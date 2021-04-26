@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+# 验证码
+captcha:
+  #  验证码宽度
+  width: 130
+  #  验证码高度
+  high: 48
+  # 验证码个数
+  length: 4
+  # 验证码种类： 1 gif 2 中文 3 中文gif 4 算术
+  type: 1

@@ -1,0 +1,75 @@
+body{
+    display: flex;
+    height: 100vh;
+}
+.left{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+    animation: backgroundColor 5s linear infinite;
+}
+.logo{
+    border: 5px solid white;
+    width: 230px;
+    height: 70px;
+    font-family: sans-serif;
+    text-align: center;
+    line-height: 60px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+}
+
+@keyframes backgroundColor {
+    0%{
+        background: rgb(46, 46, 46);
+    }
+    25%{
+        background: rgb(41, 90, 131);
+    }
+    50%{
+        background: rgb(20, 100, 153);
+    }
+    75%{
+        background: rgb(62, 46, 100);
+    }
+    100%{
+        background: rgb(46, 46, 46);
+    }
+}
+
+.right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+}
+.right .login-panel{
+    width: 420px;
+    height: auto;
+}
+.login-panel h2{
+    font-size: 40px;
+    text-align: center;
+    margin: 20px 0;
+}
+.layui-input{
+    border-color: rgba(160,160,160,.7);
+    border-radius: 5px;
+    height: 60px;
+}
+img{
+    float: left!important;
+}
+.layui-form-item .captchaInput{
+    width: 220px;
+    height: 48px;
+    float: right!important;
+}
+.captchaItem{
+    margin-bottom: 5px;
+}

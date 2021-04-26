@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:th="http://www.thymeleaf.org"
+            xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>首页</title>
+    <link th:href="@{/system/CommonStyle.css}" rel="stylesheet">
+    <link th:href="@{/system/index/css/index.css}" rel="stylesheet">
+    <script th:src="@{/system/index/js/flexible.js}"></script>
+</head>
+<body>
+    <header>
+        <h1>数据可视化</h1>
+    </header>
+    <section class="mainbox">
+        <div class="column">
+            <div class="panel bar">
+                <h2>柱状图</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+            <div class="panel line">
+                <h2>折线图</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+            <div class="panel pie">
+                <h2>饼形图</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="no">
+                <div class="no-hd">
+                    <ul>
+                        <li>999</li>
+                        <li>999</li>
+                    </ul>
+                </div>
+                <div class="no-bd">
+                    <ul>
+                        <li>需求人数</li>
+                        <li>供应人数</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="panel bar1">
+                <h2>柱形图</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+            <div class="panel line1">
+                <h2>柱形图</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+            <div class="panel pie1">
+                <h2>柱形图</h2>
+                <div class="chart"></div>
+                <div class="panel-footer"></div>
+            </div>
+        </div>
+    </section>
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/system/index/js/index.js}"></script>
+</body>
+</html>

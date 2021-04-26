@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <th:block th:include="component::header('登录页面')"></th:block>
+    <link rel="stylesheet" th:href="@{/system/login/css/login.css}">
+</head>
+<body>
+    <div class="left">
+        <div class="logo">Studying</div>
+    </div>
+    <div class="right">
+        <div class="login-panel">
+            <h2>后台系统</h2>
+            <form class="layui-form" style="padding: 0 20px">
+                <div class="layui-form-item">
+                    <input type="text" name="userName" placeholder="用户名" class="layui-input" autocomplete="off">
+                </div>
+                <div class="layui-form-item">
+                    <input type="text" name="password" placeholder="密码" class="layui-input">
+                </div>
+                <div class="layui-form-item captchaItem">
+                    <img src="/captcha" width="130px" height="48px" title="点击切换验证码" id="captcha">
+                    <input type="text" class="layui-input captchaInput" name="captcha" autocomplete="off">
+                </div>
+                <div class="layui-form-item">
+                    <input type="checkbox" name="" title="Remember me" lay-skin="primary">
+                </div>
+                <div class="layui-form-item">
+                    <a class="layui-btn layui-btn-normal" style="width: 100%">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/login/js/login.js}"></script>
+</body>
+</html>
