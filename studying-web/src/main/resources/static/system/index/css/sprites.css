@@ -1,0 +1,24 @@
+#animation_container{
+    position: relative;
+    background-color: transparent;
+    width: 700px;
+    height: 700px;
+    top: 40px;
+    margin: auto;
+}
+#canvas{
+    position: absolute;
+    display: block;
+    background-color: transparent;
+    height: 700px;
+}
+#dom_overlay_container{
+    pointer-events: none;
+    overflow: hidden;
+    width: 700px;
+    height: 700px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+}

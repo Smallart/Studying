@@ -12,3 +12,9 @@ li {
     font-family: electronicFont;
     src: url("font/DS-DIGIT.TTF");
 }
+div.layui-fluid{
+    padding: 15px;
+}
+html{
+    background-color: #f2f2f2;
+}

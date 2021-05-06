@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="component::header('主页')"></th:block>
+    <link rel="stylesheet" th:href="@{/system/back/main/css/back_main.css}">
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6">
+                <div class="layui-panel" style="padding: 30px;">
+                    <div>一个面板</div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-panel" style="padding: 30px;">
+                    <div>一个面板</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/main/js/back_main.js}"></script>
+</body>
+</html>

@@ -27,7 +27,6 @@
         <dependency>
             <groupId>com.small</groupId>
             <artifactId>studying-common</artifactId>
-            <version>${project-verison}</version>
         </dependency>
     </dependencies>
 

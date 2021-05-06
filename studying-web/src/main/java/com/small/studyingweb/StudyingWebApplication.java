@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(value = {"com.small.*"})
 public class StudyingWebApplication {
 
     public static void main(String[] args) {

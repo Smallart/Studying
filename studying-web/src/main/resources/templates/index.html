@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-            xmlns:th="http://www.thymeleaf.org"
-            xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+            xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>首页</title>
-    <link th:href="@{/system/CommonStyle.css}" rel="stylesheet">
+    <th:block th:include="component::header('首页')"></th:block>
     <link th:href="@{/system/index/css/index.css}" rel="stylesheet">
-    <script th:src="@{/system/index/js/flexible.js}"></script>
+    <link rel="stylesheet" th:href="@{/system/index/css/sprites.css}">
 </head>
 <body>
     <header>
@@ -16,18 +12,18 @@
     </header>
     <section class="mainbox">
         <div class="column">
-            <div class="panel bar">
-                <h2>柱状图</h2>
+            <div class="panel dailyTasks">
+                <h2>每日任务</h2>
                 <div class="chart"></div>
                 <div class="panel-footer"></div>
             </div>
-            <div class="panel line">
-                <h2>折线图</h2>
+            <div class="panel tasksTime">
+                <h2>任务进行时间</h2>
                 <div class="chart"></div>
                 <div class="panel-footer"></div>
             </div>
-            <div class="panel pie">
-                <h2>饼形图</h2>
+            <div class="panel dailyTasksPrecent">
+                <h2>每日任务时间占比</h2>
                 <div class="chart"></div>
                 <div class="panel-footer"></div>
             </div>
@@ -47,26 +43,34 @@
                     </ul>
                 </div>
             </div>
+            <div id="animation_container">
+                <canvas id="canvas"></canvas>
+                <div id="dom_overlay_container"></div>
+            </div>
         </div>
         <div class="column">
-            <div class="panel bar1">
-                <h2>柱形图</h2>
+            <div class="panel compareWithYesterday">
+                <h2>与昨日相比</h2>
                 <div class="chart"></div>
                 <div class="panel-footer"></div>
             </div>
-            <div class="panel line1">
-                <h2>柱形图</h2>
+            <div class="panel weekTasks">
+                <h2>本周任务</h2>
                 <div class="chart"></div>
                 <div class="panel-footer"></div>
             </div>
-            <div class="panel pie1">
-                <h2>柱形图</h2>
+            <div class="panel monthTasks">
+                <h2>本月任务</h2>
                 <div class="chart"></div>
                 <div class="panel-footer"></div>
             </div>
         </div>
     </section>
-    <script th:src="@{/layui/layui.js}"></script>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/index/js/flexible.js}"></script>
     <script th:src="@{/system/index/js/index.js}"></script>
+    <script th:src="@{/system/index/js/createjs.min.js}"></script>
+    <script th:src="@{/system/index/js/sprites/lizi.js}"></script>
+    <script th:src="@{/system/index/js/spriteplayer.js}"></script>
 </body>
 </html>
