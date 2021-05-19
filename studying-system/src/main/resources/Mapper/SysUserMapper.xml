@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.small.system.mapper.SysUserMapper">
+    <select id="find"></select>
+    <insert id="save"></insert>
+    <select id="findUserByLoginName" parameterType="String" resultType="com.small.common.base.enitity.SysUser">
+        SELECT
+            user_id userId,
+            user_name userName,
+            create_time createTime,
+            create_by createBy,
+            update_time updateTime,
+            update_by updateBy,
+            login_name loginName,
+            user_type userType,
+            sex sex,
+            avatar avatar,
+            PASSWORD password,
+            salt salt,
+            STATUS status,
+            del_flag delFlag,
+            login_ip loginIp,
+            login_date loginDate,
+            pwd_update_time pwdUpdateTime
+        from
+            sys_user
+        where
+            login_name = #{loginName}
+    </select>
+</mapper>

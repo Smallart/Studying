@@ -6,14 +6,14 @@
     <link rel="stylesheet" th:href="@{/system/back/index/css/back_index.css}">
 </head>
 <body class="layui-layout-body">
-    <div id="LAY_app" class="layuiadmin-side-shrink">
+    <div id="LAY_app">
         <div class="layui-layout layui-layout-admin">
             <!-- 头部区域 -->
             <div class="layui-header">
                 <ul class="layui-nav layui-layout-left">
                     <li class="layui-nav-item" lay-unselect studying-event="flexible">
                         <a href="javascript:void(0);" title="侧边伸缩">
-                            <i class="layui-icon layui-icon-spread-left" id="LAY_app_flexible"></i>
+                            <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
                         </a>
                     </li>
                     <li class="layui-nav-item  layui-hide-xs" lay-unselect>
@@ -55,7 +55,7 @@
                                 <a href="">修改密码</a>
                             </dd>
                             <hr/>
-                            <dd style="text-align: center;"><a>退出</a></dd>
+                            <dd style="text-align: center;"><a href="/logout">退出</a></dd>
                         </dl>
                     </li>
                 </ul>

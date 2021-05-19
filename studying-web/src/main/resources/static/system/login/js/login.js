@@ -25,6 +25,7 @@ layui.use(['form','jquery'],function () {
       }).then(function (data) {
          if (data.code==0){
             layer.msg(data.msg);
+            window.location.href = '/sysLogin/backIndex';
          }else{
             layer.alert("<span style='color:red'>登录失败，失败原因："+data.msg+"</span>",{icon:5});
             $('#captcha').click();

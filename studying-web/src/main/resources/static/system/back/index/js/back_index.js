@@ -63,16 +63,14 @@ layui.extend({
             if (isSpread){
                 $('#LAY_app_flexible').removeClass(ICON_SPREAD).addClass(ICON_SHRINK);
                 $('#LAY_app').removeClass(CLASS_SHRINK);
+                offMenuMouseEven();
             }else{
                 $('#LAY_app_flexible').removeClass(ICON_SHRINK).addClass(ICON_SPREAD);
                 $('#LAY_app').addClass(CLASS_SHRINK);
+                menuMouseEven();
             }
         }
     };
-    //侧边伸缩
-    function sideFlexible() {
-
-    }
     function openTabsPage(url,text) {
         var marchTo,tabs = $('#LAY_app_tabsheader>li'),path = url.replace(/(^http(s*):)|(\?[\s\S]*$)/g, '');
         tabs.each(function (index) {
@@ -153,16 +151,23 @@ layui.extend({
         var $this = $(this),attrEvent = $this.attr('studying-event');
         events[attrEvent]&&events[attrEvent].call(this,$this);
     });
-    //
-    $('#LAY-system-side-menu').on('mouseenter','li',function () {
-        layer.open({
-           type:4,
-           content: [$(this).children('a').attr('lay-tips'),this],
-           shade:0,
-           closeBtn: 0
+    // 侧边栏添加监听事件
+    function menuMouseEven(){
+        $('#LAY-system-side-menu').on('mouseenter','li',function () {
+            layer.open({
+                type:4,
+                content: [$(this).children('a').attr('lay-tips'),this],
+                shade:0,
+                closeBtn: 0
+            });
         });
-    });
-    $('#LAY-system-side-menu').on('mouseleave','li',function () {
-        layer.close(layer.index);
-    });
+        $('#LAY-system-side-menu').on('mouseleave','li',function () {
+            layer.close(layer.index);
+        });
+    }
+    // 消除侧边栏监听事件
+    function offMenuMouseEven() {
+        $('#LAY-system-side-menu').unbind();
+    }
+
 });

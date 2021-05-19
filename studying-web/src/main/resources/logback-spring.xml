@@ -22,9 +22,9 @@
         </encoder>
     </appender>
     <!--end-system的mapper对象-->
-<!--    <logger name="com.dream.mapper" level="DEBUG">-->
+    <logger name="com.small.system.mapper" level="DEBUG">
 
-<!--    </logger>-->
+    </logger>
 
     <root level="info">
         <appender-ref ref="CONSOLE"></appender-ref>

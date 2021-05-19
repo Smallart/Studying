@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.small.system.mapper.SysUserOnlineMapper">
+    <insert id="save" parameterType="com.small.system.domain.SysUserOnline">
+        replace into sys_user_online(
+            sessionId,
+            login_name,
+            ipaddr,
+            login_location,
+            browser,
+            os,
+            status,
+            start_timestamp,
+            last_access_time,
+            expire_time)
+        values(#{sessionId},#{loginName},#{ip},#{loginLocation},#{browser},#{os},#{status},#{startTimeStamp},#{lastAccessTime},#{expireTime});
+    </insert>
+
+    <select id="find" parameterType="com.small.system.query.SysUserOnlineQuery" resultType="com.small.system.domain.SysUserOnline">
+        SELECT sessionId,
+            login_name loginName,
+            ipaddr ip,
+            login_location loginLocaiton,
+            browser browser,
+            os os,
+            status status,
+            start_timestamp startTimeStamp,
+            last_access_time lastAccessTime,
+            expire_time expireTime
+        from sys_user_online
+        WHERE sessionId = #{search}
+    </select>
+
+    <select id="findExpireUserOnline" parameterType="com.small.system.query.SysUserOnlineQuery" resultType="com.small.system.domain.SysUserOnline">
+        SELECT sessionId sessionId,
+        login_name loginName,
+        ipaddr ip,
+        login_location loginLocation,
+        browser browser,
+        os os,
+        status status,
+        start_timestamp startTimeStamp,
+        last_access_time lastAccessTime,
+        expire_time expireTime
+        from sys_user_online
+        WHERE <![CDATA[last_access_time<=#{searchDate}]]>
+    </select>
+    <delete id="batchDeleteOnline" parameterType="List">
+        delete from sys_user_online where sessionId in
+        <foreach collection="list" item="item" separator="','" open="('" close="')">
+            #{item}
+        </foreach>
+    </delete>
+    <delete id="deleteOnlineById" parameterType="String">
+        delete from sys_user_online where sessionId = #{sessionId}
+    </delete>
+</mapper>

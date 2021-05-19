@@ -1,11 +1,14 @@
 package com.small.frame.shiro.realm;
 
-import com.small.common.exceptions.user.UserException;
+import com.small.common.base.enitity.SysUser;
+import com.small.common.exceptions.user.*;
 import com.small.frame.shiro.service.SysLoginService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -13,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Liang
  */
 public class ShiroRealm extends AuthorizingRealm {
+
+    private final Logger log = LoggerFactory.getLogger(ShiroRealm.class);
 
     @Autowired
     private SysLoginService loginService;
@@ -41,8 +46,24 @@ public class ShiroRealm extends AuthorizingRealm {
         if (usernamePasswordToken.getPassword()!=null){
             password = new String(usernamePasswordToken.getPassword());
         }
-        loginService.login(userName,password);
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userName, password, getName());
+        SysUser user = null;
+        try{
+            user = loginService.login(userName, password);
+        }catch (CaptchaException e){
+            throw new AuthenticationException(e.getMessage(),e);
+        }catch (UserNotExistsException e){
+            throw new UnknownAccountException(e.getMessage(),e);
+        }catch (UserPasswordNotMatchException e){
+            throw new IncorrectCredentialsException(e.getMessage(),e);
+        }catch (UserPasswordRetryLimitExceedException e){
+            throw new ExcessiveAttemptsException(e.getMessage(),e);
+        }catch (UserBlockedException e){
+            throw new LockedAccountException(e.getMessage(),e);
+        }catch (Exception e){
+            log.error("对用户{}，进行登录验证未通过，原因：{}",userName,e.getMessage());
+            throw new AuthenticationException(e.getMessage(),e);
+        }
+        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
         return info;
     }
 }

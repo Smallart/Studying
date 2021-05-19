@@ -26,6 +26,7 @@ function handleComplete(evt,comp) {
         ss[ssMetadata[i].name] = new createjs.SpriteSheet( {"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames} )
     }
     exportRoot = new lib.liz();
+    // exportRoot = new lib.fly();
     stage = new lib.Stage(canvas);
     //Registers the "tick" event listener.
     fnStartAnimation = function() {
