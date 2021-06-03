@@ -25,9 +25,7 @@ public class SysShiroService {
      * @return
      */
     public Session getSession(Serializable sessionId){
-        SysUserOnlineQuery sysUserOnlineQuery = new SysUserOnlineQuery();
-        sysUserOnlineQuery.setSearch(String.valueOf(sessionId));
-        SysUserOnline sysUserOnline = onlineService.find(sysUserOnlineQuery);
+        SysUserOnline sysUserOnline = onlineService.findUserOnlineBySessionId(String.valueOf(sessionId));
         return sysUserOnline == null? null:createSession(sysUserOnline);
     }
 

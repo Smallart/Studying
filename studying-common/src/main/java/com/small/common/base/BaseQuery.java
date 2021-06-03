@@ -34,4 +34,8 @@ public class BaseQuery {
      * 排序策略
      */
     private String orderStrategy;
+
+    public int getLimit() {
+        return (limit-1);
+    }
 }

@@ -40,4 +40,9 @@ public class SysUserOnlineServiceImpl extends BaseServiceImpl<SysUserOnline, Sys
     public void deleteOnlineById(String sessionId) {
         userOnlineMapper.deleteOnlineById(sessionId);
     }
+
+    @Override
+    public SysUserOnline findUserOnlineBySessionId(String sessionId) {
+        return userOnlineMapper.findUserOnlineBySessionId(sessionId);
+    }
 }

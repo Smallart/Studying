@@ -1,0 +1,39 @@
+:root{
+    --timeline-contain-width: 200px;
+    --timeline-item-left:-100px;
+}
+.studying-badge{
+    position: absolute;
+    top: 25%;
+    right: 15px;
+}
+.layui-panel{
+
+}
+.layui-card-body .studying-big-font{
+    font-size: 36px;
+    color: #666;
+    line-height: 36px;
+    padding: 5px 0 10px;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
+}
+.layui-card-body .studying-span-color{
+    font-size: 14px;
+    position: absolute;
+    right: 0px;
+}
+.studying-progress{
+    position: relative;
+}
+.studying-badge-progress{
+    width: 180px;
+    position: absolute;
+    top: 10px;
+    left: 40px;
+}
+.studying-badge-progress .layui-progress-text{
+    top: 0px;
+}
+

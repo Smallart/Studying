@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('用户管理')"></th:block>
+    <link rel="stylesheet" th:href="@{/expandjs/layout/layout-default-latest.css}">
+    <link rel="stylesheet" th:href="@{/system/back/system/css/back_user.css}">
+    <link rel="stylesheet" th:href="@{/expandjs/ztree/metroStyle.css}">
+</head>
+<body>
+    <div class="ui-layout-center">
+        <div class="layui-fluid">
+            <div class="layui-row">
+                <div class="layui-panel">
+                    <form class="layui-form menu-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">登录名称：</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="loginName" autocomplete="off" class="layui-input">
+                            </div>
+                            <label class="layui-form-label">创建时间：</label>
+                            <div class="layui-input-inline dateTimeWidth">
+                                <input type="text" name="createStartTime" class="layui-input" placeholder="开始时间" id="create-start-time">
+                            </div>
+                            <div class="layui-form-mid">-</div>
+                            <div class="layui-input-inline dateTimeWidth">
+                                <input type="text" name="createEndTime" class="layui-input" placeholder="结束时间" id="create-end-time">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="margin-bottom: 0px">
+                            <label class="layui-form-label">用户状态：</label>
+                            <div class="layui-input-inline">
+                                <select name="userStatus">
+                                    <option value="">所有</option>
+                                    <option value="0">停用</option>
+                                    <option value="1">正常</option>
+                                </select>
+                            </div>
+                            <div class="layui-btn-container">
+                                <button class="layui-btn" type="button" lay-submit lay-filter="*">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                    搜索
+                                </button>
+                                <button class="layui-btn layui-btn-warm" type="reset">
+                                    <i class="layui-icon layui-icon-refresh"></i>
+                                    重置
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-panel">
+                    <div class="layui-btn-container menu-table">
+                        <button class="layui-btn layui-btn-normal layui-btn-sm" studying-event="add">
+                            <i class="layui-icon layui-icon-addition"></i>新增
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-disabled" ruoyi-event="edit" id="edit">
+                            <i class="layui-icon layui-icon-edit"></i>修改
+                        </button>
+                        <button class="layui-btn layui-btn-danger layui-btn-sm layui-btn-disabled" studying-event="batchDelete" id="del">
+                            <i class="layui-icon layui-icon-delete"></i>删除
+                        </button>
+                        <button class="layui-btn layui-btn-normal layui-btn-sm" ruoyi-event="import">
+                            <i class="layui-icon layui-icon-upload"></i>导入
+                        </button>
+                        <button class="layui-btn  layui-btn-warm layui-btn-sm" ruoyi-event="outport">
+                            <i class="layui-icon layui-icon-download-circle"></i>导出
+                        </button>
+                        <table class="layui-hide" id="userTable" lay-filter="userTable" lay-skin="line"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-layout-west">
+        <div class="box-header">
+            <h3>组织机构</h3>
+            <div>
+                <a href="javascript:void(0)" title="管理部门" studying-event="openDept">
+                    <i class="layui-icon layui-icon-set-fill"></i>
+                </a>
+                <a href="javascript:void(0)" title="折叠" studying-event="toggle">
+                    <i class="layui-icon layui-icon-down"></i>
+                </a>
+                <a href="javascript:void(0)" title="刷新部门" studying-event="refresh">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                </a>
+            </div>
+        </div>
+        <div class="box-body">
+            <ul id="companyTree" class="ztree"></ul>
+        </div>
+    </div>
+    <script type="text/html" id="barOperator">
+        <button type="button" class="layui-btn layui-btn-xs barOperatorStyle">编辑</button>
+        <button type="button" class="layui-btn layui-btn-danger layui-btn-xs barOperatorStyle">删除</button>
+        <div class="btn-box">
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal barOperatorStyle">更多操作</button>
+            <div class="layui-btn-container more-operate">
+                <button type="button" class="layui-btn layui-btn-xs">重置密码</button>
+                <button type="button" class="layui-btn layui-btn-xs">分配角色</button>
+            </div>
+        </div>
+    </script>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_user.js}"></script>
+</body>
+</html>

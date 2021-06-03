@@ -29,4 +29,11 @@ public interface ISysUserOnlineService extends BaseService<SysUserOnline, SysUse
      * @param sessionId
      */
     void deleteOnlineById(String sessionId);
+
+    /**
+     * 通过SessionId查询用户是否在线
+     * @param sessionId
+     * @return
+     */
+    SysUserOnline findUserOnlineBySessionId(String sessionId);
 }

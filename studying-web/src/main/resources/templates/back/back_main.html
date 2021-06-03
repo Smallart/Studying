@@ -2,25 +2,102 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="component::header('主页')"></th:block>
-    <link rel="stylesheet" th:href="@{/system/back/main/css/back_main.css}">
+        <th:block th:include="component::header('主页')"></th:block>
+    <link rel="stylesheet" th:href="@{/system/back/main/css/back_main.css}" href="../../static/system/back/main/css/back_main.css">
+    <link rel="stylesheet" th:href="@{/expandjs/mytimeline/mytimeline.css}">
 </head>
 <body>
     <div class="layui-fluid">
         <div class="layui-row layui-col-space15">
-            <div class="layui-col-md6">
-                <div class="layui-panel" style="padding: 30px;">
-                    <div>一个面板</div>
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        日目标
+                        <span class="layui-badge layui-bg-blue studying-badge">日</span>
+                    </div>
+                    <div class="layui-card-body">
+                        <p class="studying-big-font">66666</p>
+                        <div class="studying-progress">
+                            进度：
+                            <div class="layui-progress studying-badge-progress" lay-showPercent="yes">
+                                <div class="layui-progress-bar layui-bg-blue" lay-percent="30%"></div>
+                            </div>
+                            <span class="studying-span-color">
+                                <i class="layui-inline layui-icon layui-icon-flag"></i>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="layui-col-md6">
-                <div class="layui-panel" style="padding: 30px;">
-                    <div>一个面板</div>
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        周目标
+                        <span class="layui-badge layui-bg-green studying-badge">周</span>
+                    </div>
+                    <div class="layui-card-body">
+                        <p class="studying-big-font">66666</p>
+                        <div class="studying-progress">
+                            进度：
+                            <div class="layui-progress studying-badge-progress" lay-showPercent="yes">
+                                <div class="layui-progress-bar layui-bg-green" lay-percent="30%"></div>
+                            </div>
+                            <span class="studying-span-color">
+                                <i class="layui-inline layui-icon layui-icon-flag"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        月目标
+                        <span class="layui-badge layui-bg-orange studying-badge">月</span>
+                    </div>
+                    <div class="layui-card-body">
+                        <p class="studying-big-font">66666</p>
+                        <div class="studying-progress">
+                            进度：
+                            <div class="layui-progress studying-badge-progress" lay-showPercent="yes">
+                                <div class="layui-progress-bar layui-bg-orange" lay-percent="30%"></div>
+                            </div>
+                            <span class="studying-span-color">
+                                <i class="layui-inline layui-icon layui-icon-flag"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        年目标
+                        <span class="layui-badge layui-bg-cyan studying-badge">年</span>
+                    </div>
+                    <div class="layui-card-body">
+                        <p class="studying-big-font">66666</p>
+                        <div class="studying-progress">
+                            进度：
+                            <div class="layui-progress studying-badge-progress" lay-showPercent="yes">
+                                <div class="layui-progress-bar layui-bg-red" lay-percent="30%"></div>
+                            </div>
+                            <span class="studying-span-color">
+                                <i class="layui-inline layui-icon layui-icon-flag"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space15" style="margin: 0px">
+            <div class="layui-panel">
+                <div class="my-timeline-content">
                 </div>
             </div>
         </div>
     </div>
     <th:block th:include="component::commonJs"></th:block>
-    <script th:src="@{/system/back/main/js/back_main.js}"></script>
+    <script th:src="@{/system/back/main/js/back_main.js}" src="system/back/main/js/back_main.js"></script>
 </body>
 </html>

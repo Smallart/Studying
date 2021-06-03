@@ -109,6 +109,9 @@
 .layadmin-pagetabs .layui-tab-title li:first-child .layui-tab-close {
     display: none;
 }
+.layui-nav{
+    background: none;
+}
 .layadmin-tabs-selected.layui-nav{
     position: absolute;
     background: none;
@@ -160,5 +163,8 @@
 .layuiadmin-side-shrink .layui-side-menu .layui-nav>.layui-nav-item>a .layui-nav-more,
 .layuiadmin-side-shrink .layui-side-menu .layui-nav>.layui-nav-item>.layui-nav-child{display: none; padding: 8px 0; width: 200px;}
 .layadmin-side-shrink .layui-side-menu .layui-nav > .layui-nav-itemed>a{background: rgba(0,0,0,.3);}
+.layui-nav-child dd{
+    cursor: pointer;
+}
 
 

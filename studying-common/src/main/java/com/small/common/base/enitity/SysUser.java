@@ -30,6 +30,16 @@ public class SysUser extends BaseObject implements Serializable {
      */
     private String userType;
     /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 电话号码
+     */
+    private String iphone;
+
+    /**
      * 性别
      * 0女 1男
      */
@@ -66,4 +76,17 @@ public class SysUser extends BaseObject implements Serializable {
      * 密码最新登录时间
      */
     private Date pwdUpdateTime;
+
+    /**
+     * 公司名称
+     */
+    private String deptName;
+
+    /**
+     * 判断是否是管理员
+     * @return
+     */
+    public boolean isAdmin(){
+        return this.userId == 1L;
+    }
 }

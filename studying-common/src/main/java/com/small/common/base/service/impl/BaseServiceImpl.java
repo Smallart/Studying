@@ -5,6 +5,8 @@ import com.small.common.base.BaseObject;
 import com.small.common.base.BaseQuery;
 import com.small.common.base.service.BaseService;
 
+import java.util.List;
+
 /**
  * 封装基础的Service层
  * @param <T>
@@ -24,8 +26,15 @@ public class BaseServiceImpl<T extends BaseObject,U extends BaseQuery,V extends 
     }
 
     @Override
-    public T find(U u) {
+    public List<T> find(U u) {
         return dao.find(u);
     }
+
+    @Override
+    public Integer count(U u) {
+        return dao.count(u);
+    }
+
+
 }
 

@@ -9,7 +9,7 @@ layui.extend({
     events={
         //关闭当前页面
         closeThisTab:function () {
-            $('#LAY_app_tabsheader').children('li.layui-this').children('i').click();
+            pageOp.closeThisTab();
         },
         //关闭其它页面
         closeOtherTabs:function () {
@@ -71,41 +71,48 @@ layui.extend({
             }
         }
     };
-    function openTabsPage(url,text) {
-        var marchTo,tabs = $('#LAY_app_tabsheader>li'),path = url.replace(/(^http(s*):)|(\?[\s\S]*$)/g, '');
-        tabs.each(function (index) {
-           var li = $(this),layId = li.attr('lay-id');
-           if (layId === url){
-               marchTo = true;
-               tabsPage.index = index;
-           }
-        });
-        text = text || '新标签页';
-        if (pageOp.pageTabs){
-            //如果没有在选项卡中匹配到，则追加选项卡
-            if (!marchTo){
-                $('#LAY_app_body').append([
-                    '<div class="layadmin-tabsbody-item">'
-                    ,'<iframe src="'+ url +'" frameborder="0" class="layadmin-iframe"></iframe>'
-                    ,'</div>'
-                ].join(''));
-                tabsPage.index = tabs.length;
-                element.tabAdd('layadmin-layout-tabs', {
-                    title: '<span>'+ text +'</span>'
-                    ,id: url
-                    ,attr: path
-                });
-            }
-        }else {
-          var iframe =  pageOp.tabsBody(tabsPage.index).find('.layadmin-iframe');
-          iframe[0].contentWindow.location.href = url;
-        }
-        element.tabChange('layadmin-layout-tabs',url);
-        pageOp.tabsBodyChange(tabsPage.index,{
-            url:url,
-            text:text
-        })
+
+    init();
+    //初始化菜单
+    function init() {
+        menus();
     }
+
+    // function openTabsPage(url,text) {
+    //     var marchTo,tabs = $('#LAY_app_tabsheader>li'),path = url.replace(/(^http(s*):)|(\?[\s\S]*$)/g, '');
+    //     tabs.each(function (index) {
+    //        var li = $(this),layId = li.attr('lay-id');
+    //        if (layId === url){
+    //            marchTo = true;
+    //            tabsPage.index = index;
+    //        }
+    //     });
+    //     text = text || '新标签页';
+    //     if (pageOp.pageTabs){
+    //         //如果没有在选项卡中匹配到，则追加选项卡
+    //         if (!marchTo){
+    //             $('#LAY_app_body').append([
+    //                 '<div class="layadmin-tabsbody-item">'
+    //                 ,'<iframe src="'+ url +'" frameborder="0" class="layadmin-iframe"></iframe>'
+    //                 ,'</div>'
+    //             ].join(''));
+    //             tabsPage.index = tabs.length;
+    //             element.tabAdd('layadmin-layout-tabs', {
+    //                 title: '<span>'+ text +'</span>'
+    //                 ,id: url
+    //                 ,attr: path
+    //             });
+    //         }
+    //     }else {
+    //       var iframe =  pageOp.tabsBody(tabsPage.index).find('.layadmin-iframe');
+    //       iframe[0].contentWindow.location.href = url;
+    //     }
+    //     element.tabChange('layadmin-layout-tabs',url);
+    //     pageOp.tabsBodyChange(tabsPage.index,{
+    //         url:url,
+    //         text:text
+    //     })
+    // }
     //监听tab标签页，联动左边菜单栏
     element.on('tab(layadmin-layout-tabs)',function (data) {
         var url = $(this).attr('lay-id'),sideMenu=$('#LAY-system-side-menu'),SIDE_NAV_ITEMD='layui-nav-itemed',
@@ -138,7 +145,7 @@ layui.extend({
     //监听菜单栏，联动tab标签页
     element.on('nav(menuFilter)',function (data) {
         if (data.attr('lay-href')!=null|undefined){
-            openTabsPage(data.attr('lay-href'),data.text());
+            pageOp.openTabsPage(data.attr('lay-href'),data.text());
         }
     });
     //选项卡删除时触发
@@ -168,6 +175,51 @@ layui.extend({
     // 消除侧边栏监听事件
     function offMenuMouseEven() {
         $('#LAY-system-side-menu').unbind();
+    }
+
+    // 初始化菜单
+    function menus() {
+        fetch('/system/menus').then(response=>response.json()).then(result=>{
+            if(result.code==0){
+                const sideMenu = $('#LAY-system-side-menu');
+                let htmlOuterItem='';
+                for (let dataKey of result.data) {
+                    let htmlInnerItem = createItemsHtml(dataKey.childrenItems,0);
+                    htmlOuterItem +=
+                    `<li data-name="${dataKey.menuName}" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="${dataKey.menuName}" lay-direction="${dataKey.menuId}">
+                            <i class="${dataKey.icon}"></i>
+                            <cite>${dataKey.menuName}</cite>
+                        </a>
+                        ${htmlInnerItem}
+                    </li>`;
+                }
+                sideMenu.html(htmlOuterItem);
+                sideMenu.find('li:first-child').addClass('layui-nav-itemed');
+                element.render();
+            }
+        }).catch(events=>console.error(events));
+    }
+
+    // 创建ItemsHTML
+    function createItemsHtml(items,level) {
+        let innerHtml='';
+        for (let itemsKey of items) {
+            let childInnerHtml='';
+            if (itemsKey.childrenItems!=null|undefined){
+                childInnerHtml=createItemsHtml(itemsKey.childrenItems,level+1);
+            }
+            let href = itemsKey.url=='#'? 'href="javascript:;"' : `lay-href="${itemsKey.url}"`;
+            innerHtml+=
+                `<dd data-name="${itemsKey.menuName}">
+                    <a ${href} style="padding-left: ${45+15*level}px">${itemsKey.menuName}</a>
+                    ${childInnerHtml}
+                </dd>`;
+        }
+        let outHtml=`<dl class="layui-nav-child">
+                        ${innerHtml}                        
+                    </dl>`;
+        return outHtml;
     }
 
 });

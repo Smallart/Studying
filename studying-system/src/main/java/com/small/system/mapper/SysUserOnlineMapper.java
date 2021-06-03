@@ -31,4 +31,10 @@ public interface SysUserOnlineMapper extends BaseDao<SysUserOnline, SysUserOnlin
      * @param sessionId
      */
     void deleteOnlineById(String sessionId);
+
+    /**
+     * 通过sessionId查询SysUserOnline
+     * @param sessionId
+     */
+    SysUserOnline findUserOnlineBySessionId(String sessionId);
 }

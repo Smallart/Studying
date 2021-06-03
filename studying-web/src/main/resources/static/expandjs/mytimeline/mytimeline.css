@@ -1,0 +1,94 @@
+:root{
+    --timeline-contain-width: 200px;
+    --timeline-item-left:-100px;
+}
+.my-timeline-content{
+    position: relative;
+    margin: 10px auto 0px;
+}
+.layui-timeline{
+    margin: 0px 35px;
+    padding: 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all .2s;
+    height: 50px;
+}
+.my-timeline-text{
+    position: absolute;
+    top: 20px;
+}
+.layui-timeline-item{
+    display: inline-block;
+    width: var(--timeline-contain-width);
+}
+.layui-timeline-item>i{
+    position: absolute;
+    left: calc(calc(var(--timeline-contain-width) / 2));
+}
+.layui-timeline>i:hover{
+    color: #5FB878;
+}
+.layui-timeline-item::before{
+    content: '';
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    top: 8px;
+    left: var(--timeline-item-left);
+}
+.layui-timeline-item:first-child::before{
+    width: calc(var(--timeline-contain-width) / 2);
+    left: 0px;
+}
+.layui-timeline-item:last-child::before{
+    display: inline-block;
+}
+.layui-timeline-item:last-child::after{
+    content: '';
+    position: absolute;
+    height: 4px;
+    width: calc(var(--timeline-contain-width) / 2);
+    top: 8px;
+    right: 0px;
+    background-color: #eee;
+}
+.layui-icon-this{
+    background-color: #5FB878;
+}
+
+.my-timeline-content .myTimeline-pre,.my-timeline-content .myTimeline-next{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #aaa;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.my-timeline-content .myTimeline-pre>i,.my-timeline-content .myTimeline-next>i{
+    position: absolute;
+    top: 5px;
+    left: 6px;
+    color: #aaa;
+}
+.my-timeline-content .myTimeline-next{
+    right: 0;
+}
+
+.my-timeline-bg-fadeout.layui-timeline-item::before{
+    animation: 0s ease-out 0.2s 1 reverse bgcFadeOut;
+}
+.my-timeline-bg-fadein.layui-timeline-item::before{
+    animation: 0s ease-in 0.2s 1 forwards bgcFadeOut;
+}
+@keyframes bgcFadeOut {
+    0% {
+        background-color: #eee;
+    }
+    50% {
+        background-color: #9cf5b5;
+    }
+    100%{
+        background-color: #5FB878;
+    }
+}

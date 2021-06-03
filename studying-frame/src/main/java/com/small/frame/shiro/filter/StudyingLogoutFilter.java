@@ -1,5 +1,6 @@
 package com.small.frame.shiro.filter;
 
+import com.small.common.base.enitity.SysUser;
 import com.small.common.constant.Constants;
 import com.small.common.enums.OnlineStatus;
 import com.small.common.enums.UserStatus;
@@ -35,7 +36,10 @@ public class StudyingLogoutFilter extends LogoutFilter {
 
             try {
                 String loginName = ShiroUtils.getLoginName();
-                ShiroUtils.getPrincipal().setStatus(OnlineStatus.OFF_LINE.getInfo());
+                SysUser principal = ShiroUtils.getPrincipal();
+                if (principal!=null){
+                    principal.setStatus(OnlineStatus.OFF_LINE.getInfo());
+                }
                 if (loginName!=null){
                     AsyncManager.me().execute(AsyncFactory.syncLoginInfoToDb(loginName, Constants.LOGOUT, ""));
                 }

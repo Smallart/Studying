@@ -1,5 +1,7 @@
 package com.small.common.base.service;
 
+import java.util.List;
+
 /**
  * 基础Service层
  * @author Liang
@@ -16,5 +18,12 @@ public interface BaseService<T,U>{
      * @param u
      * @return
      */
-    T find(U u);
+    List<T> find(U u);
+
+    /**
+     * 计算查询数量
+     * @param u
+     * @return
+     */
+    Integer count(U u);
 }

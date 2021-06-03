@@ -17,6 +17,44 @@ layui.define(function (exports) {
         },closeThisTabs:function () {
             if (admin.tabsPage.index) return;
             $(Tabs_HEADER).eq(admin.tabsPage.index).find('.layui-tab-close').trigger('click');
+        },openTabsPage(url,text) {
+                let $this = this;
+                var marchTo,tabs = $('#LAY_app_tabsheader>li'),path = url.replace(/(^http(s*):)|(\?[\s\S]*$)/g, '');
+                tabs.each(function (index) {
+                    var li = $(this),layId = li.attr('lay-id');
+                    if (layId === url){
+                        marchTo = true;
+                        $this.tabsPage.index = index;
+                    }
+                });
+                text = text || '新标签页';
+                if ($this.pageTabs){
+                    //如果没有在选项卡中匹配到，则追加选项卡
+                    if (!marchTo){
+                        $('#LAY_app_body').append([
+                            '<div class="layadmin-tabsbody-item">'
+                            ,'<iframe src="'+ url +'" frameborder="0" class="layadmin-iframe"></iframe>'
+                            ,'</div>'
+                        ].join(''));
+                        $this.tabsPage.index = tabs.length;
+                        element.tabAdd('layadmin-layout-tabs', {
+                            title: '<span>'+ text +'</span>'
+                            ,id: url
+                            ,attr: path
+                        });
+                    }
+                }else {
+                    var iframe =  $this.tabsBody($this.tabsPage.index).find('.layadmin-iframe');
+                    iframe[0].contentWindow.location.href = url;
+                }
+                element.tabChange('layadmin-layout-tabs',url);
+                $this.tabsBodyChange($this.tabsPage.index,{
+                    url:url,
+                    text:text
+                })
+            },
+        closeThisTab:function () {
+            $('#LAY_app_tabsheader').children('li.layui-this').children('i').click();
         }
     };
     //事件

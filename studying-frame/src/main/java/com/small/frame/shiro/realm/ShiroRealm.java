@@ -2,14 +2,22 @@ package com.small.frame.shiro.realm;
 
 import com.small.common.base.enitity.SysUser;
 import com.small.common.exceptions.user.*;
+import com.small.common.utils.ShiroUtils;
 import com.small.frame.shiro.service.SysLoginService;
+import com.small.system.domain.SysMenu;
+import com.small.system.query.SysMenuQuery;
+import com.small.system.service.ISysMenuService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 实现Shiro的Realm用于鉴权或是授予相关权限
@@ -22,6 +30,9 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private SysLoginService loginService;
 
+    @Autowired
+    private ISysMenuService menuService;
+
     /**
      * 授权
      * @param principals
@@ -29,7 +40,18 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        return null;
+        SysUser sysUser = ShiroUtils.getPrincipal();
+        SimpleAuthorizationInfo authInfo = new SimpleAuthorizationInfo();
+        if (sysUser.isAdmin()){
+            authInfo.addStringPermission("*:*:*");
+        }else{
+            SysMenuQuery sysMenuQuery = new SysMenuQuery();
+            sysMenuQuery.setUserId(sysUser.getUserId());
+            sysMenuQuery.setOperation(SysMenuQuery.OperationEnum.NOT_INCLUDE_M.getVal());
+            List<String> perms = menuService.find(sysMenuQuery).stream().map(item -> item.getPerms()).collect(Collectors.toList());
+            authInfo.addStringPermissions(perms);
+        }
+        return authInfo;
     }
 
     /**

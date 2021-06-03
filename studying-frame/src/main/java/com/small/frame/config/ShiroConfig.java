@@ -1,5 +1,6 @@
 package com.small.frame.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.small.common.utils.SpringUtils;
 import com.small.frame.shiro.filter.CaptchaFilter;
 import com.small.frame.shiro.filter.OnlineSessionFilter;
@@ -19,11 +20,14 @@ import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.session.mgt.SessionFactory;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -215,6 +219,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/sysLogin/login","anon,captcha");
         filterChainDefinitionMap.put("/captcha","anon");
         filterChainDefinitionMap.put("/logout","logout");
+//        filterChainDefinitionMap.put("/sysLogin/backIndex","anon");
 
         filterChainDefinitionMap.put("/**","user,online,sync");
         return shiroFilterFactoryBean;
@@ -254,5 +259,30 @@ public class ShiroConfig {
      */
     public CaptchaFilter captchaFilter(){
         return new CaptchaFilter();
+    }
+
+    @Bean
+    public ShiroDialect shiroDialect(){
+        return new ShiroDialect();
+    }
+
+    /**
+     * 开启shiro注解
+     * @param securityManager
+     * @return
+     */
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+        return defaultAdvisorAutoProxyCreator;
     }
 }

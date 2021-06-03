@@ -3,11 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.small.system.mapper.SysUserLoginInfoMapper">
-    <select id="find">
+    <select id="find" parameterType="com.small.system.query.SysUserQuery" resultType="com.small.common.base.enitity.SysUser">
 
     </select>
     <select id="save" parameterType="com.small.system.domain.SysLoginInfo">
         INSERT into sys_logininfo(login_name,ipaddr,login_location,browser,os,status,msg,login_time)
         values(#{loginName},#{ipAddr},#{loginLocation},#{browser},#{os},#{status},#{msg},NOW());
     </select>
+    <select id="count" parameterType="com.small.system.query.SysUserQuery" resultType="Integer"></select>
 </mapper>

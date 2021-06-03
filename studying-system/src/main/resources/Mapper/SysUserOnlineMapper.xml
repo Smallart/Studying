@@ -18,7 +18,7 @@
         values(#{sessionId},#{loginName},#{ip},#{loginLocation},#{browser},#{os},#{status},#{startTimeStamp},#{lastAccessTime},#{expireTime});
     </insert>
 
-    <select id="find" parameterType="com.small.system.query.SysUserOnlineQuery" resultType="com.small.system.domain.SysUserOnline">
+    <sql id="sys_userOnline">
         SELECT sessionId,
             login_name loginName,
             ipaddr ip,
@@ -29,6 +29,10 @@
             start_timestamp startTimeStamp,
             last_access_time lastAccessTime,
             expire_time expireTime
+    </sql>
+
+    <select id="find" parameterType="com.small.system.query.SysUserOnlineQuery" resultType="com.small.system.domain.SysUserOnline">
+        <include refid="sys_userOnline"></include>
         from sys_user_online
         WHERE sessionId = #{search}
     </select>
@@ -56,4 +60,10 @@
     <delete id="deleteOnlineById" parameterType="String">
         delete from sys_user_online where sessionId = #{sessionId}
     </delete>
+    <select id="findUserOnlineBySessionId" parameterType="String" resultType="com.small.system.domain.SysUserOnline">
+        <include refid="sys_userOnline"></include>
+        from sys_user_online
+        WHERE sessionId = #{sessionId}
+    </select>
+    <select id="count" resultType="Integer" parameterType="com.small.system.query.SysUserOnlineQuery"></select>
 </mapper>
