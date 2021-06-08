@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.small.system.mapper.SysDepartmentMapper">
+    <sql id="commonSelectSql">
+         SELECT
+            dept.dept_id departmentId,
+            dept.parent_id parentId,
+            dept.ancestors ancestors,
+            dept.dept_name departmentName,
+            dept.order_num orderNum,
+            dept.leader leader,
+            dept.phone phone,
+            dept.email email,
+            dept.status status,
+            dept.del_flag delFlag,
+            dept.create_by  createBy,
+            dept.create_time createTime,
+            dept.update_by updateBy,
+            dept.update_time updateTime,
+            dept.isParent isParent
+        FROM
+            sys_dept dept
+    </sql>
+    <select id="find" resultType="com.small.system.domain.SysDepartment" parameterType="com.small.system.query.SysDepartmentQuery">
+        <include refid="commonSelectSql"></include>
+        <where>
+            <if test="deptStatus != null">
+                dept.status = #{deptStatus}
+            </if>
+            <if test="deptName != null and deptName != ''">
+               and dept.dept_name like CONCAT('%',${deptName},'%')
+            </if>
+        </where>
+    </select>
+    <select id="save" parameterType="com.small.system.domain.SysDepartment">
+
+    </select>
+    <select id="count" resultType="Integer" parameterType="com.small.system.query.SysDepartmentQuery"></select>
+    <select id="dynamicGetDeptByPId" parameterType="com.small.system.query.SysDepartmentQuery" resultType="com.small.system.domain.SysDepartment">
+       <include refid="commonSelectSql"></include>
+        <if test="userId!=1">
+            Inner join sys_role_dept srd on srd.dept_id = dept.dept_id
+            Inner join sys_role role on role.role_id = srd.role_id
+            Inner join sys_role_user sur on sur.role_id = role.role_id
+        </if>
+        WHERE
+        <if test="parentId!=0">
+            dept.parent_id=#{parentId}
+        </if>
+        <if test="parentId==0">
+            (dept.parent_id = 0  or dept.parent_id=(select dept_id from sys_dept where parent_id= 0))
+        </if>
+        <if test="userId != 1">
+            and sur.user_id = #{userId}
+        </if>
+    </select>
+</mapper>

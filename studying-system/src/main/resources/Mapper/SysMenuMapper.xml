@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.small.system.mapper.SysMenuMapper">
+    <sql id="menuList">
+        SELECT
+            menu.menu_id menuId,menu.menu_name menuName,menu.parent_id parentId,
+            menu.order_num orderNum, menu.url url,menu.target target,
+            menu.menu_type menuType, menu.visible visible,menu.perms perms,
+            menu.icon icon,menu.create_by createBy,menu.create_time createTime,
+            menu.update_by updateBy,menu.update_time updateTime
+        FROM
+            sys_menu menu
+    </sql>
+    <select id="find" parameterType="com.small.system.query.SysMenuQuery" resultType="com.small.system.domain.SysMenu">
+        <include refid="menuList"></include>
+        <if test="userId != null and userId != 0">
+            LEFT JOIN sys_role_menu srm on menu.menu_id = srm.menu_id
+            LEFT JOIN sys_role_user sru on srm.role_id = sru.role_id
+        </if>
+        <where>
+            <if test="visible != null">
+                visible = #{visible}
+            </if>
+             <if test="operation != null and operation == 0">
+                 AND menu_type != 'M'
+             </if>
+            <if test="operation != null and operation == 1">
+                AND menu_type != 'F'
+            </if>
+            <if test="userId != null and userId!=0">
+               and sru.user_id = #{userId}
+            </if>
+            <if test="menuName != null and menuName != ''">
+                and menu.menu_name like concat('%',#{menuName},'%')
+            </if>
+        </where>
+        order by menu.parent_id,menu.order_num
+    </select>
+    <select id="count" parameterType="com.small.system.query.SysMenuQuery" resultType="Integer"></select>
+    <insert id="save" parameterType="com.small.system.domain.SysMenu">
+
+    </insert>
+    <select id="menusZtree" resultType="com.small.system.domain.SysMenu">
+        <include refid="menuList"></include>
+    </select>
+</mapper>

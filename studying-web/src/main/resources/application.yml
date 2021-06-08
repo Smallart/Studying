@@ -5,6 +5,8 @@ spring:
     mode: HTML
     encoding: UTF-8
     cache: false
+  profiles:
+    active: druid
 # 验证码
 captcha:
   #  验证码宽度
@@ -15,3 +17,41 @@ captcha:
   length: 4
   # 验证码种类： 1 gif 2 中文 3 中文gif 4 算术
   type: 1
+
+mybatis:
+  type-aliases-package: com.small.*.doamin,com.small.*.query
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  configuration:
+    cache-enabled: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+# shiro设置参数
+shiro:
+  user:
+    loginUrl: /sysLogin/login
+    unauthorizedUrl: /unauth
+    indexUrl: /index
+  session:
+    #同步session到数据库中（默认2分钟）
+    dbSyncPeriod: 2
+    # Session的超时时间，-1代表用户过期（默认30分钟）
+    expireTime: 30
+    # Session自查有效性 10分钟一次
+    validationInterval: 10
+  cookie:
+    # 设置Cookie的域名 默认为空 表示当前访问的域名
+    domain:
+    # 设置Cookie的有效访问路径
+    path: /
+    # 设置HttpOnly
+    httpOnly: true
+    # 设置Cookie的过期时间，天为单位
+    maxAge: 30
+    # 设置密钥，务必保持唯一性（生成方式，直接拷贝到main运行即可）KeyGenerator keygen = KeyGenerator.getInstance("AES"); SecretKey deskey = keygen.generateKey(); System.out.println(Base64.encodeToString(deskey.getEncoded()));
+    cipherKey: zSyK5Kp6PZAAjlT+eeNMlg==
+
+# user设置参数
+user:
+  password:
+    # 最大尝试次数
+    maxRetryCount: 10000

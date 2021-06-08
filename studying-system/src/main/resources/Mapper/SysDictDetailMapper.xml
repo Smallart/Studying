@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.small.system.mapper.SysDictDetailMapper">
+    <select id="find" parameterType="com.small.system.query.SysDictDetailQuery" resultType="com.small.system.domain.SysDictDetail">
+        SELECT
+            sdd.dict_code dictCode,
+            sdd.dict_sort dictSort,
+            sdd.dict_label dictLabel,
+            sdd.dict_value dictValue,
+            sdd.dict_type dictType,
+            sdd.is_default isDefault,
+            sdd.status dictDetailStatus,
+            sdd.create_by createBy,
+            sdd.create_time createTime,
+            sdd.update_by updateBy,
+            sdd.update_time updateTime,
+            sdd.remark remark
+        FROM
+            sys_dict_data sdd
+        <where>
+            <if test="dictType != null and dictType != ''">
+                sdd.dict_type = #{dictType}
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                and sdd.dict_label like concat('%',#{dictLabel},'%')
+            </if>
+             <if test="dictDetailStatus != null">
+                 and sdd.status = #{dictDetailStatus}
+             </if>
+        </where>
+        <if test="order == null or order == ''">
+            order by sdd.dict_code
+        </if>
+        <if test="offset != null and offset != 0">
+            limit #{limit},#{offset}
+        </if>
+    </select>
+    <select id="count" parameterType="com.small.system.query.SysDictDetailQuery" resultType="Integer">
+        SELECT
+            count(*)
+        FROM
+        sys_dict_data sdd
+        <where>
+            <if test="dictType != null and dictType != ''">
+                sdd.dict_type = #{dictType}
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                and sdd.dict_label like concat('%',#{dictLabel},'%')
+            </if>
+            <if test="dictDetailStatus != null">
+                and sdd.status = #{dictDetailStatus}
+            </if>
+        </where>
+    </select>
+    <insert id="save" parameterType="com.small.system.domain.SysDictDetail"></insert>
+</mapper>

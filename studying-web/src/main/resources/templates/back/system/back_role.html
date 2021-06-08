@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('角色管理')"></th:block>
+    <link rel="stylesheet" th:href="@{/system/back/system/css/back_user.css}">
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <div class="layui-panel">
+                <form class="layui-form menu-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">角色名称：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="roleName" autocomplete="off" class="layui-input">
+                        </div>
+                        <label class="layui-form-label">权限字符：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="roleKey" autocomplete="off" class="layui-input">
+                        </div>
+                        <label class="layui-form-label">角色状态：</label>
+                        <div class="layui-input-inline">
+                            <select name="roleStatus">
+                                <option value="">所有</option>
+                                <option value="0">正常</option>
+                                <option value="1">停用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="margin-bottom: 0px">
+                        <label class="layui-form-label">创建时间：</label>
+                        <div class="layui-input-inline dateTimeWidth">
+                            <input type="text" name="preTime" class="layui-input" placeholder="开始时间" id="create-start-time">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline dateTimeWidth">
+                            <input type="text" name="nextTime" class="layui-input" placeholder="结束时间" id="create-end-time">
+                        </div>
+                        <div class="layui-btn-container">
+                            <button class="layui-btn" type="button">
+                                <i class="layui-icon layui-icon-search"></i>
+                                搜索
+                            </button>
+                            <button class="layui-btn layui-btn-warm" type="button">
+                                <i class="layui-icon layui-icon-refresh"></i>
+                                重置
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="layui-row">
+            <div class="layui-panel">
+                <div class="menu-table">
+                    <div class="layui-btn-container">
+                        <button class="layui-btn layui-btn-sm" type="button" studying-event="add">
+                            <i class="layui-icon layui-icon-addition"></i>
+                            新增
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-warm layui-btn-disabled" type="button">
+                            <i class="layui-icon layui-icon-edit"></i>
+                            修改
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger" type="button">
+                            <i class="layui-icon layui-icon-delete"></i>
+                            删除
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-warm" type="button">
+                            <i class="layui-icon layui-icon-download-circle"></i>
+                            导出
+                        </button>
+                    </div>
+                    <table id="roleTable" lay-filter="roleTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/html" id="barOperator">
+        <button type="button" class="layui-btn layui-btn-xs barOperatorStyle">编辑</button>
+        <button type="button" class="layui-btn layui-btn-danger layui-btn-xs barOperatorStyle">删除</button>
+        <div class="btn-box">
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal barOperatorStyle">更多操作</button>
+            <div class="layui-btn-container more-operate">
+                <button type="button" class="layui-btn layui-btn-xs">数据权限</button>
+                <button type="button" class="layui-btn layui-btn-xs">分配用户</button>
+            </div>
+        </div>
+    </script>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_role.js}"></script>
+</body>
+</html>

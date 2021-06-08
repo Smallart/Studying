@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('菜单管理')"></th:block>
+    <style type="text/css">
+        .layui-btn-sm{
+            line-height: 28px;
+        }
+    </style>
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <div class="layui-panel">
+                <form class="layui-form menu-form">
+                    <div class="layui-form-item" style="margin-bottom: 0px">
+                        <label class="layui-form-label">菜单名称：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="" autocomplete="off" class="layui-input">
+                        </div>
+                        <label class="layui-form-label">菜单状态：</label>
+                        <div class="layui-input-inline">
+                            <select name="menuStatus">
+                                <option value=""></option>
+                                <option value="0">显示</option>
+                                <option value="1">隐藏</option>
+                            </select>
+                        </div>
+                        <div class="layui-btn-container">
+                            <button class="layui-btn" type="button">
+                                <i class="layui-icon layui-icon-search"></i>
+                                搜索
+                            </button>
+                            <button class="layui-btn layui-btn-warm" type="button">
+                                <i class="layui-icon layui-icon-refresh"></i>
+                                重置
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="layui-row">
+            <div class="layui-panel">
+                <div class="menu-table">
+                    <div class="layui-btn-container">
+                        <button class="layui-btn layui-btn-sm" type="button" studying-event="add">
+                            <i class="layui-icon layui-icon-addition"></i>
+                            新增
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-warm layui-btn-disabled" type="button">
+                            <i class="layui-icon layui-icon-edit"></i>
+                            修改
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-warm" type="button">
+                            <i class="layui-icon layui-icon-senior"></i>
+                            展开/折叠
+                        </button>
+                    </div>
+                    <table id="menuTable" lay-filter="menuTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/html" id="operatorButtons">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="add">新增</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+    </script>
+    <script type="text/html" id="menuType">
+        <a class="layui-btn layui-btn-radius layui-btn-xs {{d.menuType=='M'?'':d.menuType=='C'?'layui-btn-normal':'layui-btn-warm'}}">{{d.menuType=="M"?"目录":d.menuType=="C"?"菜单":"按钮"}}</a>
+    </script>
+    <script type="text/html" id="visible">
+        <a class="layui-btn layui-btn-primary layui-btn-xs {{d.visible== 0?'layui-border-blue':'layui-border-red'}}">{{d.visible==0?"可见":"不可见"}}</a>
+    </script>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_menu.js}"></script>
+</body>
+</html>

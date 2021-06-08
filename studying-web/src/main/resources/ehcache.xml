@@ -1,0 +1,32 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false" monitoring="autodetect" dynamicConfig="true" name="studying">
+    <!--
+        timeToLive：不管使用与否，元素在缓存中存活的时间 0表示永久
+        timeToIdle：当元素在缓存中不被访问时能够存活时间
+    -->
+    <!-- 默认缓存 -->
+    <defaultCache
+        maxEntriesLocalHeap = "1000"
+        eternal="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="3600"
+        overflowToDisk="false">
+    </defaultCache>
+    <!-- 会话缓存 -->
+    <cache name="shiro-sessionCache"
+           maxEntriesLocalHeap="10000"
+           overflowToDisk = "false"
+           eternal="false"
+           diskPersistent="false"
+           timeToLiveSeconds="0"
+            timeToIdleSeconds="0"
+            statistics="false">
+    </cache>
+    <cache name="loginRecordCache"
+           maxEntriesLocalHeap="2000"
+           overflowToDisk = "false"
+           eternal="false"
+           timeToLiveSeconds="0"
+           timeToIdleSeconds="600"
+           statistics="false">
+    </cache>
+</ehcache>

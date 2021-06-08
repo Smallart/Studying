@@ -3,6 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <project-verison>1.0-SNAPSHOT</project-verison>
+        <spring-version>2.4.3</spring-version>
+        <mysql.version>8.0.22</mysql.version>
+        <mybatis-version>2.1.4</mybatis-version>
+        <lombok-version>1.18.20</lombok-version>
+        <java.version>11</java.version>
+        <shiro-version>1.7.0</shiro-version>
+        <captcha-version>1.6.2</captcha-version>
+        <servlet-api.version>4.0.1</servlet-api.version>
+        <commons.io.version>2.5</commons.io.version>
+        <userAgent.version>1.21</userAgent.version>
+        <druid.version>1.2.2</druid.version>
+        <commons-lang3.version>3.8.1</commons-lang3.version>
+        <fastjson.version>1.2.74</fastjson.version>
+        <jackson.core>2.10.1</jackson.core>
+        <thymeleaf-shiro>2.0.0</thymeleaf-shiro>
+    </properties>
     <modules>
         <module>studying-web</module>
         <module>studying-frame</module>
@@ -11,48 +29,49 @@
     </modules>
     <groupId>com.small</groupId>
     <artifactId>studying</artifactId>
-    <version>${project-verison}</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>This is the Super POM of the project</description>
 
-    <properties>
-        <project-verison>1.0-SNAPSHOT</project-verison>
-        <spring-version>2.4.3</spring-version>
-        <mybatis-version>2.1.4</mybatis-version>
-        <lombok-version>1.18.20</lombok-version>
-        <java.version>11</java.version>
-        <shiro-version>1.7.0</shiro-version>
-        <captcha-version>1.6.2</captcha-version>
-    </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- shiro-ehcache依赖  -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-ehcache</artifactId>
+                <version>${shiro-version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jdbc</artifactId>
                 <version>${spring-version}</version>
             </dependency>
+            <!-- springboot 引入 thymeleaf -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
                 <version>${spring-version}</version>
             </dependency>
+            <!-- springboot web start -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring-version}</version>
             </dependency>
+            <!-- springboot start -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis-version}</version>
             </dependency>
+            <!-- mySql -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>${spring-version}</version>
-                <scope>runtime</scope>
+                <version>${mysql.version}</version>
             </dependency>
+            <!-- lomback -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -71,10 +90,76 @@
                 <artifactId>shiro-spring</artifactId>
                 <version>${shiro-version}</version>
             </dependency>
+            <!-- 验证码 -->
             <dependency>
                 <groupId>com.github.whvcse</groupId>
                 <artifactId>easy-captcha</artifactId>
                 <version>${captcha-version}</version>
+            </dependency>
+            <!-- servlet-api -->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${servlet-api.version}</version>
+            </dependency>
+            <!--  其他组件 -->
+            <dependency>
+                <groupId>com.small</groupId>
+                <artifactId>studying-common</artifactId>
+                <version>${project-verison}</version>
+            </dependency>
+            <!-- system-frame -->
+            <dependency>
+                <groupId>com.small</groupId>
+                <artifactId>studying-frame</artifactId>
+                <version>${project-verison}</version>
+            </dependency>
+            <!-- studying-system -->
+            <dependency>
+                <groupId>com.small</groupId>
+                <artifactId>studying-system</artifactId>
+                <version>${project-verison}</version>
+            </dependency>
+            <!--io常用工具类 -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+            <!-- 获取请求的相关信息 -->
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${userAgent.version}</version>
+            </dependency>
+            <!-- druid线程池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!-- 常见工具类 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <!-- 阿里JSON解析器 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.core}</version>
+            </dependency>
+            <!--  thymeleaf于shiro的依赖 -->
+            <dependency>
+                <groupId>com.github.theborakompanioni</groupId>
+                <artifactId>thymeleaf-extras-shiro</artifactId>
+                <version>${thymeleaf-shiro}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -96,5 +181,16 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5</version>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
  </project>

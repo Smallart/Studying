@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.small.system.mapper.SysUserMapper">
+    <select id="find" parameterType="com.small.system.query.SysUserQuery" resultType="com.small.common.base.enitity.SysUser">
+        SELECT
+            u.user_id userId,
+            u.user_name userName,
+            u.login_name loginName,
+            u.user_type userType,
+            u.sex sex,
+            u.avatar avatar,
+            u.status status,
+            u.del_flag delFlag,
+            u.email email,
+            u.phone iphone,
+            dept.dept_name deptName,
+            DATE_FORMAT( u.create_time,'%Y-%m-%d') createTime
+        FROM
+            sys_user u
+        LEFT JOIN sys_dept dept on u.dept_id = dept.dept_id
+        <where>
+            <if test="userStatus != null">
+                u.status = #{userStatus}
+            </if>
+            <if test="createStartTime != null">
+                and <![CDATA[DATE_FORMAT(u.create_time,'%Y-%m-%d')>= DATE_FORMAT(#{createStartTime},'%Y-%m-%d')]]>
+            </if>
+            <if test="createEndTime != null">
+                and <![CDATA[DATE_FORMAT(u.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createEndTime},'%Y-%m-%d')]]>
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and u.login_name like CONCAT('%',#{loginName},'%')
+            </if>
+            <if test="iphone != null and iphone != ''">
+                and u.phone like CONCAT('%',#{iphone},'%')
+            </if>
+        </where>
+                <if test="order == null">
+                    order by u.user_id asc
+                </if>
+                <if test="order != null and order != '' and orderStrategy != null and orderStrategy != ''">
+                    order by #{order}  #{orderStrategy}
+                </if>
+              <if test="offset != null and offset != 0">
+                  limit #{limit},#{offset}
+              </if>
+    </select>
+    <insert id="save"></insert>
+    <select id="findUserByLoginName" parameterType="String" resultType="com.small.common.base.enitity.SysUser">
+        SELECT
+            user_id userId,
+            user_name userName,
+            create_time createTime,
+            create_by createBy,
+            update_time updateTime,
+            update_by updateBy,
+            login_name loginName,
+            user_type userType,
+            email email,
+            phone iphone,
+            sex sex,
+            avatar avatar,
+            PASSWORD password,
+            salt salt,
+            STATUS status,
+            del_flag delFlag,
+            login_ip loginIp,
+            login_date loginDate,
+            pwd_update_time pwdUpdateTime
+        from
+            sys_user
+        where
+            login_name = #{loginName}
+    </select>
+    <select id="count" parameterType="com.small.system.query.SysUserQuery" resultType="Integer">
+        SELECT
+            count(*)
+        FROM
+        sys_user u
+        LEFT JOIN sys_dept dept on u.dept_id = dept.dept_id
+        <where>
+            <if test="userStatus != null">
+                u.status = #{userStatus}
+            </if>
+            <if test="createStartTime != null">
+                and <![CDATA[DATE_FORMAT(u.create_time,'%Y-%m-%d')>= DATE_FORMAT(#{createStartTime},'%Y-%m-%d')]]>
+            </if>
+            <if test="createEndTime != null">
+                and <![CDATA[DATE_FORMAT(u.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createEndTime},'%Y-%m-%d')]]>
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and u.login_name like CONCAT('%',#{loginName},'%')
+            </if>
+            <if test="iphone != null and iphone != ''">
+                and u.phone like CONCAT('%',#{iphone},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

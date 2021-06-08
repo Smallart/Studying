@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="component::header('后台页面')"></th:block>
+    <link rel="stylesheet" th:href="@{/system/back/index/css/back_index.css}">
+</head>
+<body class="layui-layout-body">
+    <div id="LAY_app">
+        <div class="layui-layout layui-layout-admin">
+            <!-- 头部区域 -->
+            <div class="layui-header">
+                <ul class="layui-nav layui-layout-left">
+                    <li class="layui-nav-item" lay-unselect studying-event="flexible">
+                        <a href="javascript:void(0);" title="侧边伸缩">
+                            <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item  layui-hide-xs" lay-unselect>
+                        <a th:href="@{/sysLogin/index}" title="前台" target="_blank">
+                            <i class="layui-icon layui-icon-website"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect studying-event="refresh">
+                        <a href="javascript:void(0);" title="刷新">
+                            <i class="layui-icon layui-icon-refresh-3"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="layui-nav layui-layout-right">
+                    <li class="layui-nav-item  layui-hide-xs" lay-unselect>
+                        <a href="javascript:void(0);" layadmin-event="theme">
+                            <i class="layui-icon layui-icon-theme"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:void(0);" layadmin-event="note">
+                            <i class="layui-icon layui-icon-note"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item layui-hide-xs" studying-event="fullscreen" lay-unselect>
+                        <a href="javascript:void(0);">
+                            <i class="layui-icon layui-icon-screen-full"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:void(0)">
+                            <cite>Dream</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="">基本资料</a>
+                            </dd>
+                            <dd>
+                                <a href="">修改密码</a>
+                            </dd>
+                            <hr/>
+                            <dd style="text-align: center;"><a href="/logout">退出</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <!-- 侧边菜单 -->
+            <div class="layui-side layui-side-menu">
+                <div class="layui-side-scroll">
+                    <div class="logo">
+                        <span>Studying</span>
+                    </div>
+                    <ul class="layui-nav layui-nav-tree" lay-filter="menuFilter" id="LAY-system-side-menu">
+                        <li data-name="home" class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+                                <i class="layui-icon layui-icon-home"></i>
+                                <cite>主页</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd data-name="console" class="layui-this">
+                                    <a lay-href="home/console.html">控制台</a>
+                                </dd>
+                                <dd data-name="console">
+                                    <a href="javascript:void(0);">主页1</a>
+                                    <dl class="layui-nav-child">
+                                        <dd data-name="list">
+                                            <a href="javascript:void(0)">列表</a>
+                                            <dl class="layui-nav-child">
+                                                <dd data-name="mobile">
+                                                    <a lay-href="component/co/list.html">等比例列表排序</a>
+                                                </dd>
+                                            </dl>
+                                        </dd>
+                                    </dl>
+                                </dd>
+                                <dd data-name="console">
+                                    <a lay-href="/grid/list.html">主页二</a>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 页面标签 -->
+            <div class="layadmin-pagetabs" id="LAY_app_tabs">
+                <div class="layui-icon layadmin-tabs-control layui-icon-prev" studying-event="leftPage">
+                </div>
+                <div class="layui-icon layadmin-tabs-control layui-icon-next" studying-event="rightPage">
+                </div>
+                <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                    <ul class="layui-nav layadmin-tabs-selected">
+                        <li class="layui-nav-item" lay-unselect>
+                            <a href="javascript:void(0)"></a>
+                            <dl class="layui-nav-child layui-anim-fadein">
+                                <dd studying-event="closeThisTab" lay-unselect><a href="javascript:void(0);">关闭当前标签页</a></dd>
+                                <dd studying-event="closeOtherTabs" lay-unselect><a href="javascript:void(0);">关闭其它标签页</a></dd>
+                                <dd studying-event="closeAllTabs" lay-unselect><a href="javascript:void(0);">关闭全部标签页</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-tab"  lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+                    <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                        <li class="layui-this" lay-id="component/grid/list.html">
+                            <i class="layui-icon layui-icon-home"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 主体内容 -->
+            <div class="layui-body" id="LAY_app_body">
+                <div class="layadmin-tabsbody-item layui-show">
+                    <iframe th:src="@{/sysLogin/backMain}" frameborder="0" class="layadmin-iframe"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/index/js/back_index.js}"></script>
+</body>
+</html>

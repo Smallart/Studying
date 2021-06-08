@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('字典管理')"></th:block>
+    <style>
+        a.dictType{
+            color: rgb(0,0,238);
+        }
+    </style>
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <div class="layui-panel">
+                <form class="layui-form menu-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">字典名称：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="dictTypeName" autocomplete="off" class="layui-input">
+                        </div>
+                        <label class="layui-form-label">字典类型：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="dictTypeCode" autocomplete="off" class="layui-input">
+                        </div>
+                        <label class="layui-form-label">字典状态：</label>
+                        <div class="layui-input-inline">
+                            <select name="dictTypeStatus">
+                                <option value="">所有</option>
+                                <option value="0">正常</option>
+                                <option value="1">停用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="margin-bottom: 0px">
+                        <label class="layui-form-label">创建时间：</label>
+                        <div class="layui-input-inline dateTimeWidth">
+                            <input type="text" name="preTime" class="layui-input" placeholder="开始时间" id="create-start-time">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline dateTimeWidth">
+                            <input type="text" name="nextTime" class="layui-input" placeholder="结束时间" id="create-end-time">
+                        </div>
+                        <div class="layui-btn-container">
+                            <button class="layui-btn" type="button">
+                                <i class="layui-icon layui-icon-search"></i>
+                                搜索
+                            </button>
+                            <button class="layui-btn layui-btn-warm" type="button">
+                                <i class="layui-icon layui-icon-refresh"></i>
+                                重置
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="layui-row">
+            <div class="layui-panel">
+                <div class="menu-table">
+                    <div class="layui-btn-container">
+                        <button class="layui-btn layui-btn-sm" type="button" studying-event="add">
+                            <i class="layui-icon layui-icon-addition"></i>
+                            新增
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-normal layui-btn-disabled" type="button" studying-event="edit">
+                            <i class="layui-icon layui-icon-edit"></i>
+                            修改
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled" type="button">
+                            <i class="layui-icon layui-icon-delete"></i>
+                            删除
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-warm" type="button">
+                            <i class="layui-icon layui-icon-down"></i>
+                            导出
+                        </button>
+                        <button class="layui-btn layui-btn-sm layui-btn-danger" type="button">
+                            <i class="layui-icon layui-icon-refresh"></i>
+                            清除缓存
+                        </button>
+                    </div>
+                    <table id="dictTypeTable" lay-filter="dictTypeTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/html" id="operatorButtons">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="add">新增</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+    </script>
+    <script type="text/html" id="deptStatus">
+        <a class="layui-btn layui-btn-radius layui-btn-xs {{d.status=='0'?'':'layui-btn-warm'}}">{{d.status==0?'正常':'停用'}}</a>
+    </script>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_dictType.js}"></script>
+</body>
+</html>

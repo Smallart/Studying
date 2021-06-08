@@ -1,0 +1,32 @@
+.layui-form-item .layui-input-inline{
+    width: 150px;
+    left: -30px;
+}
+.searchBtn{
+    position: absolute;
+    left: 160px;
+    top: 0;
+    height: 38px;
+}
+.tree-head{
+    position: relative;
+}
+#searchToggle{
+    position: absolute;
+    top: -18px;
+    right: 0;
+    cursor: pointer;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+.tree-body{
+    position: relative;
+}
+#treeController{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.user-menu{
+    transition: all 1s ease-out;
+}

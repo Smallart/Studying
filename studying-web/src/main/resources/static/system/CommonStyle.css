@@ -12,3 +12,32 @@ li {
     font-family: electronicFont;
     src: url("font/DS-DIGIT.TTF");
 }
+div.layui-fluid{
+    padding: 15px;
+}
+html{
+    background-color: #f2f2f2;
+}
+.layui-form-label{
+    width: auto;
+}
+.menu-form{
+    margin: 10px 10px 0 10px;
+}
+.layui-row{
+    margin-bottom: 10px;
+}
+.menu-table{
+    margin: 10px 25px;
+}
+.star{
+    color: red;
+}
+.layui-form-switch{
+    height: 24px;
+    line-height: 24px;
+}
+.addForm{
+    max-width: 500px;
+    margin: 0 auto;
+}

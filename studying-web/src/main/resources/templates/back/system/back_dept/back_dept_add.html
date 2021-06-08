@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('添加部门')"></th:block>
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-col-space12">
+        <form class="layui-form addForm" lay-filter="deptForm">
+            <div class="layui-form-item">
+                <label class="layui-form-label">上级部门：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="superDept" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="star">*</span>部门名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="star">*</span>显示排序：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">负责人：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">联系电话：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="" autocomplete="off" class="layui-input" lay-verify="required">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">部门状态：</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="deptStatus" value="" title="显示">
+                    <input type="radio" name="deptStatus" value="" title="隐藏">
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_dept/back_dept_add.js}"></script>
+</body>
+</html>
