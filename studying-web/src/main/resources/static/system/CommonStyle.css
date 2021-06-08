@@ -30,3 +30,14 @@ html{
 .menu-table{
     margin: 10px 25px;
 }
+.star{
+    color: red;
+}
+.layui-form-switch{
+    height: 24px;
+    line-height: 24px;
+}
+.addForm{
+    max-width: 500px;
+    margin: 0 auto;
+}

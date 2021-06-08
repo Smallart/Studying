@@ -2,12 +2,11 @@ layui.config({
     base: '/expandjs/'
 }).extend({
     JqueryLayout: 'layout/jquery-layout',
-    JqueryZtree: 'ztree/jquery-ztree'
-}).use(['JqueryLayout','JqueryZtree','laydate','table','form'],function () {
+    JqueryZtree: 'ztree/jquery-ztree',
+    studyingPageCommon: 'studyingpagecommon/studyingPageCommon'
+}).use(['JqueryLayout','JqueryZtree','studyingPageCommon'],function () {
     let $ = layui.JqueryZtree,
-        laydate = layui.laydate,
-        table = layui.table,
-        form = layui.form,
+        studyingPageCommon = layui.studyingPageCommon,
         layout_config = {
             togglerTip_closed: "打开公司面板",
             togglerTip_open: "收起公司面板"
@@ -56,7 +55,6 @@ layui.config({
                 let checkedData = table.checkStatus('userTable');
                 let ids = checkedData.data.map(item=>item.userId).join(',');
                 console.log(ids);
-                fetch('')
             },
             add:function () {
                 //todo 去了解下 top是个啥
@@ -73,8 +71,7 @@ layui.config({
 
     function init(){
         initTree();
-        initDate();
-        initTable();
+        initDateAndTable();
     }
     //初始化组织树
     function initTree(){
@@ -83,96 +80,52 @@ layui.config({
         });
     }
     //初始化日期
-    function initDate(){
-       let startTime = laydate.render({
-            elem: '#create-start-time',
-            type: 'datetime',
-            form: 'yyyy-MM-dd HH:mm:ss',
-            done:function (value,dates,endDate) {
-                endTime.config.min = {
-                    year: dates.year,
-                    month: dates.month - 1,
-                    date: dates.date
-                };
-            }
-        });
-        let endTime = laydate.render({
-            elem: '#create-end-time',
-            type: 'datetime',
-            form: 'yyyy-MM-dd HH:mm:ss',
-            done:function (value,dates,endDate) {
-                startTime.config.max = {
-                    year: dates.year,
-                    month: dates.month - 1,
-                    date: dates.date
-                };
-            }
-        });
-    }
-    //初始化table
-    function initTable(){
-        table.render({
-            elem:'#userTable',
-            height: 'full-260',
-            url:'/system/user/find',
-            request:{
-                pageName: 'limit',
-                limitName: 'offset'
-            },
-            page: true,
-            skin: 'line',
-            cols:[[
-                {type:'checkbox',fixed:'left'},
-                {field:'userId',title:'Id',align:'center'},
-                {field:'loginName',title:'登录名称',sort:true,align: 'center',width: 100},
-                {field:'userName',title:'用户名称',align:'center',width:100},
-                {field:'deptName',title:'部门',align:'center',width:120},
-                {field:'iphone',title:'手机',align:'center',width:130},
-                {title:'用户状态',align:'center',width:100,templet:function (res) {
-                    return `<input type="checkbox" lay-skin="switch" lay-text="正常|停用" ${res.status==0?'checked':''}>`;
-                }},
-                {title:'创建时间',align:'center',sort:true,width:120,templet:"<div>{{layui.util.toDateString(d.createTime,'yyyy-MM-dd')}}</div>"},
-                {title:'操作',fixed:'right',align:'center',toolbar:'#barOperator',width:250},
-            ]],
-            parseData:function (res) {
-                return{
-                    "code":res.code,
-                    "msg":res.msg,
-                    "count":res.data.total,
-                    "data": res.data.data
-                }
-            },
-            done:function () {
-                $('.btn-box').on('mouseenter mouseleave',function (event) {
-                    if (event.type=='mouseenter'){
-                        $(this).find('.more-operate').show();
-                    }else if (event.type == 'mouseleave'){
-                        $(this).find('.more-operate').hide();
-                    }
-                });
-            }
-        });
+    function initDateAndTable(){
+       studyingPageCommon.render({table:{
+               elem:'#userTable',
+               height: 'full-260',
+               url:'/system/user/find',
+               cols:[[
+                   {type:'checkbox',fixed:'left'},
+                   {field:'userId',title:'Id',align:'center'},
+                   {field:'loginName',title:'登录名称',sort:true,align: 'center',width: 110},
+                   {field:'userName',title:'用户名称',align:'center',width:100},
+                   {field:'deptName',title:'部门',align:'center',width:120},
+                   {field:'iphone',title:'手机',align:'center',width:130},
+                   {title:'用户状态',align:'center',width:100,templet:function (res) {
+                           return `<input type="checkbox" lay-skin="switch" lay-text="正常|停用" ${res.status==0?'checked':''}>`;
+                       }},
+                   {title:'创建时间',align:'center',sort:true,width:120,templet:"<div>{{layui.util.toDateString(d.createTime,'yyyy-MM-dd')}}</div>"},
+                   {title:'操作',fixed:'right',align:'center',toolbar:'#barOperator',width:250},
+               ]],
+               done:function () {
+                   $('.btn-box').on('mouseenter mouseleave',function (event) {
+                       if (event.type=='mouseenter'){
+                           $(this).find('.more-operate').show();
+                       }else if (event.type == 'mouseleave'){
+                           $(this).find('.more-operate').hide();
+                       }
+                   });
+               }
+           }});
     }
     //重新加载Table
     function renderTable(param){
-        table.reload('userTable',{
-            url:'/system/user/find',
-            where:param
-        });
+        studyingPageCommon.tableReload('userTable','/system/user/find',param);
     }
     // 提交
-    form.on('submit(*)',function (data) {
+    studyingPageCommon.on('form','submit(*)',function (data) {
         let param = {
-          'loginName': data.field.loginName,
-           'createStartTime': data.field.createStartTime,
-           'createEndTime' : data.field.createEndTime,
-           'userStatus': data.field.userStatus
+            'loginName': data.field.loginName,
+            'createStartTime': data.field.createStartTime,
+            'createEndTime' : data.field.createEndTime,
+            'userStatus': data.field.userStatus
         };
         renderTable(param);
         return false;
     });
-
-    table.on('checkbox(userTable)',function (obj) {
+    // 绑定table 复选框事件
+    studyingPageCommon.on('table','checkbox(userTable)',function (obj) {
         let checkStatus = table.checkStatus('userTable');
         let edit =  $('#edit');
         let del = $('#del');

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.small.system.mapper.SysPostMapper">
+    <sql id="sysPost">
+        SELECT
+            post.post_id postId,
+            post.post_code postCode,
+            post.post_name postName,
+            post.post_sort postSort,
+            post.status status,
+            post.create_by createBy,
+            post.create_time createTime,
+            post.update_by updateBy,
+            post.update_time updateTime
+        FROM
+            sys_post post
+    </sql>
+    <select id="find" parameterType="com.small.system.query.SysPostQuery" resultType="com.small.system.domain.SysPost">
+        <include refid="sysPost"></include>
+        <where>
+            <if test="postStatus != null">
+                post.status = #{postStatus}
+            </if>
+            <if test="postCode != null and postCode != ''">
+                and post.post_code like CONCAT('%',#{postCode},'%')
+            </if>
+            <if test="postName != null and postName != ''">
+                and post.post_name like CONCAT('%',#{postName},'%')
+            </if>
+        </where>
+        <if test="order == null or order == ''">
+            order by #{order} desc
+        </if>
+         <if test="offset != null and offset != 0">
+             limit #{limit},#{offset}
+         </if>
+    </select>
+    <select id="count" parameterType="com.small.system.query.SysPostQuery" resultType="Integer">
+        SELECT
+            count(*)
+        FROM
+            sys_post post
+        <where>
+            <if test="postStatus != null">
+                post.status = #{postStatus}
+            </if>
+            <if test="postCode != null and postCode != ''">
+                and post.post_code like CONCAT('%',#{postCode},'%')
+            </if>
+            <if test="postName != null and postName != ''">
+                and post.post_name like CONCAT('%',#{postName},'%')
+            </if>
+        </where>
+    </select>
+    <insert id="save" parameterType="com.small.system.domain.SysPost"></insert>
+</mapper>

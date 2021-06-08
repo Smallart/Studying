@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * SysMenuService 实现
@@ -23,5 +24,10 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuQuery, S
     @PostConstruct
     public void init(){
         setDao(menuMapper);
+    }
+
+    @Override
+    public List<SysMenu> menusZtree() {
+        return menuMapper.menusZtree();
     }
 }

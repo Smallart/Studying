@@ -12,5 +12,58 @@
 <div th:fragment="commonJs">
     <script th:src="@{/layui/layui.js}"></script>
 </div>
+<!--role添加和删除的公共部分-->
+<div th:fragment="role">
+    <div class="layui-fluid">
+        <div class="layui-col-space12">
+            <form class="layui-form addForm" lay-filter="roleForm">
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="star">*</span>角色名称：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="star">*</span>权限字符：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input" lay-verify="required">
+                        <div class="layui-form-mid layui-word-aux">控制器中定义的权限字符，如：@RequiresRoles("")</div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="star">*</span>显示顺序：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态：</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="status" lay-skin="switch" lay-text="ON|OFF">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">复选框</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" name="like1[write]" lay-skin="primary" title="展开/折叠" checked="">
+                        <input type="checkbox" name="like1[read]" lay-skin="primary" title="全选/全不选">
+                        <input type="checkbox" name="like1[game]" lay-skin="primary" title="父子联动">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block menuTreeBorder">
+                        <ul class="ztree" id="menuTree"></ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 </html>

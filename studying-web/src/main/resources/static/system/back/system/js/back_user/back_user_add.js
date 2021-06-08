@@ -24,13 +24,18 @@ layui.config({
                   method: 'get',
                   url: '/system/user/checkRegisterName?loginName='+value,
                   success:function (res) {
-                      console.log(res);
+                      exist = res.data;
                   }
                });
            }
            if (exist){
              return "该登录账号已被注册";
            }
+        },
+        loginPassword:function (value,item) {
+            if (value.length<2||value.length>20){
+                return "密码的长度要在2到20之间";
+            }
         }
     });
     /**
@@ -47,6 +52,7 @@ layui.config({
                 // 获得子弹出框的树
                  let zTreeObj = layero.find('iframe')[0].contentWindow.layui.jquery.fn.zTree.getZTreeObj('companyTree');
                 let selectDept = zTreeObj.getSelectedNodes()[0];
+                $('input[name="dept"]').attr('dept-id',selectDept.departmentId);
                 form.val('userForm',{
                     "dept": selectDept.departmentName
                 });
@@ -59,4 +65,10 @@ layui.config({
         let methodName = $(this).attr('studying-event');
         methodName && events[methodName].call(this);
     })
+    /**
+     * 提交
+     */
+    form.on('submit(*)',function (obj) {
+        console.log(obj.field);
+    });
 });

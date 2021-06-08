@@ -51,6 +51,19 @@ public class SysUserController extends BaseController {
         return "/back/system/back_user/back_user_add_dept";
     }
 
+    /**
+     * 查询
+     * @param loginName
+     * @param iphone
+     * @param userStatus
+     * @param createStartTime
+     * @param createEndTime
+     * @param offset
+     * @param limit
+     * @param order
+     * @param orderStrategy
+     * @return
+     */
     @GetMapping("/user/find")
     @ResponseBody
     public ResponseResult find(@RequestParam(value = "loginName",required = false) String loginName,
@@ -75,9 +88,25 @@ public class SysUserController extends BaseController {
         return success("success",userWebService.find(sysUserQuery));
     }
 
+    /**
+     * 检查注册名称
+     * @param loginName
+     * @return
+     */
     @GetMapping("/user/checkRegisterName")
     @ResponseBody
     public ResponseResult checkRegisterName(@RequestParam("loginName")String loginName){
         return success("success",userWebService.checkRegisterName(loginName));
+    }
+
+    /**
+     * 保存用户信息
+     * @param userJson
+     * @return
+     */
+    @PostMapping("/user/save")
+    @ResponseBody
+    public ResponseResult save(@RequestBody String userJson){
+        return success();
     }
 }

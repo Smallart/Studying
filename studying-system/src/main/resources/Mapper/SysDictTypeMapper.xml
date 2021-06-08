@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.small.system.mapper.SysDictTypeMapper">
+    <select id="find" parameterType="com.small.system.query.SysDictTypeQuery" resultType="com.small.system.domain.SysDictType">
+        SELECT
+            sdt.dict_id dictId,
+            sdt.dict_name dictName,
+            sdt.dict_type dictType,
+            sdt.status status,
+            sdt.create_by createBy,
+            sdt.create_time createTime,
+            sdt.update_by updateBy,
+            sdt.update_time updateTime,
+            sdt.remark remark
+        FROM
+            sys_dict_type sdt
+        <where>
+            <if test="dictTypeStatus != null">
+                sdt.status = #{dictTypeStatus}
+            </if>
+            <if test="createStartDate != null">
+                <![CDATA[DATE_FORMAT(sdt.create_time,'%Y-%m-%d')>= DATE_FORMAT(#{createStartDate},'%Y-%m-%d')]]>
+            </if>
+            <if test="createEndDate != null">
+                <![CDATA[DATE_FORMAT(sdt.create_time,'%Y-%m-%d')<= DATE_FORMAT(#{createEndDate},'%Y-%m-%d')]]>
+            </if>
+            <if test="dictTypeName != null and dictTypeName != ''">
+                sdt.dict_name like concat('%',#{dictTypeName},'%')
+            </if>
+             <if test="dictTypeCode != null and dictTypeCode != ''">
+                 sdt.dict_type like concat('%',#{dictTypeCode},'%')
+             </if>
+        </where>
+           <if test="offset != null and offset != 0">
+               limit #{limit},#{offset}
+           </if>
+    </select>
+    <select id="count" resultType="integer" parameterType="com.small.system.query.SysDictTypeQuery">
+        SELECT
+            count(*)
+        FROM
+        sys_dict_type sdt
+        <where>
+            <if test="dictTypeStatus != null">
+                sdt.status = #{dictTypeStatus}
+            </if>
+            <if test="createStartDate != null">
+                <![CDATA[DATE_FORMAT(sdt.create_time,'%Y-%m-%d')>= DATE_FORMAT(#{createStartDate},'%Y-%m-%d')]]>
+            </if>
+            <if test="createEndDate != null">
+                <![CDATA[DATE_FORMAT(sdt.create_time,'%Y-%m-%d')<= DATE_FORMAT(#{createEndDate},'%Y-%m-%d')]]>
+            </if>
+            <if test="dictTypeName != null and dictTypeName != ''">
+                sdt.dict_name like concat('%',#{dictTypeName},'%')
+            </if>
+            <if test="dictTypeCode != null and dictTypeCode != ''">
+                sdt.dict_type like concat('%',#{dictTypeCode},'%')
+            </if>
+        </where>
+    </select>
+    <insert id="save" parameterType="com.small.system.domain.SysDictType">
+
+    </insert>
+</mapper>

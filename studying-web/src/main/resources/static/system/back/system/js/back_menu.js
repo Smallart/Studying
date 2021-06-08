@@ -2,9 +2,27 @@ layui.config({
     base: '/expandjs/'
 }).extend({
     treeTable: 'treeTable/treeTable'
-}).use(['form','treeTable'],function () {
+}).use(['jquery','form','treeTable'],function () {
     let form = layui.from,
-        treeTable = layui.treeTable;
+        treeTable = layui.treeTable,
+        $ = layui.jquery,
+        events={
+            add:function () {
+                layer.open({
+                    title: "添加菜单",
+                    type: 2,
+                    content: '/system/menu/add',
+                    area:['600px','600px'],
+                    btn:['确定','关闭'],
+                    yes:function (index,layero) {
+
+                    },
+                    btn2: function () {
+
+                    }
+                });
+            }
+        };
 
     let table = treeTable.render({
         elem: '#menuTable',
@@ -29,5 +47,10 @@ layui.config({
             {field:'perms',title:'权限标识',align:'center'},
             {title:'操作',align:'center',toolbar:'#operatorButtons',minWidth:120}
         ]]
+    });
+
+    $('body').on('click','*[studying-event]',function (event) {
+        let eventsName = $(this).attr('studying-event');
+        eventsName&&events[eventsName].call(this);
     });
 });

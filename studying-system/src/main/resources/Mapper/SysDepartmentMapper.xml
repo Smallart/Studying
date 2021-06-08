@@ -26,8 +26,11 @@
     <select id="find" resultType="com.small.system.domain.SysDepartment" parameterType="com.small.system.query.SysDepartmentQuery">
         <include refid="commonSelectSql"></include>
         <where>
+            <if test="deptStatus != null">
+                dept.status = #{deptStatus}
+            </if>
             <if test="deptName != null and deptName != ''">
-                dept.dept_name like CONCAT('%',${deptName},'%')
+               and dept.dept_name like CONCAT('%',${deptName},'%')
             </if>
         </where>
     </select>

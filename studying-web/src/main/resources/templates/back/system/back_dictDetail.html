@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('字典数据')"></th:block>
+    <style type="text/css">
+        .layui-form-item .layui-input-inline{
+            width: 170px;
+        }
+    </style>
+</head>
+<body>
+    <div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-panel">
+            <form class="layui-form menu-form">
+                <div class="layui-form-item" style="margin-bottom: 0px">
+                    <label class="layui-form-label">字典名称：</label>
+                    <div class="layui-input-inline">
+                        <select name="dictType">
+                            <option value="">用户性别</option>
+                            <option value="0">菜单状态</option>
+                            <option value="1">系统开关</option>
+                            <option value="2">任务状态</option>
+                            <option value="3">任务分组</option>
+                        </select>
+                    </div>
+                    <label class="layui-form-label">字典标签：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="dictLabel" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">字典状态：</label>
+                    <div class="layui-input-inline">
+                        <select name="dictDetailStatus">
+                            <option value="">所有</option>
+                            <option value="0">正常</option>
+                            <option value="1">停用</option>
+                        </select>
+                    </div>
+                    <div class="layui-btn-container">
+                        <button class="layui-btn" type="button" lay-submit lay-filter="*">
+                            <i class="layui-icon layui-icon-search"></i>
+                            搜索
+                        </button>
+                        <button class="layui-btn layui-btn-warm" type="button">
+                            <i class="layui-icon layui-icon-refresh"></i>
+                            重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-panel">
+            <div class="menu-table">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-sm" type="button" studying-event="add" th:dictType="${dictType}">
+                        <i class="layui-icon layui-icon-addition"></i>
+                        新增
+                    </button>
+                    <button class="layui-btn layui-btn-sm layui-btn-warm layui-btn-disabled" type="button">
+                        <i class="layui-icon layui-icon-edit"></i>
+                        修改
+                    </button>
+                    <button class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled" type="button">
+                        <i class="layui-icon layui-icon-delete"></i>
+                        删除
+                    </button>
+                    <button class="layui-btn layui-btn-sm layui-btn-warm" type="button">
+                        <i class="layui-icon layui-icon-down"></i>
+                        导出
+                    </button>
+                    <button class="layui-btn layui-btn-sm layui-btn-danger" type="button">
+                        <i class="layui-icon layui-icon-close-fill"></i>
+                        关闭
+                    </button>
+                </div>
+                <table id="dictDetailTable" lay-filter="dictDetailTable">
+                    <thead>
+                        <tr>
+                            <th lay-data="{type:'checkbox',fixed:'left'}"></th>
+                            <th lay-data="{field:'dictCode',title:'字典编码',align:'center'}"></th>
+                            <th lay-data="{field:'dictLabel',title:'字典标签',align: 'center',width: 110}"></th>
+                            <th lay-data="{field:'dictValue',title:'字典键值',align:'center'}"></th>
+                            <th lay-data="{field:'dictSort',title:'字典排序',align:'center'}"></th>
+                            <th lay-data="{field:'dictDetailStatus',title:'状态',align:'center',width:80}"></th>
+                            <th lay-data="{field:'remark',title:'备注',align:'center'}"></th>
+                            <th lay-data="{field:'createTime',title:'创建时间',align:'center',sort:true,width:170}"></th>
+                            <th lay-data="{title:'操作',fixed:'right',align:'center',toolbar:'#operatorButtons',width:140}"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="dictDetail:${dictDetails.data}">
+                            <td></td>
+                            <td th:text="${dictDetail.dictCode}"></td>
+                            <td th:text="${dictDetail.dictLabel}"></td>
+                            <td th:text="${dictDetail.dictValue}"></td>
+                            <td th:text="${dictDetail.dictSort}"></td>
+                            <td>
+                                <a th:class="'layui-btn layui-btn-radius layui-btn-xs'+((${dictDetail.dictDetailStatus}=='0')?'':'layui-btn-warm')" th:text="(${dictDetail.dictDetailStatus}=='0')?'正常':'异常'"></a>
+                            </td>
+                            <td th:text="${dictDetail.remark}"></td>
+                            <td th:text="${#dates.format(dictDetail.createTime,'yyyy:MM:dd HH:mm:ss')}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/html" id="operatorButtons">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+    </script>
+   <script type="text/html" id="status">
+       <a class="layui-btn layui-btn-radius layui-btn-xs {{d.dictDetailStatus=='0'?'':'layui-btn-warm'}}">{{d.dictDetailStatus==0?'正常':'停用'}}</a>
+    </script>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_dictDetail.js}"></script>
+</div>
+</body>
+</html>

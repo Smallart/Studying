@@ -22,4 +22,10 @@ public interface SysMenuWebService {
      * @return
      */
     List<SysMenu> find();
+
+    /**
+     * 查询menu树所需数据
+     * @return
+     */
+    List<SysMenu> menusZtree();
 }

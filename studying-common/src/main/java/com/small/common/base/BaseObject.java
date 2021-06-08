@@ -26,4 +26,9 @@ public class BaseObject {
      * 跟新者
      */
     private String updateBy;
+
+    /**
+     * 备注
+     */
+    private String remark;
 }

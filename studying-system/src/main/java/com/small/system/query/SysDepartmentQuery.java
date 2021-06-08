@@ -22,4 +22,9 @@ public class SysDepartmentQuery extends BaseQuery {
      * 组织名称
      */
     private String deptName;
+
+    /**
+     * 部门状态
+     */
+    private Integer deptStatus;
 }

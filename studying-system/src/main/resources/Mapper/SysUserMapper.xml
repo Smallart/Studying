@@ -25,10 +25,10 @@
                 u.status = #{userStatus}
             </if>
             <if test="createStartTime != null">
-                and <![CDATA[and DATE_FORMAT(su.create_time,'%Y-%m-%d')>= DATE_FORMAT(#{createStartTime},'%Y-%m-%d')]]>
+                and <![CDATA[DATE_FORMAT(u.create_time,'%Y-%m-%d')>= DATE_FORMAT(#{createStartTime},'%Y-%m-%d')]]>
             </if>
             <if test="createEndTime != null">
-                and <![CDATA[and DATE_FORMAT(su.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createEndTime},'%Y-%m-%d')]]>
+                and <![CDATA[DATE_FORMAT(u.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createEndTime},'%Y-%m-%d')]]>
             </if>
             <if test="loginName != null and loginName != ''">
                 and u.login_name like CONCAT('%',#{loginName},'%')
@@ -85,10 +85,10 @@
                 u.status = #{userStatus}
             </if>
             <if test="createStartTime != null">
-                and <![CDATA[and DATE_FORMAT(su.create_time,'%Y-%m-%d')>= DATE_FORMAT(#{createStartTime},'%Y-%m-%d')]]>
+                and <![CDATA[DATE_FORMAT(u.create_time,'%Y-%m-%d')>= DATE_FORMAT(#{createStartTime},'%Y-%m-%d')]]>
             </if>
             <if test="createEndTime != null">
-                and <![CDATA[and DATE_FORMAT(su.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createEndTime},'%Y-%m-%d')]]>
+                and <![CDATA[DATE_FORMAT(u.create_time,'%Y-%m-%d') <= DATE_FORMAT(#{createEndTime},'%Y-%m-%d')]]>
             </if>
             <if test="loginName != null and loginName != ''">
                 and u.login_name like CONCAT('%',#{loginName},'%')

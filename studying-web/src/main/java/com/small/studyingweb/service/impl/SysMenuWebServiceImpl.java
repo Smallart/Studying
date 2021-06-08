@@ -40,6 +40,17 @@ public class SysMenuWebServiceImpl implements SysMenuWebService {
         return menuService.find(sysMenuQuery);
     }
 
+    @Override
+    public List<SysMenu> menusZtree() {
+        List<SysMenu> sysMenus = menuService.menusZtree();
+        sysMenus.forEach(item->{
+            if (item.getPerms()!=null){
+                item.setMenuName(item.getMenuName()+" "+item.getPerms());
+            }
+        });
+        return sysMenus;
+    }
+
     private List<MenuItem> changeToMenuItems(List<SysMenu> menus){
         List<MenuItem> menuItems = new ArrayList<>();
         for (SysMenu menu : menus) {

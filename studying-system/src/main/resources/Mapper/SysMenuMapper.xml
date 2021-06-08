@@ -42,5 +42,7 @@
     <insert id="save" parameterType="com.small.system.domain.SysMenu">
 
     </insert>
-
+    <select id="menusZtree" resultType="com.small.system.domain.SysMenu">
+        <include refid="menuList"></include>
+    </select>
 </mapper>
