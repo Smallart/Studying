@@ -11,4 +11,6 @@
         values(#{loginName},#{ipAddr},#{loginLocation},#{browser},#{os},#{status},#{msg},NOW());
     </select>
     <select id="count" parameterType="com.small.system.query.SysUserQuery" resultType="Integer"></select>
+    <delete id="batchDelete"></delete>
+    <update id="update"></update>
 </mapper>

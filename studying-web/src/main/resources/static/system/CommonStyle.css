@@ -41,3 +41,9 @@ html{
     max-width: 500px;
     margin: 0 auto;
 }
+body .warn-new-skin .layui-layer-title{
+    background:red;
+    color: #fff;
+    border: none;
+}
+body .warn-new-skin .layui-layer-btn .layui-layer-btn0{background:red;}

@@ -17,7 +17,13 @@ public class SysUserQuery extends BaseQuery {
     /**
      * 电话
      */
-    private String iphone;
+    private String phone;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
     /**
      * 用户状态
      */

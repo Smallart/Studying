@@ -11,7 +11,7 @@ public interface BaseService<T,U>{
      * 保存相关信息
      * @param t
      */
-    void save(T t);
+    Integer save(T t);
 
     /**
      * 查询相关信息
@@ -26,4 +26,11 @@ public interface BaseService<T,U>{
      * @return
      */
     Integer count(U u);
+
+    /**
+     * 更新
+     * @param t
+     * @return
+     */
+    Integer update(T t);
 }

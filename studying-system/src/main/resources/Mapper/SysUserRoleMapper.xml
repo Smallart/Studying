@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.small.system.mapper.SysUserRoleMapper">
+    <insert id="batchInsert" parameterType="List">
+        INSERT into sys_role_user(role_id,user_id) values
+        <foreach collection="list" separator="," item="item">
+            (#{item.roleId},#{item.userId})
+        </foreach>
+    </insert>
+    <delete id="batchDelete" parameterType="List">
+        DELETE FROM sys_role_user where user_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

@@ -10,8 +10,8 @@ import com.small.system.query.SysUserQuery;
 public interface SysUserMapper extends BaseDao<SysUser, SysUserQuery> {
     /**
      * 通过登录名称查找用户
-     * @param loginName
+     * @param query
      * @return
      */
-    SysUser findUserByLoginName(String loginName);
+    SysUser CheckInputUnique(SysUserQuery query);
 }

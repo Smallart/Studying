@@ -56,4 +56,6 @@
             and sur.user_id = #{userId}
         </if>
     </select>
+    <delete id="batchDelete"></delete>
+    <update id="update"></update>
 </mapper>

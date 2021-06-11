@@ -29,4 +29,9 @@ public class SysPost extends BaseObject {
      * 岗位状态
      */
     private Integer status;
+
+    /**
+     * 是否被标记的标志
+     */
+    private boolean flag;
 }

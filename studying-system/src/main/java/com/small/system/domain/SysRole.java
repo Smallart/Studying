@@ -44,4 +44,9 @@ public class SysRole extends BaseObject {
      * 2 删除
      */
     private String delFlag;
+
+    /**
+     * 是否选中的标志
+     */
+    private boolean flag;
 }

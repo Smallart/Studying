@@ -1,16 +1,22 @@
 layui.config({
     base: '/expandjs/'
 }).extend({
-    JqueryZtree: 'ztree/jquery-ztree'
-}).use(['jquery','layer','JqueryZtree','form'],function () {
+    JqueryZtree: 'ztree/jquery-ztree',
+    xmSelect: 'xmSelect/xm-select'
+}).use(['jquery','layer','JqueryZtree','form','xmSelect'],function () {
     let $ = layui.jquery,
         layer = layui.layer,
         form = layui.form,
+        xmSelect = layui.xmSelect,
+        postSelect=xmSelect.render({
+            el:'#post'
+        }),
     events = {
         close:function () {
             top.layui.pageOp.closeThisTab();
         }
     };
+    initSelect();
     form.verify({
         loginName:function (value,item) {
            if (value.length<2||value.length>20){
@@ -61,14 +67,55 @@ layui.config({
         });
     });
 
+    /**
+     * 初始化Select
+     */
+    function initSelect(){
+        $.get('/system/post/markingPostById',function (resp) {
+            let data = resp.map(item=>{
+                let obj = {
+                    name: item.postName,
+                    value: item.postId,
+                    selected: item.flag
+                };
+                if (obj.status===0){
+                    obj.disabled = true;
+                    delete obj.selected;
+                }
+                return obj;
+            });
+            postSelect.update({
+                data:data
+            })
+        })
+    }
+
     $('body').on('click','*[studying-event]',function () {
         let methodName = $(this).attr('studying-event');
         methodName && events[methodName].call(this);
-    })
+    });
     /**
      * 提交
      */
     form.on('submit(*)',function (obj) {
-        console.log(obj.field);
+        let params = obj.field;
+        params.deptId = parseInt($('input[name="dept"]').attr('dept-id'));
+        params.postIds = postSelect.getValue().map(item=>item.value);
+        params.roles = Array.from(document.querySelectorAll('input[name="role"]:checked')).map(item=>parseInt(item.getAttribute('value')));
+        params.status = $('input[name="status"]').is(':checked')?0:1;
+        delete params.dept;
+        delete params.select;
+        delete params.role;
+        $.ajax({
+            url: '/system/user/save',
+            type: 'post',
+            data: JSON.stringify(params),
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            success:function (data) {
+                console.log(data);
+            }
+        });
     });
 });

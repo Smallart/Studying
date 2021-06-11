@@ -17,6 +17,10 @@ public class SysUser extends BaseObject implements Serializable {
      */
     private Long userId;
     /**
+     * 部门Id
+     */
+    private Integer deptId;
+    /**
      * 用户名
      */
     private String userName;
@@ -89,4 +93,18 @@ public class SysUser extends BaseObject implements Serializable {
     public boolean isAdmin(){
         return this.userId == 1L;
     }
+
+    public static boolean isAdmin(Long userId){
+        return userId!=null&&userId==1;
+    }
+
+    /**
+     * postIds
+     */
+    private Long[] postIds;
+
+    /**
+     * roles
+     */
+    private Long[] roles;
 }

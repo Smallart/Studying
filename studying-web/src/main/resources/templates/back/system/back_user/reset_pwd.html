@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('重置密码')"></th:block>
+    <style>
+        .pwdIcon{
+            position: absolute;
+            top: 9px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-col-space12">
+            <form class="layui-form addForm" lay-filter="resetPasswordForm">
+                <div class="layui-form-item" style="display: none">
+                    <label class="layui-form-label">用户Id：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="userId" autocomplete="off" class="layui-input" th:value="${userId}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">登录名称：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="loginName" autocomplete="off" class="layui-input" disabled th:value="${userName}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入密码：</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" autocomplete="off" class="layui-input" th:value="${123456}">
+                        <i class="layui-icon layui-icon-password pwdIcon"></i>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="display: none">
+                    <button class="layui-btn" type="button" lay-submit lay-filter="*" id="search">
+                        <i class="layui-icon layui-icon-add-1"></i>
+                        保存
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_user/reset_pwd.js}"></script>
+</body>
+</html>

@@ -30,4 +30,9 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuQuery, S
     public List<SysMenu> menusZtree() {
         return menuMapper.menusZtree();
     }
+
+    @Override
+    public Integer batchDelete(List<Long> ids) {
+        return menuMapper.batchDelete(ids);
+    }
 }

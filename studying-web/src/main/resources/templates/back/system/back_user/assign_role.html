@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('分配角色')"></th:block>
+    <link rel="stylesheet" th:href="@{/system/back/system/css/back_user/back_user_add.css}">
+    <style>
+        .layout-center{
+            min-width: 740px;
+            width: 1000px;
+        }
+        .layui-form-item .layui-input-inline{
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-col-space12">
+            <form class="layui-form user-menu" lay-filter="assignRoleForm">
+                <div class="layui-form-item">
+                    <h3 class="site-h3">基本信息</h3>
+                </div>
+                <div class="layout-center">
+                    <div class="layui-form-item" style="display: none">
+                        <div class="layui-input-inline">
+                            <input type="text" name="userId" autocomplete="off" class="layui-input" lay-verify="required" th:value="${userId}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="star">*</span>用户名称：</label>
+                        <div class="layui-input-inline" style="margin-right: 50px;">
+                            <input type="text" name="userName" autocomplete="off" class="layui-input" disabled>
+                        </div>
+                        <label class="layui-form-label"><span class="star">*</span>登录账号：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="loginName" autocomplete="off" class="layui-input" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <h3 class="site-h3">分配角色</h3>
+                </div>
+                <div class="layout-center">
+                    <div class="layui-form-item">
+                        <table id="roleTable" lay-filter="roleTable"></table>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin: 0 auto;width: max-content;">
+                    <div class="layui-btn-container">
+                        <button class="layui-btn" type="button" lay-submit lay-filter="*">
+                            <i class="layui-icon layui-icon-add-1"></i>
+                            保存
+                        </button>
+                        <button class="layui-btn layui-btn-danger" type="reset" studying-event="close">
+                            <i class="layui-icon layui-icon-close"></i>
+                            关闭
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_user/assign_role.js}"></script>
+</body>
+</html>

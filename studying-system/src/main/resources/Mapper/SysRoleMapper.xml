@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.small.system.mapper.SysRoleMapper">
-    <select id="find" resultType="com.small.system.domain.SysRole" parameterType="com.small.system.query.SysRoleQuery">
+    <sql id="role">
         SELECT
             r.role_id roleId,
             r.role_name roleName,
@@ -18,6 +18,9 @@
             r.del_flag delFlag
         FROM
             sys_role r
+    </sql>
+    <select id="find" resultType="com.small.system.domain.SysRole" parameterType="com.small.system.query.SysRoleQuery">
+        <include refid="role"></include>
         <where>
             <if test="roleName != null and roleName != ''">
                 r.role_name like CONCAT('%',#{roleName},'%')
@@ -66,4 +69,15 @@
         </where>
     </select>
     <insert id="save" parameterType="com.small.system.domain.SysRole"></insert>
+    <select id="findRoleById" parameterType="Long" resultType="com.small.system.domain.SysRole">
+         <include refid="role"></include>
+            INNER JOIN sys_role_user sru ON sru.role_id = r.role_id
+        <where>
+            <if test="_parameter != null and _parameter != 0">
+                sru.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+    <delete id="batchDelete"></delete>
+    <update id="update"></update>
 </mapper>

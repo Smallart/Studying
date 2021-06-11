@@ -1,6 +1,7 @@
 package com.small.studyingweb.service.impl;
 
 import com.small.studyingweb.service.SysDictWebService;
+import com.small.system.domain.SysDictDetail;
 import com.small.system.query.SysDictDetailQuery;
 import com.small.system.query.SysDictTypeQuery;
 import com.small.system.service.ISysDictDetailService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,5 +40,12 @@ public class SysDictWebServiceImpl implements SysDictWebService {
         map.put("data",sysDictDetailService.find(query));
         map.put("total",sysDictDetailService.count(query));
         return map;
+    }
+
+    @Override
+    public List<SysDictDetail> findDetailByType(String type) {
+        SysDictDetailQuery query = new SysDictDetailQuery();
+        query.setDictType(type);
+        return sysDictDetailService.find(query);
     }
 }

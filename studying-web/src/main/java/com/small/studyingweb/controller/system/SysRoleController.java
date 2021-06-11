@@ -1,17 +1,16 @@
 package com.small.studyingweb.controller.system;
 
-import com.small.common.base.BaseObject;
 import com.small.common.utils.DateUtils;
 import com.small.common.utils.ResponseResult;
 import com.small.studyingweb.controller.common.BaseController;
 import com.small.studyingweb.service.SysRoleWebService;
+import com.small.system.domain.SysRole;
 import com.small.system.query.SysRoleQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * SysRole controller 层
@@ -55,6 +54,18 @@ public class SysRoleController extends BaseController {
 
     @GetMapping("/add")
     public String add(){
-        return "back/system/back_role/back_role_add";
+        return "add";
+    }
+
+    @GetMapping("/selectRolesByUserId/{userId}")
+    @ResponseBody
+    public List<SysRole> selectRolesByUserId(@PathVariable("userId")Long userId){
+        return roleWebService.findRoleById(userId);
+    };
+
+    @GetMapping("/assignRoleTable/{userId}")
+    @ResponseBody
+    public ResponseResult assignRoleTable(@PathVariable("userId") Long userId){
+        return success("success",roleWebService.assignRoleTable(userId));
     }
 }

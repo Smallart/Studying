@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * SysRole service层实现
@@ -23,5 +24,10 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleQuery, S
     @PostConstruct
     public void init(){
         setDao(roleMapper);
+    }
+
+    @Override
+    public List<SysRole> findRoleById(Long userId) {
+        return roleMapper.findRoleById(userId);
     }
 }
