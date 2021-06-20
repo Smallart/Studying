@@ -123,7 +123,7 @@ layui.define(['carousel'],function (exports) {
         let index = 0;
         let innerHtml =data.map(todoes=>{
             let todoHtml = todoes.map(todo=>{
-                return `<li>${todo}</li>`;
+                return `<li class="${todo['finished']?'todo-finished':''}">${todo['content']}</li>`;
             }).join('');
             return `<div class="layui-timeline-content layui-text" data-todoItem="${index++}">
                         <ul>

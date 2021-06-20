@@ -1,5 +1,35 @@
 {
-  "data":{
-
-  }
+  "time":["6月12日","6月13日","6月14日","6月15日"],
+  "todoItems":[
+    [{
+      "content": "角色管理-新增",
+      "finished": true
+    },{
+      "content": "角色管理-修改",
+      "finished": false
+    },{
+      "content": "角色管理-删除",
+      "finished": false
+    },{
+      "content": "角色管理-数据权限",
+      "finished": false
+    },{
+      "content": "角色管理-分配功能",
+      "finished": false
+    }],[
+      {
+        "content": "角色管理-修改",
+        "finished": false
+      },{
+        "content": "角色管理-删除",
+        "finished": false
+      },{
+        "content": "角色管理-数据权限",
+        "finished": false
+      },{
+        "content": "角色管理-分配功能",
+        "finished": false
+      }
+    ]
+  ]
 }

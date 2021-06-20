@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * SysPost service实现层
@@ -22,5 +23,10 @@ public class SysPostServiceImpl extends BaseServiceImpl<SysPost, SysPostQuery, S
     @PostConstruct
     public void init(){
         setDao(sysPostMapper);
+    }
+
+    @Override
+    public List<SysPost> findPostByUserId(Integer userId) {
+        return sysPostMapper.findPostByUserId(userId);
     }
 }

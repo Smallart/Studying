@@ -77,42 +77,6 @@ layui.extend({
     function init() {
         menus();
     }
-
-    // function openTabsPage(url,text) {
-    //     var marchTo,tabs = $('#LAY_app_tabsheader>li'),path = url.replace(/(^http(s*):)|(\?[\s\S]*$)/g, '');
-    //     tabs.each(function (index) {
-    //        var li = $(this),layId = li.attr('lay-id');
-    //        if (layId === url){
-    //            marchTo = true;
-    //            tabsPage.index = index;
-    //        }
-    //     });
-    //     text = text || '新标签页';
-    //     if (pageOp.pageTabs){
-    //         //如果没有在选项卡中匹配到，则追加选项卡
-    //         if (!marchTo){
-    //             $('#LAY_app_body').append([
-    //                 '<div class="layadmin-tabsbody-item">'
-    //                 ,'<iframe src="'+ url +'" frameborder="0" class="layadmin-iframe"></iframe>'
-    //                 ,'</div>'
-    //             ].join(''));
-    //             tabsPage.index = tabs.length;
-    //             element.tabAdd('layadmin-layout-tabs', {
-    //                 title: '<span>'+ text +'</span>'
-    //                 ,id: url
-    //                 ,attr: path
-    //             });
-    //         }
-    //     }else {
-    //       var iframe =  pageOp.tabsBody(tabsPage.index).find('.layadmin-iframe');
-    //       iframe[0].contentWindow.location.href = url;
-    //     }
-    //     element.tabChange('layadmin-layout-tabs',url);
-    //     pageOp.tabsBodyChange(tabsPage.index,{
-    //         url:url,
-    //         text:text
-    //     })
-    // }
     //监听tab标签页，联动左边菜单栏
     element.on('tab(layadmin-layout-tabs)',function (data) {
         var url = $(this).attr('lay-id'),sideMenu=$('#LAY-system-side-menu'),SIDE_NAV_ITEMD='layui-nav-itemed',

@@ -63,4 +63,6 @@
     <insert id="save" parameterType="com.small.system.domain.SysDictType">
 
     </insert>
+    <delete id="batchDelete"></delete>
+    <update id="update"></update>
 </mapper>

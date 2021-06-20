@@ -4,13 +4,13 @@ import com.small.common.utils.DateUtils;
 import com.small.common.utils.ResponseResult;
 import com.small.studyingweb.controller.common.BaseController;
 import com.small.studyingweb.service.SysPostWebService;
+import com.small.system.domain.SysPost;
 import com.small.system.query.SysPostQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 岗位管理 controller层
@@ -55,5 +55,11 @@ public class SysPostController extends BaseController {
     @GetMapping("/add")
     public String add(){
         return "back/system/back_post/back_post_add";
+    }
+
+    @GetMapping("/markingPostById")
+    @ResponseBody
+    public List<SysPost> MarkingPostByUserId(@RequestParam(value = "userId",required = false)Integer userId){
+        return sysPostWebService.findPostByUserId(userId);
     }
 }

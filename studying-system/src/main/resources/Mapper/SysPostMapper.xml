@@ -55,4 +55,11 @@
         </where>
     </select>
     <insert id="save" parameterType="com.small.system.domain.SysPost"></insert>
+    <select id="findPostByUserId" parameterType="Integer" resultType="com.small.system.domain.SysPost">
+        <include refid="sysPost"></include>
+        INNER JOIN sys_user_post sup ON post.post_id = sup.post_id
+        where sup.user_id = #{userId}
+    </select>
+    <delete id="batchDelete"></delete>
+    <update id="update"></update>
 </mapper>

@@ -9,6 +9,7 @@ import com.small.common.exceptions.user.*;
 import com.small.common.utils.ServletUtils;
 import com.small.frame.manager.AsyncManager;
 import com.small.frame.manager.facotry.AsyncFactory;
+import com.small.system.query.SysUserQuery;
 import com.small.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -49,7 +50,9 @@ public class SysLoginService {
             throw new UserPasswordNotMatchException();
         }
         // 查询用户
-        SysUser sysUser = userService.findUserByLoginName(userName);
+        SysUserQuery query = new SysUserQuery();
+        query.setLoginName(userName);
+        SysUser sysUser = userService.checkInputUnique(query);
         if (sysUser==null){
             AsyncManager.me().execute(AsyncFactory.syncLoginInfoToDb(userName, Constants.LOGIN_FAIL,""));
             throw new UserNotExistsException();

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 系统用户类
@@ -16,6 +17,10 @@ public class SysUser extends BaseObject implements Serializable {
      * 用户Id
      */
     private Long userId;
+    /**
+     * 部门Id
+     */
+    private Integer deptId;
     /**
      * 用户名
      */
@@ -89,4 +94,28 @@ public class SysUser extends BaseObject implements Serializable {
     public boolean isAdmin(){
         return this.userId == 1L;
     }
+
+    public static boolean isAdmin(Long userId){
+        return userId!=null&&userId==1;
+    }
+
+    /**
+     * postIds
+     */
+    private Long[] postIds;
+
+    /**
+     * roles
+     */
+    private Long[] roles;
+
+    /**
+     * 用户所包含角色
+     */
+    private List<SysRole> sysRoles;
+
+    /**
+     * 用户所属部门
+     */
+    private SysDepartment department;
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * SysUser service层实现
@@ -26,7 +27,22 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserQuery, S
     }
 
     @Override
-    public SysUser findUserByLoginName(String loginName) {
-        return userMapper.findUserByLoginName(loginName);
+    public SysUser checkInputUnique(SysUserQuery query) {
+        return userMapper.CheckInputUnique(query);
+    }
+
+    @Override
+    public List<SysUser> findBindUserByRoleId(SysUserQuery query) {
+        return userMapper.findBindUserByRoleId(query);
+    }
+
+    @Override
+    public List<SysUser> findNotBindUserByRoleId(SysUserQuery query) {
+        return userMapper.findNotBindUserByRoleId(query);
+    }
+
+    @Override
+    public Integer findNotBindUserCount(SysUserQuery query) {
+        return userMapper.findNotBindUserCount(query);
     }
 }

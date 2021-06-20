@@ -11,7 +11,7 @@ public interface BaseDao<T,U>{
      * 保存用户
      * @param t
      */
-    void save(T t);
+    Integer save(T t);
 
     /**
      * 查询相关信息
@@ -26,10 +26,17 @@ public interface BaseDao<T,U>{
      */
     Integer count(U u);
 
-//    /**
-//     * 根据id批量删除
-//     * @param ids
-//     * @return
-//     */
-//    Integer batchDelete(List<Integer> ids);
+    /**
+     * 根据id批量删除
+     * @param ids
+     * @return
+     */
+    Integer batchDelete(List<Long> ids);
+
+    /**
+     * 更新
+     * @param t
+     * @return
+     */
+    Integer update(T t);
 }

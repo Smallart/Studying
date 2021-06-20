@@ -23,7 +23,7 @@
         FROM
             sys_dept dept
     </sql>
-    <select id="find" resultType="com.small.system.domain.SysDepartment" parameterType="com.small.system.query.SysDepartmentQuery">
+    <select id="find" resultType="com.small.common.base.enitity.SysDepartment" parameterType="com.small.system.query.SysDepartmentQuery">
         <include refid="commonSelectSql"></include>
         <where>
             <if test="deptStatus != null">
@@ -34,11 +34,11 @@
             </if>
         </where>
     </select>
-    <select id="save" parameterType="com.small.system.domain.SysDepartment">
+    <select id="save" parameterType="com.small.common.base.enitity.SysDepartment">
 
     </select>
     <select id="count" resultType="Integer" parameterType="com.small.system.query.SysDepartmentQuery"></select>
-    <select id="dynamicGetDeptByPId" parameterType="com.small.system.query.SysDepartmentQuery" resultType="com.small.system.domain.SysDepartment">
+    <select id="dynamicGetDeptByPId" parameterType="com.small.system.query.SysDepartmentQuery" resultType="com.small.common.base.enitity.SysDepartment">
        <include refid="commonSelectSql"></include>
         <if test="userId!=1">
             Inner join sys_role_dept srd on srd.dept_id = dept.dept_id
@@ -55,5 +55,13 @@
         <if test="userId != 1">
             and sur.user_id = #{userId}
         </if>
+    </select>
+    <delete id="batchDelete"></delete>
+    <update id="update"></update>
+    <select id="findDeptByRoleId" parameterType="Long" resultType="com.small.common.base.enitity.SysDepartment">
+        <include refid="commonSelectSql"></include>
+        LEFT JOIN sys_role_dept srd on srd.dept_id = dept.dept_id
+        where
+        srd.role_id = #{roleId}
     </select>
 </mapper>

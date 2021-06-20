@@ -66,4 +66,6 @@
         WHERE sessionId = #{sessionId}
     </select>
     <select id="count" resultType="Integer" parameterType="com.small.system.query.SysUserOnlineQuery"></select>
+    <delete id="batchDelete"></delete>
+    <update id="update"></update>
 </mapper>

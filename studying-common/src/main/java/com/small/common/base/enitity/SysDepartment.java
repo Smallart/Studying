@@ -1,4 +1,4 @@
-package com.small.system.domain;
+package com.small.common.base.enitity;
 
 import com.small.common.base.BaseObject;
 import lombok.Data;
@@ -55,4 +55,6 @@ public class SysDepartment extends BaseObject {
      * 是否包含子类
      */
     private Boolean isParent;
+
+    private boolean checked;
 }

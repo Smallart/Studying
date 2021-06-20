@@ -2,7 +2,10 @@ package com.small.common.utils;
 
 import com.small.common.base.enitity.SysUser;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
 /**
@@ -20,6 +23,19 @@ public class ShiroUtils {
             user = (SysUser) SecurityUtils.getSubject().getPrincipal();
         }
         return user;
+    }
+
+    /**
+     * 重新设置凭证
+     * @param sysUser
+     */
+    public static void setPrincipal(SysUser sysUser){
+        Subject subject = getSubject();
+        PrincipalCollection principals = subject.getPrincipals();
+        String realmName = principals.getRealmNames().iterator().next();
+        SimplePrincipalCollection simplePrincipalCollection = new SimplePrincipalCollection(sysUser, realmName);
+        //重新加载Principal
+        subject.runAs(simplePrincipalCollection);
     }
 
     /**
@@ -64,6 +80,15 @@ public class ShiroUtils {
         return userId;
     }
 
+    /**
+     * 生成随机盐
+     * @return
+     */
+    public static String randomSalt(){
+        SecureRandomNumberGenerator secureRandomNumberGenerator = new SecureRandomNumberGenerator();
+        return secureRandomNumberGenerator.nextBytes(3).toHex();
+    }
+
 
     /**
      * 登出操作
@@ -74,5 +99,4 @@ public class ShiroUtils {
             subject.logout();
         }
     }
-
 }

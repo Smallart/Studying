@@ -81,6 +81,11 @@
 .my-timeline-bg-fadein.layui-timeline-item::before{
     animation: 0s ease-in 0.2s 1 forwards bgcFadeOut;
 }
+
+.todo-finished{
+    text-decoration: line-through;
+}
+
 @keyframes bgcFadeOut {
     0% {
         background-color: #eee;

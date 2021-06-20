@@ -59,7 +59,11 @@ public class SysPasswordService {
     }
 
     private boolean matches(SysUser user,String password){
+        return encryptPassword(user,password).equals(user.getPassword());
+    }
+
+    public String encryptPassword(SysUser user, String password){
         Md5Hash md5Hash = new Md5Hash(user.getLoginName()+password+user.getSalt());
-        return md5Hash.toHex().equals(user.getPassword());
+        return md5Hash.toHex();
     }
 }

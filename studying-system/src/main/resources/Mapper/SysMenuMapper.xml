@@ -45,4 +45,6 @@
     <select id="menusZtree" resultType="com.small.system.domain.SysMenu">
         <include refid="menuList"></include>
     </select>
+    <delete id="batchDelete"></delete>
+    <update id="update"></update>
 </mapper>

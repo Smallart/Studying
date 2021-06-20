@@ -21,8 +21,8 @@ public class BaseServiceImpl<T extends BaseObject,U extends BaseQuery,V extends 
     }
 
     @Override
-    public void save(T t) {
-        dao.save(t);
+    public Integer save(T t) {
+        return dao.save(t);
     }
 
     @Override
@@ -35,6 +35,14 @@ public class BaseServiceImpl<T extends BaseObject,U extends BaseQuery,V extends 
         return dao.count(u);
     }
 
+    @Override
+    public Integer update(T t) {
+        return dao.update(t);
+    }
 
+    @Override
+    public Integer batchDelete(List<Long> id) {
+        return dao.batchDelete(id);
+    }
 }
 

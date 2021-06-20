@@ -4,12 +4,12 @@ import com.small.common.base.enitity.SysUser;
 import com.small.common.exceptions.user.*;
 import com.small.common.utils.ShiroUtils;
 import com.small.frame.shiro.service.SysLoginService;
-import com.small.system.domain.SysMenu;
 import com.small.system.query.SysMenuQuery;
 import com.small.system.service.ISysMenuService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
@@ -87,5 +87,20 @@ public class ShiroRealm extends AuthorizingRealm {
         }
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
         return info;
+    }
+
+    /**
+     * 清理所有用户授权信息缓存
+     */
+    public void clearAllCachedAuthorizationInfo()
+    {
+        Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
+        if (cache != null)
+        {
+            for (Object key : cache.keys())
+            {
+                cache.remove(key);
+            }
+        }
     }
 }
