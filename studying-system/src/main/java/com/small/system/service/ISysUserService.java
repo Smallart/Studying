@@ -19,9 +19,22 @@ public interface ISysUserService extends BaseService<SysUser, SysUserQuery> {
     SysUser checkInputUnique(SysUserQuery query);
 
     /**
-     * 根据Ids删除用户
-     * @param ids
+     * 通过RoleId查询绑定在该角色上的所有用户
+     * @param query
      * @return
      */
-    Integer batchDelete(List<Long> ids);
+    List<SysUser> findBindUserByRoleId(SysUserQuery query);
+
+    /**
+     * 查询没有绑定在该角色上的用户
+     * @return
+     */
+    List<SysUser> findNotBindUserByRoleId(SysUserQuery query);
+
+    /**
+     * 没有绑定在该角色上的总个数
+     * @param query
+     * @return
+     */
+    Integer findNotBindUserCount(SysUserQuery query);
 }

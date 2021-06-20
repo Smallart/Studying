@@ -15,4 +15,10 @@
             #{item}
         </foreach>
     </delete>
+    <delete id="batchDeleteBySysUserRoles" parameterType="Map">
+        DELETE FROM sys_role_user where role_id = #{roleId} and user_id in
+        <foreach collection="userIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

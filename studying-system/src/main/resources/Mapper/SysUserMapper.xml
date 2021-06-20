@@ -3,6 +3,90 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.small.system.mapper.SysUserMapper">
+
+    <resultMap id="sysUserResult" type="com.small.common.base.enitity.SysUser">
+        <id property="userId" column="user_id"></id>
+        <result property="deptId" column="dept_id"></result>
+        <result property="userName" column="user_name"></result>
+        <result property="loginName" column="login_name"></result>
+        <result property="userType" column="user_type"></result>
+        <result property="sex" column="sex"></result>
+        <result property="avatar" column="avatar"></result>
+        <result property="password" column="password"></result>
+        <result property="salt" column="salt"></result>
+        <result property="status" column="status"></result>
+        <result property="delFlag" column="del_flag"></result>
+        <result property="loginIp" column="login_ip"></result>
+        <result property="loginDate" column="login_date"></result>
+        <result property="pwdUpdateTime" column="pwd_update_time"></result>
+        <result property="email" column="email"></result>
+        <result property="iphone" column="phone"></result>
+        <result property="remark" column="remark"></result>
+        <result property="createBy" column="create_by"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="updateBy" column="update_by"></result>
+        <result property="updateTime" column="update_time"></result>
+        <association property="department" javaType="com.small.common.base.enitity.SysDepartment" column="dept_id" resultMap="sysDeptResult"></association>
+        <collection property="sysRoles" ofType="com.small.common.base.enitity.SysRole" resultMap="sysRoleResult"></collection>
+    </resultMap>
+    <resultMap id="sysDeptResult" type="com.small.common.base.enitity.SysDepartment">
+        <id property="departmentId" column="dept_id"></id>
+        <result property="parentId" column="parent_id"></result>
+        <result property="departmentName" column="dept_name"></result>
+        <result property="orderNum" column="order_num"></result>
+        <result property="leader" column="leader"></result>
+        <result property="status" column="status"></result>
+    </resultMap>
+    <resultMap id="sysRoleResult" type="com.small.common.base.enitity.SysRole">
+        <id property="roleId" column="role_id"></id>
+        <result property="roleName" column="role_name"></result>
+        <result property="roleKey" column="role_key"></result>
+        <result property="roleSort" column="role_sort"></result>
+        <result property="dataScope" column="data_scope"></result>
+        <result property="status" column="status"></result>
+    </resultMap>
+    <sql id="sql">
+        SELECT
+            u.user_id,
+            u.dept_id,
+            u.user_name,
+            u.login_name,
+            u.user_type,
+            u.sex,
+            u.avatar,
+            u.PASSWORD,
+            u.salt,
+            u.STATUS,
+            u.del_flag,
+            u.login_ip,
+            u.login_date,
+            u.pwd_update_time,
+            u.create_by,
+            u.create_time,
+            u.update_by,
+            u.update_time,
+            u.remark,
+            u.phone,
+            u.email,
+            d.dept_id,
+            d.parent_id,
+            d.dept_name,
+            d.order_num,
+            d.leader,
+            d.STATUS,
+            r.role_id,
+            r.role_name,
+            r.role_key,
+            r.role_sort,
+            r.data_scope,
+            r.STATUS
+        FROM
+            sys_user u
+            LEFT JOIN sys_dept d ON d.dept_id = u.dept_id
+            LEFT JOIN sys_role_user sru on sru.user_id = u. user_id
+            LEFT JOIN sys_role r on r.role_id = sru.role_id
+    </sql>
+
     <select id="find" parameterType="com.small.system.query.SysUserQuery" resultType="com.small.common.base.enitity.SysUser">
         SELECT
             u.user_id userId,
@@ -101,38 +185,17 @@
             sysdate()
         );
     </insert>
-    <select id="CheckInputUnique" parameterType="com.small.system.query.SysUserQuery" resultType="com.small.common.base.enitity.SysUser">
-        SELECT
-            user_id userId,
-            user_name userName,
-            create_time createTime,
-            create_by createBy,
-            update_time updateTime,
-            update_by updateBy,
-            login_name loginName,
-            user_type userType,
-            email email,
-            phone iphone,
-            sex sex,
-            avatar avatar,
-            PASSWORD password,
-            salt salt,
-            STATUS status,
-            del_flag delFlag,
-            login_ip loginIp,
-            login_date loginDate,
-            pwd_update_time pwdUpdateTime
-        from
-            sys_user
+    <select id="CheckInputUnique" parameterType="com.small.system.query.SysUserQuery" resultMap="sysUserResult">
+        <include refid="sql"></include>
         <where>
             <if test="loginName != null and loginName != ''">
-                login_name = #{loginName}
+                u.login_name = #{loginName}
             </if>
             <if test="phone != null and phone != ''">
-                and phone = #{phone}
+                and u.phone = #{phone}
             </if>
             <if test="email != null and email != ''">
-                and email = #{email}
+                and u.email = #{email}
             </if>
         </where>
     </select>
@@ -197,4 +260,86 @@
         </set>
         where user_id = #{userId}
     </update>
+    <sql id="bindUser">
+        SELECT
+            u.user_id userId,
+            u.user_name userName,
+            u.login_name loginName,
+            u.user_type userType,
+            u.sex sex,
+            u.avatar avatar,
+            u.status status,
+            u.del_flag delFlag,
+            u.email email,
+            u.phone iphone,
+            u.remark remark,
+            u.dept_id deptId
+        from sys_user u
+    </sql>
+    <select id="findBindUserByRoleId" parameterType="com.small.system.query.SysUserQuery" resultMap="sysUserResult">
+        select distinct u.user_id, u.dept_id, u.login_name, u.user_name, u.user_type, u.email, u.avatar, u.phone, u.status, u.create_time
+        from sys_user u
+        left join sys_dept d on u.dept_id = d.dept_id
+        left join sys_role_user ur on u.user_id = ur.user_id
+        left join sys_role r on r.role_id = ur.role_id
+        <where>
+            u.del_flag = '0'
+            <if test="id != null">
+                and r.role_id = #{id}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and u.login_name like concat('%',#{loginName},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and u.phone like concat('%',#{phone},'%')
+            </if>
+            ${params.dataScope}
+        </where>
+    </select>
+    <select id="findNotBindUserByRoleId" parameterType="com.small.system.query.SysUserQuery" resultMap="sysUserResult">
+        select distinct u.user_id, u.dept_id, u.login_name, u.user_name, u.user_type, u.email, u.avatar, u.phone, u.status, u.create_time
+        from sys_user u
+        left join sys_dept d on u.dept_id = d.dept_id
+        left join sys_role_user ur on u.user_id = ur.user_id
+        left join sys_role r on r.role_id = ur.role_id
+        <where>
+            u.del_flag = '0'
+            <if test="id != null">
+                and r.role_id != #{id}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and u.login_name like concat('%',#{loginName},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and u.phone like concat('%',#{phone},'%')
+            </if>
+            ${params.dataScope}
+        </where>
+        <if test="order != null and order != ''">
+            order #{order} #{orderStrategy}
+        </if>
+        <if test="offset != null and offset != 0">
+            limit #{limit},#{offset}
+        </if>
+    </select>
+    <select id="findNotBindUserCount" parameterType="com.small.system.query.SysUserQuery" resultType="Integer">
+        select distinct u.user_id, u.dept_id, u.login_name, u.user_name, u.user_type, u.email, u.avatar, u.phone, u.status, u.create_time
+        from sys_user u
+        left join sys_dept d on u.dept_id = d.dept_id
+        left join sys_role_user ur on u.user_id = ur.user_id
+        left join sys_role r on r.role_id = ur.role_id
+        <where>
+            u.del_flag = '0'
+            <if test="id != null">
+               and r.role_id != #{id}
+            </if>
+            <if test="loginName != null and loginName != ''">
+                and u.login_name like concat('%',#{loginName},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and u.phone like concat('%',#{phone},'%')
+            </if>
+            ${params.dataScope}
+        </where>
+    </select>
 </mapper>

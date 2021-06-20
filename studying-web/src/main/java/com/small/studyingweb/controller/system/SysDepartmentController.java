@@ -1,17 +1,13 @@
 package com.small.studyingweb.controller.system;
 
-import com.small.common.utils.ResponseResult;
 import com.small.common.utils.ShiroUtils;
 import com.small.studyingweb.controller.common.BaseController;
 import com.small.studyingweb.service.SysDeptWebService;
-import com.small.system.domain.SysDepartment;
+import com.small.common.base.enitity.SysDepartment;
 import com.small.system.query.SysDepartmentQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -50,5 +46,11 @@ public class SysDepartmentController extends BaseController {
         SysDepartmentQuery query = new SysDepartmentQuery();
         query.setDeptName(deptName);
         return deptWebService.addDeptSelectFind(query);
+    }
+
+    @GetMapping("/dept/dataScope/{roleId}")
+    @ResponseBody
+    public List<SysDepartment> tagDataScope(@PathVariable("roleId") Long roleId){
+        return deptWebService.tagDataScope(roleId);
     }
 }

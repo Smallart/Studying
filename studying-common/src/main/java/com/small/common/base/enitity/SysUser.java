@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 系统用户类
@@ -107,4 +108,14 @@ public class SysUser extends BaseObject implements Serializable {
      * roles
      */
     private Long[] roles;
+
+    /**
+     * 用户所包含角色
+     */
+    private List<SysRole> sysRoles;
+
+    /**
+     * 用户所属部门
+     */
+    private SysDepartment department;
 }

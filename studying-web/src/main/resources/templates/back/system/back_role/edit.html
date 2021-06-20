@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('修改角色')"></th:block>
+    <link rel="stylesheet" th:href="@{/expandjs/ztree/metroStyle.css}">
+    <style>
+        .menuTreeBorder{
+            border: 1px solid #ddd
+        }
+    </style>
+</head>
+<body>
+    <th:block th:include="component::role"></th:block>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_role/edit.js}"></script>
+</body>
+</html>

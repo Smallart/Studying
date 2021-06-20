@@ -1,7 +1,7 @@
 package com.small.system.service.impl;
 
 import com.small.common.base.service.impl.BaseServiceImpl;
-import com.small.system.domain.SysDepartment;
+import com.small.common.base.enitity.SysDepartment;
 import com.small.system.mapper.SysDepartmentMapper;
 import com.small.system.mapper.SysMenuMapper;
 import com.small.system.query.SysDepartmentQuery;
@@ -29,5 +29,10 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartment,SysD
     @Override
     public List<SysDepartment> dynamicGetDeptByPId(SysDepartmentQuery query) {
         return departmentMapper.dynamicGetDeptByPId(query);
+    }
+
+    @Override
+    public List<SysDepartment> findDeptByRoleId(Long roleId) {
+        return departmentMapper.findDeptByRoleId(roleId);
     }
 }

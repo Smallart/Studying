@@ -3,6 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.small.system.mapper.SysRoleMapper">
+    <resultMap id="sysRoleResult" type="com.small.common.base.enitity.SysRole">
+        <id property="roleId" column="role_id"></id>
+        <result property="roleName" column="role_name"></result>
+        <result property="roleSort" column="role_sort"></result>
+        <result property="roleKey" column="role_key"></result>
+        <result property="dataScope" column="data_scope"></result>
+        <result property="status" column="status"></result>
+        <result property="delFlag" column="del_flag"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="createBy" column="create_by"></result>
+        <result property="updateTime" column="update_time"></result>
+        <result property="updateBy" column="update_by"></result>
+        <result property="remark" column="remark"></result>
+    </resultMap>
     <sql id="role">
         SELECT
             r.role_id roleId,
@@ -15,15 +29,37 @@
             r.role_key roleKey,
             r.data_scope dataScope,
             r.status status,
-            r.del_flag delFlag
+            r.del_flag delFlag,
+            r.remark remark
         FROM
             sys_role r
     </sql>
-    <select id="find" resultType="com.small.system.domain.SysRole" parameterType="com.small.system.query.SysRoleQuery">
-        <include refid="role"></include>
+    <sql id="roleVo">
+        SELECT DISTINCT
+            r.role_id,
+            r.role_name,
+            r.role_sort,
+            r.role_key,
+            r.status,
+            r.data_scope,
+            r.del_flag,
+            r.create_by,
+            r.create_time,
+            r.update_by,
+            r.update_time,
+            r.remark
+        FROM
+            sys_role r
+        LEFT JOIN sys_role_user sru on sru.role_id = r.role_id
+        LEFT JOIN sys_user u on sru.user_id = u.user_id
+        LEFT JOIN sys_dept d on d.dept_id = u.dept_id
+    </sql>
+    <select id="find" parameterType="com.small.system.query.SysRoleQuery" resultMap="sysRoleResult">
+        <include refid="roleVo"></include>
         <where>
+            r.del_flag = 0
             <if test="roleName != null and roleName != ''">
-                r.role_name like CONCAT('%',#{roleName},'%')
+                and r.role_name like CONCAT('%',#{roleName},'%')
             </if>
             <if test="roleKey != null and roleKey != ''">
                 and r.role_key like CONCAT('%',#{roleKey},'%')
@@ -35,8 +71,9 @@
                 and <![CDATA[DATE_FORMAT(r.create_time,'%Y-%m-%d')>= DATE_FORMAT(#{createStartTime},'%Y-%m-%d')]]>
             </if>
             <if test="createEndTime != null">
-                and <![CDATA[DATE_FORMAT(r.create_time,'%Y-%m-%d')<= DATE_FORMAT(#{createEndTime}),'%Y-%m-%d']]>
+                and <![CDATA[DATE_FORMAT(r.create_time,'%Y-%m-%d')<= DATE_FORMAT(#{createEndTime},'%Y-%m-%d')]]>
             </if>
+            ${params.dataScope}
         </where>
         <if test="order == null">
             order by r.role_sort
@@ -46,13 +83,17 @@
          </if>
     </select>
     <select id="count" resultType="Integer" parameterType="com.small.system.query.SysRoleQuery">
-        SELECT
+        SELECT DISTINCT
             count(*)
         FROM
         sys_role r
+        LEFT JOIN sys_role_user sru on sru.role_id = r.role_id
+        LEFT JOIN sys_user u on sru.user_id = u.user_id
+        LEFT JOIN sys_dept d on d.dept_id = u.dept_id
         <where>
+            r.del_flag = 0
             <if test="roleName != null and roleName != ''">
-                r.role_name like CONCAT('%',#{roleName},'%')
+                and r.role_name like CONCAT('%',#{roleName},'%')
             </if>
             <if test="roleKey != null and roleKey != ''">
                 and r.role_key like CONCAT('%',#{roleKey},'%')
@@ -64,12 +105,33 @@
                 and <![CDATA[DATE_FORMAT(r.create_time,'%Y-%m-%d')>= DATE_FORMAT(#{createStartTime},'%Y-%m-%d')]]>
             </if>
             <if test="createEndTime != null">
-                and <![CDATA[DATE_FORMAT(r.create_time,'%Y-%m-%d')<= DATE_FORMAT(#{createEndTime}),'%Y-%m-%d']]>
+                and <![CDATA[DATE_FORMAT(r.create_time,'%Y-%m-%d')<= DATE_FORMAT(#{createEndTime},'%Y-%m-%d')]]>
             </if>
+            ${params.dataScope}
         </where>
     </select>
-    <insert id="save" parameterType="com.small.system.domain.SysRole"></insert>
-    <select id="findRoleById" parameterType="Long" resultType="com.small.system.domain.SysRole">
+    <insert id="save" parameterType="com.small.common.base.enitity.SysRole" useGeneratedKeys="true" keyProperty="roleId">
+        INSERT INTO sys_role(
+            <if test="roleName != null and roleName != ''">role_name,</if>
+            <if test="roleSort != null">role_sort,</if>
+            <if test="roleKey != null and roleKey != ''">role_key,</if>
+            <if test="dataScope != null and dataScope != ''">data_scope,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            create_time
+        )VALUES(
+            <if test="roleName != null and roleName != ''">#{roleName},</if>
+            <if test="roleSort != null">#{roleSort},</if>
+            <if test="roleKey != null and roleKey != ''">#{roleKey},</if>
+            <if test="dataScope != null and dataScope != ''">#{dataScope},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            sysdate()
+        );
+    </insert>
+    <select id="findRolesByUserId" parameterType="Long" resultType="com.small.common.base.enitity.SysRole">
          <include refid="role"></include>
             INNER JOIN sys_role_user sru ON sru.role_id = r.role_id
         <where>
@@ -78,6 +140,41 @@
             </if>
         </where>
     </select>
-    <delete id="batchDelete"></delete>
-    <update id="update"></update>
+    <delete id="batchDelete" parameterType="Long">
+        DELETE FROM sys_role where role_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <update id="update" parameterType="com.small.common.base.enitity.SysRole">
+        UPDATE sys_role
+        <set>
+            <if test="roleName != null and roleName != ''">role_name=#{roleName},</if>
+            <if test="roleSort != null">role_sort=#{roleSort},</if>
+            <if test="roleKey != null and roleKey != ''">role_key=#{roleKey},</if>
+            <if test="dataScope != null and dataScope != ''">data_scope=#{dataScope},</if>
+            <if test="status != null and status != ''">status=#{status},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag=#{delFlag},</if>
+            <if test="remark != null and remark != ''">remark=#{remark},</if>
+            <if test="updateBy != null and updateBy != ''">update_by=#{updateBy},</if>
+            update_time=sysdate()
+        </set>
+        where
+            role_id = #{roleId}
+    </update>
+    <select id="findRoleById" parameterType="Long" resultType="com.small.common.base.enitity.SysRole">
+        <include refid="role"></include>
+        where r.del_flag = 0 and r.role_id = #{roleId}
+    </select>
+    <select id="checkRoleFieldUnique" parameterType="com.small.system.query.SysRoleQuery" resultType="com.small.common.base.enitity.SysRole">
+        <include refid="role"></include>
+        <where>
+            <if test="roleName != null and roleName != ''">
+                r.role_name = #{roleName}
+            </if>
+            <if test="roleKey != null and roleKey != ''">
+                and r.role_key = #{roleKey}
+            </if>
+        </where>
+    </select>
 </mapper>

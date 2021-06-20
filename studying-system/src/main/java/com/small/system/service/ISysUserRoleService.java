@@ -3,6 +3,7 @@ package com.small.system.service;
 import com.small.system.domain.SysUserRole;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * SysUserRole service层
@@ -22,4 +23,12 @@ public interface ISysUserRoleService {
      * @return
      */
     Integer batchDelete(List<Long> ids);
+
+
+    /**
+     * 批量取消授权
+     * @param info
+     * @return
+     */
+    Integer batchDeleteBySysUserRoles(Map<String,Object> info);
 }

@@ -18,23 +18,28 @@
     <div class="layui-fluid">
         <div class="layui-col-space12">
             <form class="layui-form addForm" lay-filter="roleForm">
+                <div class="layui-form-item" style="display: none">
+                    <div class="layui-input-block">
+                        <input type="text" name="roleId" autocomplete="off" class="layui-input" th:value="${#objects.nullSafe(roleId,'')}">
+                    </div>
+                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="star">*</span>角色名称：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="" autocomplete="off" class="layui-input" lay-verify="required">
+                        <input type="text" name="roleName" autocomplete="off" class="layui-input" lay-verify="required|roleName">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="star">*</span>权限字符：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="" autocomplete="off" class="layui-input" lay-verify="required">
+                        <input type="text" name="roleKey" autocomplete="off" class="layui-input" lay-verify="required|roleKey">
                         <div class="layui-form-mid layui-word-aux">控制器中定义的权限字符，如：@RequiresRoles("")</div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="star">*</span>显示顺序：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="" autocomplete="off" class="layui-input" lay-verify="required">
+                        <input type="text" name="roleSort" autocomplete="off" class="layui-input" lay-verify="required|sort">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -46,21 +51,27 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">备注：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="" autocomplete="off" class="layui-input">
+                        <input type="text" name="remark" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">复选框</label>
                     <div class="layui-input-block">
-                        <input type="checkbox" name="like1[write]" lay-skin="primary" title="展开/折叠" checked="">
-                        <input type="checkbox" name="like1[read]" lay-skin="primary" title="全选/全不选">
-                        <input type="checkbox" name="like1[game]" lay-skin="primary" title="父子联动">
+                        <input type="checkbox" name="treeOp[fold_unfold]" lay-skin="primary" title="展开/折叠"  lay-filter="treeOp">
+                        <input type="checkbox" name="treeOp[both_none]" lay-skin="primary" title="全选/全不选" lay-filter="treeOp">
+                        <input type="checkbox" name="treeOp[linkage]" lay-skin="primary" title="父子联动" lay-filter="treeOp" checked>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block menuTreeBorder">
                         <ul class="ztree" id="menuTree"></ul>
                     </div>
+                </div>
+                <div class="layui-form-item" style="display: none">
+                    <button class="layui-btn" type="button" lay-submit lay-filter="*" id="search">
+                        <i class="layui-icon layui-icon-add-1"></i>
+                        保存
+                    </button>
                 </div>
             </form>
         </div>

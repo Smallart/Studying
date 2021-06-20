@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * SysUserRole service实现层
@@ -26,5 +27,10 @@ public class SysUserRoleServiceImpl implements ISysUserRoleService {
     @Override
     public Integer batchDelete(List<Long> ids) {
         return sysUserRoleMapper.batchDelete(ids);
+    }
+
+    @Override
+    public Integer batchDeleteBySysUserRoles(Map<String, Object> info) {
+        return sysUserRoleMapper.batchDeleteBySysUserRoles(info);
     }
 }

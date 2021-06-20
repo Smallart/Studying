@@ -1,9 +1,8 @@
 package com.small.system.service;
 
 import com.small.common.base.service.BaseService;
-import com.small.system.domain.SysDepartment;
+import com.small.common.base.enitity.SysDepartment;
 import com.small.system.query.SysDepartmentQuery;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -18,4 +17,11 @@ public interface ISysDepartmentService extends BaseService<SysDepartment, SysDep
      * @return
      */
     List<SysDepartment> dynamicGetDeptByPId(SysDepartmentQuery query);
+
+    /**
+     * 通过roleId查询绑定的dept
+     * @param roleId
+     * @return
+     */
+    List<SysDepartment> findDeptByRoleId(Long roleId);
 }

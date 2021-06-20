@@ -99,5 +99,4 @@ public class ShiroUtils {
             subject.logout();
         }
     }
-
 }

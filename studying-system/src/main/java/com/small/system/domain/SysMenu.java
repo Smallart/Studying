@@ -65,4 +65,9 @@ public class SysMenu extends BaseObject {
     public static boolean isAdmin(Long userId){
         return userId!=null && userId == 1L;
     }
+
+    /**
+     * 标记是否被选中
+     */
+    private boolean checked;
 }

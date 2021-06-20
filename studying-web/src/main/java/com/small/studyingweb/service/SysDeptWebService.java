@@ -1,6 +1,6 @@
 package com.small.studyingweb.service;
 
-import com.small.system.domain.SysDepartment;
+import com.small.common.base.enitity.SysDepartment;
 import com.small.system.query.SysDepartmentQuery;
 
 import java.util.List;
@@ -23,4 +23,11 @@ public interface SysDeptWebService {
      * @return
      */
     List<SysDepartment> addDeptSelectFind(SysDepartmentQuery query);
+
+    /**
+     * 标记数据范围
+     * @param roleId
+     * @return
+     */
+    List<SysDepartment> tagDataScope(Long roleId);
 }

@@ -5,15 +5,12 @@
 <head>
     <th:block th:include="component::header('角色管理')"></th:block>
     <link rel="stylesheet" th:href="@{/system/back/system/css/back_user.css}">
-    <style>
-
-    </style>
 </head>
 <body>
     <div class="layui-fluid">
         <div class="layui-row">
             <div class="layui-panel">
-                <form class="layui-form menu-form">
+                <form class="layui-form menu-form" lay-filter="roleForm">
                     <div class="layui-form-item">
                         <label class="layui-form-label">角色名称：</label>
                         <div class="layui-input-inline">
@@ -35,18 +32,18 @@
                     <div class="layui-form-item" style="margin-bottom: 0px">
                         <label class="layui-form-label">创建时间：</label>
                         <div class="layui-input-inline dateTimeWidth">
-                            <input type="text" name="preTime" class="layui-input" placeholder="开始时间" id="create-start-time">
+                            <input type="text" name="preTime" class="layui-input" placeholder="开始时间" id="create-start-time" autocomplete="off">
                         </div>
                         <div class="layui-form-mid">-</div>
                         <div class="layui-input-inline dateTimeWidth">
-                            <input type="text" name="nextTime" class="layui-input" placeholder="结束时间" id="create-end-time">
+                            <input type="text" name="nextTime" class="layui-input" placeholder="结束时间" id="create-end-time" autocomplete="off">
                         </div>
                         <div class="layui-btn-container">
-                            <button class="layui-btn" type="button">
+                            <button class="layui-btn" type="button" lay-submit lay-filter="*">
                                 <i class="layui-icon layui-icon-search"></i>
                                 搜索
                             </button>
-                            <button class="layui-btn layui-btn-warm" type="button">
+                            <button class="layui-btn layui-btn-warm" type="reset" studying-event="reset">
                                 <i class="layui-icon layui-icon-refresh"></i>
                                 重置
                             </button>
@@ -63,11 +60,11 @@
                             <i class="layui-icon layui-icon-addition"></i>
                             新增
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-warm layui-btn-disabled" type="button">
+                        <button class="layui-btn layui-btn-sm layui-btn-warm layui-btn-disabled" type="button" id="edit" studying-event="edit">
                             <i class="layui-icon layui-icon-edit"></i>
                             修改
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger" type="button">
+                        <button class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled" type="button" id="del" studying-event="del">
                             <i class="layui-icon layui-icon-delete"></i>
                             删除
                         </button>
@@ -82,13 +79,13 @@
         </div>
     </div>
     <script type="text/html" id="barOperator">
-        <button type="button" class="layui-btn layui-btn-xs barOperatorStyle">编辑</button>
-        <button type="button" class="layui-btn layui-btn-danger layui-btn-xs barOperatorStyle">删除</button>
+        <button type="button" class="layui-btn layui-btn-xs barOperatorStyle" lay-event="edit">编辑</button>
+        <button type="button" class="layui-btn layui-btn-danger layui-btn-xs barOperatorStyle" lay-event="delete">删除</button>
         <div class="btn-box">
             <button type="button" class="layui-btn layui-btn-xs layui-btn-normal barOperatorStyle">更多操作</button>
             <div class="layui-btn-container more-operate">
-                <button type="button" class="layui-btn layui-btn-xs">数据权限</button>
-                <button type="button" class="layui-btn layui-btn-xs">分配用户</button>
+                <button type="button" class="layui-btn layui-btn-xs" lay-event="dataAuth">数据权限</button>
+                <button type="button" class="layui-btn layui-btn-xs" lay-event="assignUsers">分配用户</button>
             </div>
         </div>
     </script>

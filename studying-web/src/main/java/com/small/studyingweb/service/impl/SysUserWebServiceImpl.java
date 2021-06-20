@@ -1,5 +1,6 @@
 package com.small.studyingweb.service.impl;
 
+import com.small.common.anno.DataScope;
 import com.small.common.base.enitity.SysUser;
 import com.small.common.constant.UserConstants;
 import com.small.common.exceptions.BusinessException;
@@ -7,7 +8,6 @@ import com.small.common.utils.DateUtils;
 import com.small.common.utils.ShiroUtils;
 import com.small.frame.shiro.service.SysPasswordService;
 import com.small.studyingweb.service.SysUserWebService;
-import com.small.system.domain.SysRole;
 import com.small.system.domain.SysUserPost;
 import com.small.system.domain.SysUserRole;
 import com.small.system.query.SysUserQuery;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -144,6 +143,25 @@ public class SysUserWebServiceImpl implements SysUserWebService {
             }
         }
         return row>0?true:false;
+    }
+
+    @Override
+    @DataScope(deptAlias = "d",userAlias = "u")
+    public Map<String,Object> findBindUserByRoleId(SysUserQuery query) {
+        Map<String,Object> map = new HashMap<>();
+        List<SysUser> sysUsers = sysUserService.findBindUserByRoleId(query);
+        map.put("data",sysUsers);
+        map.put("total",sysUsers.size());
+        return map;
+    }
+
+    @Override
+    @DataScope(deptAlias = "d",userAlias = "u")
+    public Map<String, Object> findNotBindUser(SysUserQuery query) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("data",sysUserService.findNotBindUserByRoleId(query));
+        map.put("total",sysUserService.findNotBindUserCount(query));
+        return map;
     }
 
     /**

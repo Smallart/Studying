@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('分配用户')"></th:block>
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-row">
+        <div class="layui-panel">
+            <form class="layui-form menu-form" lay-filter="assign_userForm">
+                <div class="layui-form-item" style="display: none">
+                    <input type="text" name="roleId" autocomplete="off" class="layui-input" th:value="${roleId}">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">登录名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="loginName" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">手机号码：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="iphone" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-btn-container">
+                        <button class="layui-btn" type="button" lay-submit lay-filter="*">
+                            <i class="layui-icon layui-icon-search"></i>
+                            搜索
+                        </button>
+                        <button class="layui-btn layui-btn-warm"  type="reset">
+                            <i class="layui-icon layui-icon-refresh"></i>
+                            重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+        <div class="layui-row">
+        <div class="layui-panel">
+            <div class="menu-table">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-sm" type="button" studying-event="add">
+                        <i class="layui-icon layui-icon-addition"></i>
+                        添加用户
+                    </button>
+                    <button class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled" type="button" id="batchCancel" studying-event="batchCancelAuth">
+                        <i class="layui-icon layui-icon-fonts-del"></i>
+                        批量取消授权
+                    </button>
+                    <button class="layui-btn layui-btn-sm layui-btn-warm" type="button" id="del" studying-event="close">
+                        <i class="layui-icon layui-icon-close"></i>
+                        关闭
+                    </button>
+                </div>
+                <table id="userTable" lay-filter="userTable"></table>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/html" id="barOperator">
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-danger" lay-event="cancelAuth">取消授权</button>
+    </script>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_role/assign_users.js}"></script>
+</body>
+</html>

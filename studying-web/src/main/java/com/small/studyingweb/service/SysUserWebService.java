@@ -80,4 +80,17 @@ public interface SysUserWebService {
      * @return
      */
     boolean resetPwd(SysUser sysUser);
+
+    /**
+     * 通过RoleId查询绑定在该角色上的用户
+     * @param query
+     * @return
+     */
+    Map<String,Object> findBindUserByRoleId(SysUserQuery query);
+
+    /**
+     * 通过RoleId查询没有绑定在该角色上的用户
+     * @return
+     */
+    Map<String,Object> findNotBindUser(SysUserQuery query);
 }

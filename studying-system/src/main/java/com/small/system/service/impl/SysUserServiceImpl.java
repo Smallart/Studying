@@ -32,7 +32,17 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserQuery, S
     }
 
     @Override
-    public Integer batchDelete(List<Long> ids) {
-        return userMapper.batchDelete(ids);
+    public List<SysUser> findBindUserByRoleId(SysUserQuery query) {
+        return userMapper.findBindUserByRoleId(query);
+    }
+
+    @Override
+    public List<SysUser> findNotBindUserByRoleId(SysUserQuery query) {
+        return userMapper.findNotBindUserByRoleId(query);
+    }
+
+    @Override
+    public Integer findNotBindUserCount(SysUserQuery query) {
+        return userMapper.findNotBindUserCount(query);
     }
 }

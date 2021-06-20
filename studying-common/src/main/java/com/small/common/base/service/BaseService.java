@@ -33,4 +33,10 @@ public interface BaseService<T,U>{
      * @return
      */
     Integer update(T t);
+
+    /**
+     * 批量删除
+     * @return
+     */
+    Integer batchDelete(List<Long> id);
 }

@@ -39,5 +39,10 @@ public class BaseServiceImpl<T extends BaseObject,U extends BaseQuery,V extends 
     public Integer update(T t) {
         return dao.update(t);
     }
+
+    @Override
+    public Integer batchDelete(List<Long> id) {
+        return dao.batchDelete(id);
+    }
 }
 

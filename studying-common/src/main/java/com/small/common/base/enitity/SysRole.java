@@ -1,4 +1,4 @@
-package com.small.system.domain;
+package com.small.common.base.enitity;
 
 import com.small.common.base.BaseObject;
 import lombok.Data;
@@ -49,4 +49,23 @@ public class SysRole extends BaseObject {
      * 是否选中的标志
      */
     private boolean flag;
+
+    /**
+     * 菜单ids
+     */
+    private Long[] menuIds;
+
+    /**
+     * 部门id
+     */
+    private Long[] deptIds;
+
+    /**
+     * 判断该Role是否是超级角色
+     * @param roleId
+     * @return
+     */
+    public static boolean isAdmin(Long roleId){
+        return roleId!=null&&roleId==1;
+    }
 }

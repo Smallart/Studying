@@ -3,6 +3,7 @@ package com.small.system.mapper;
 import com.small.system.domain.SysUserRole;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * SysUserRole dao层
@@ -22,4 +23,11 @@ public interface SysUserRoleMapper {
      * @return
      */
     Integer batchDelete(List<Long> ids);
+
+    /**
+     * 批量取消授权
+     * @param info
+     * @return
+     */
+    Integer batchDeleteBySysUserRoles(Map<String,Object> info);
 }

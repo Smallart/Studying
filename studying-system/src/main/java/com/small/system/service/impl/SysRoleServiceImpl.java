@@ -1,8 +1,7 @@
 package com.small.system.service.impl;
 
-import com.small.common.base.BaseDao;
 import com.small.common.base.service.impl.BaseServiceImpl;
-import com.small.system.domain.SysRole;
+import com.small.common.base.enitity.SysRole;
 import com.small.system.mapper.SysRoleMapper;
 import com.small.system.query.SysRoleQuery;
 import com.small.system.service.ISysRoleService;
@@ -27,7 +26,17 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleQuery, S
     }
 
     @Override
-    public List<SysRole> findRoleById(Long userId) {
-        return roleMapper.findRoleById(userId);
+    public List<SysRole> findRolesByUserId(Long userId) {
+        return roleMapper.findRolesByUserId(userId);
+    }
+
+    @Override
+    public SysRole findRoleById(Long roleId) {
+        return roleMapper.findRoleById(roleId);
+    }
+
+    @Override
+    public SysRole checkRoleFieldUnique(SysRoleQuery sysRoleQuery) {
+        return roleMapper.checkRoleFieldUnique(sysRoleQuery);
     }
 }

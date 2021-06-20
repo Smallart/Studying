@@ -3,6 +3,7 @@ package com.small.common.base;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 基础类
@@ -23,7 +24,7 @@ public class BaseObject {
      */
     private Date updateTime;
     /**
-     * 跟新者
+     * 更新人员
      */
     private String updateBy;
 

@@ -5,12 +5,9 @@ import com.small.common.base.enitity.SysUser;
 import com.small.common.constant.UserConstants;
 import com.small.common.utils.DateUtils;
 import com.small.common.utils.ResponseResult;
-import com.small.common.utils.ShiroUtils;
-import com.small.frame.shiro.service.SysPasswordService;
 import com.small.studyingweb.controller.common.BaseController;
 import com.small.studyingweb.service.SysUserWebService;
 import com.small.system.query.SysUserQuery;
-import org.apache.shiro.authc.credential.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -215,5 +212,49 @@ public class SysUserController extends BaseController {
     public ResponseResult assignRoles(@RequestBody String userJson){
         SysUser sysUser = JSONObject.parseObject(userJson, SysUser.class);
         return userWebService.update(sysUser)?success("分配角色成功"):error("分配角色失败");
+    }
+
+    @GetMapping("/user/findBindUserByRoleId/{roleId}")
+    @ResponseBody
+    public ResponseResult findBindUserByRoleId(@PathVariable(value = "roleId") Long roleId,
+                                               @RequestParam(value = "loginName",required = false)String loginName,
+                                               @RequestParam(value = "iphone",required = false)String iphone){
+        SysUserQuery query = new SysUserQuery();
+        query.setId(roleId);
+        query.setLoginName(loginName);
+        query.setPhone(iphone);
+        return success("success",userWebService.findBindUserByRoleId(query));
+    }
+
+    /**
+     * 未绑定该角色id的用户
+     * @param roleId
+     * @param loginName
+     * @param iphone
+     * @param offset
+     * @param limit
+     * @param order
+     * @param orderStrategy
+     * @return
+     */
+    @GetMapping("/user/findNotBindUserByRoleId/{roleId}")
+    @ResponseBody
+    public ResponseResult findNotBindUserByRoleId(@PathVariable(value = "roleId")Long roleId,
+                                                  @RequestParam(value = "loginName",required = false)String loginName,
+                                                  @RequestParam(value = "iphone",required = false)String iphone,
+                                                  @RequestParam(value = "offset")Integer offset,
+                                                  @RequestParam(value = "limit")Integer limit,
+                                                  @RequestParam(value = "order",required = false)String  order,
+                                                  @RequestParam(value = "orderStrategy",required = false)String  orderStrategy){
+
+        SysUserQuery query = new SysUserQuery();
+        query.setId(roleId);
+        query.setLoginName(loginName);
+        query.setPhone(iphone);
+        query.setOffset(offset);
+        query.setLimit(limit);
+        query.setOrder(order);
+        query.setOrderStrategy(orderStrategy);
+        return success("success",userWebService.findNotBindUser(query));
     }
 }
