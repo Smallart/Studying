@@ -8,7 +8,7 @@
             menu.menu_id menuId,menu.menu_name menuName,menu.parent_id parentId,
             menu.order_num orderNum, menu.url url,menu.target target,
             menu.menu_type menuType, menu.visible visible,menu.perms perms,
-            menu.icon icon,menu.create_by createBy,menu.create_time createTime,
+            menu.icon menuIcon,menu.create_by createBy,menu.create_time createTime,
             menu.update_by updateBy,menu.update_time updateTime
         FROM
             sys_menu menu
@@ -40,11 +40,98 @@
     </select>
     <select id="count" parameterType="com.small.system.query.SysMenuQuery" resultType="Integer"></select>
     <insert id="save" parameterType="com.small.system.domain.SysMenu">
-
+        insert into sys_menu(
+            <if test="menuName != null and menuName != ''">menu_name,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="orderNum != null">order_num,</if>
+            <if test="url != null and url != ''">url,</if>
+            <if test="target != null and target != ''">target,</if>
+            <if test="menuType != null and menuType != ''">menu_type,</if>
+            <if test="visible != null">visible,</if>
+            <if test="perms != null and perms != ''">perms,</if>
+            <if test="menuIcon">icon,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+             create_time
+        ) values(
+            <if test="menuName != null and menuName != ''">#{menuName},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="orderNum != null">#{orderNum},</if>
+            <if test="url != null and url != ''">#{url},</if>
+            <if test="target != null and target != ''">#{target},</if>
+            <if test="menuType != null and menuType != ''">#{menuType},</if>
+            <if test="visible != null">#{visible},</if>
+            <if test="perms != null and perms != ''">#{perms},</if>
+            <if test="menuIcon">#{menuIcon},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="remark != null and remark != ''">#{remark}</if>
+            sysdate()
+        )
     </insert>
     <select id="menusZtree" resultType="com.small.system.domain.SysMenu">
         <include refid="menuList"></include>
     </select>
-    <delete id="batchDelete"></delete>
-    <update id="update"></update>
+    <delete id="batchDelete" parameterType="Long">
+        DELETE FROM sys_menu where menu_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <update id="update">
+        update
+            sys_menu
+        set
+            <if test="menuName != null and menuName != ''">menu_name=#{menuName},</if>
+            <if test="parentId != null">parent_id=#{parentId},</if>
+            <if test="orderNum != null">order_num=#{orderNum},</if>
+            <if test="url != null and url != ''">url=#{url},</if>
+            <if test="target != null and target != ''">target#{target},</if>
+            <if test="menuType != null and menuType != ''">menu_type=#{menuType},</if>
+            <if test="visible != null">visible=#{visible},</if>
+            <if test="perms != null and perms != ''">perms=#{perms},</if>
+            <if test="menuIcon">icon=#{menuIcon},</if>
+            <if test="updateBy != null and updateBy != ''">update_by=#{updateBy},</if>
+            <if test="remark != null and remark != ''">remark=#{remark},</if>
+            update_time = sysdate()
+        where
+            menu_id = #{menuId}
+    </update>
+    <select id="findMenuById" parameterType="Long" resultType="com.small.system.domain.SysMenu">
+        SELECT
+            menu.menu_id menuId,
+            menu.menu_name menuName,
+            menu.parent_id parentId,
+            menu.order_num orderNum,
+            menu.url url,
+            menu.target target,
+            menu.menu_type menuType,
+            menu.visible visible,
+            menu.perms perms,
+            menu.icon menuIcon,
+            menu.create_by createBy,
+            menu.create_time createTime,
+            menu.update_by updateBy,
+            menu.update_time updateTime,
+            m.menu_name parentName
+        FROM
+            sys_menu menu
+        left join sys_menu m on m.menu_id = menu.parent_id
+        where
+            menu.menu_id = #{menuId}
+    </select>
+    <select id="checkMenuInSameParent" parameterType="com.small.system.query.SysMenuQuery" resultType="com.small.system.domain.SysMenu">
+        <include refid="menuList"></include>
+        <where>
+            <if test="menuName != null and menuName != ''">
+                menu.menu_name = #{menuName}
+            </if>
+            <if test="id != null">
+                and menu.parent_id = #{id}
+            </if>
+        </where>
+    </select>
+    <select id="findChildMenuByMenuId" parameterType="Long" resultType="com.small.system.domain.SysMenu">
+        <include refid="menuList"></include>
+        where menu.parent_id = #{menuId}
+    </select>
 </mapper>

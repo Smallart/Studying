@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('修改菜单')"></th:block>
+    <style>
+        .layui-iconpicker{
+            max-width: 100% !important;
+        }
+        .layui-iconpicker-icon{
+            width: 350px !important;
+        }
+        .layui-iconpicker-item{
+            width: 100%!important;
+        }
+        .layui-iconpicker-item .layui-edge{
+            left: 355px !important;
+        }
+    </style>
+</head>
+    <th:block th:include="component::menu"></th:block>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_menu/edit.js}"></script>
+<body>
+
+</body>
+</html>

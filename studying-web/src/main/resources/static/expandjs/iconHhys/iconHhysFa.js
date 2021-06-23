@@ -456,12 +456,10 @@ layui.define(['laypage', 'form'], function (exports) {
         if (c.indexOf('#xe') > -1){
             p.html(c);
         } else {
-            p.html('').attr('class', 'layui-icon ' + c);
+            p.html('').attr('class', c);
         }
         el.attr('value', c).val(c);
     };
-
-
 
     /**
      * 选中图标auwosome

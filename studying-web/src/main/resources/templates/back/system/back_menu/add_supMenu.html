@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="component::header('选择上级菜单')"></th:block>
+    <link rel="stylesheet" th:href="@{/expandjs/ztree/metroStyle.css}">
+    <link rel="stylesheet" th:href="@{/system/back/system/css/back_user/back_user_add_dept.css}">
+</head>
+<body>
+    <div class="layui-fluid">
+    <div class="treeContent">
+        <div class="tree-head">
+            <i class="layui-icon layui-icon-up" id="searchToggle"></i>
+            <form class="layui-form user-menu">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关键字：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="menuName" autocomplete="off" class="layui-input">
+                        <button class="layui-btn layui-btn-sm searchBtn" type="button" lay-submit lay-filter="*">
+                            搜索
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="tree-body">
+            <ul id="menuTree" class="ztree"></ul>
+            <span id="treeController">
+                    <a href="javascript:void(0);" studying-event="unfold">展开</a>
+                    <i>/</i>
+                    <a href="javascript:void(0)" studying-event="fold">折叠</a>
+                </span>
+        </div>
+    </div>
+</div>
+    <th:block th:include="component::commonJs"></th:block>
+    <script th:src="@{/system/back/system/js/back_menu/add_supMenu.js}"></script>
+</body>
+</html>

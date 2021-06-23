@@ -32,4 +32,9 @@ public class SysRoleMenuServiceImpl implements ISysRoleMenuService {
     public List<SysRoleMenu> findRoleMenuByRoleId(Long roleId) {
         return sysRoleMenuMapper.findRoleMenuByRoleId(roleId);
     }
+
+    @Override
+    public List<SysRoleMenu> alreadyShare(Long menuId) {
+        return sysRoleMenuMapper.alreadyShare(menuId);
+    }
 }

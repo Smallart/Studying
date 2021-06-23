@@ -18,22 +18,22 @@
                     <div class="layui-form-item" style="margin-bottom: 0px">
                         <label class="layui-form-label">菜单名称：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="" autocomplete="off" class="layui-input">
+                            <input type="text" name="menuName" autocomplete="off" class="layui-input">
                         </div>
                         <label class="layui-form-label">菜单状态：</label>
                         <div class="layui-input-inline">
-                            <select name="menuStatus">
+                            <select name="visible">
                                 <option value=""></option>
                                 <option value="0">显示</option>
                                 <option value="1">隐藏</option>
                             </select>
                         </div>
                         <div class="layui-btn-container">
-                            <button class="layui-btn" type="button">
+                            <button class="layui-btn" lay-filter="*" lay-submit>
                                 <i class="layui-icon layui-icon-search"></i>
                                 搜索
                             </button>
-                            <button class="layui-btn layui-btn-warm" type="button">
+                            <button class="layui-btn layui-btn-warm" type="reset" studying-event="reset">
                                 <i class="layui-icon layui-icon-refresh"></i>
                                 重置
                             </button>
@@ -50,11 +50,11 @@
                             <i class="layui-icon layui-icon-addition"></i>
                             新增
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-warm layui-btn-disabled" type="button">
+                        <button class="layui-btn layui-btn-sm layui-btn-normal layui-btn-disabled" type="button" studying-event="edit" id="edit">
                             <i class="layui-icon layui-icon-edit"></i>
                             修改
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-warm" type="button">
+                        <button class="layui-btn layui-btn-sm layui-btn-warm" type="button" studying-event="treeTableOp">
                             <i class="layui-icon layui-icon-senior"></i>
                             展开/折叠
                         </button>

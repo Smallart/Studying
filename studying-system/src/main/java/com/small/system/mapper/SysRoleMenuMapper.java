@@ -27,4 +27,11 @@ public interface SysRoleMenuMapper {
      * @return
      */
     List<SysRoleMenu> findRoleMenuByRoleId(Long roleId);
+
+    /**
+     * 查询该menuId是否已经绑定用户
+     * @param menuId
+     * @return
+     */
+    List<SysRoleMenu> alreadyShare(Long menuId);
 }

@@ -30,4 +30,19 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuQuery, S
     public List<SysMenu> menusZtree() {
         return menuMapper.menusZtree();
     }
+
+    @Override
+    public SysMenu findMenuById(Long menuId) {
+        return menuMapper.findMenuById(menuId);
+    }
+
+    @Override
+    public SysMenu checkMenuInSameParent(SysMenuQuery query) {
+        return menuMapper.checkMenuInSameParent(query);
+    }
+
+    @Override
+    public List<SysMenu> findChildMenuByMenuId(Long menuId) {
+        return menuMapper.findChildMenuByMenuId(menuId);
+    }
 }

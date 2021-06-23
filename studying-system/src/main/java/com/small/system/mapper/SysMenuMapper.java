@@ -16,4 +16,25 @@ public interface SysMenuMapper extends BaseDao<SysMenu,SysMenuQuery> {
      * @return
      */
     List<SysMenu> menusZtree();
+
+    /**
+     * 通过menuId查询SysMenu
+     * @param menuId
+     * @return
+     */
+    SysMenu findMenuById(Long menuId);
+
+    /**
+     * 查询在同一父下是否又相同菜单
+     * @param query
+     * @return
+     */
+    SysMenu checkMenuInSameParent(SysMenuQuery query);
+
+    /**
+     * 查询该menuId的子菜单
+     * @param menuId
+     * @return
+     */
+    List<SysMenu> findChildMenuByMenuId(Long menuId);
 }

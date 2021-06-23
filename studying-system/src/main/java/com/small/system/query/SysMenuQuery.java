@@ -15,7 +15,12 @@ public class SysMenuQuery extends BaseQuery {
     private String menuName;
 
     /**
-     * 菜单ID
+     * 菜单Id
+     */
+    private Long menuId;
+
+    /**
+     * user ID
      */
     private Long userId;
 

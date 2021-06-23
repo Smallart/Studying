@@ -24,6 +24,11 @@ public class SysMenu extends BaseObject {
     private Long parentId;
 
     /**
+     * 父菜单名称
+     */
+    private String parentName;
+
+    /**
      * 显示顺序
      */
     private int orderNum;
@@ -56,7 +61,7 @@ public class SysMenu extends BaseObject {
     /**
      * 菜单图标
      */
-    private String icon;
+    private String menuIcon;
 
     /**
      * 是否是Admin

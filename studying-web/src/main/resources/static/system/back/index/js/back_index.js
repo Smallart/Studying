@@ -168,17 +168,19 @@ layui.extend({
     // 创建ItemsHTML
     function createItemsHtml(items,level) {
         let innerHtml='';
-        for (let itemsKey of items) {
-            let childInnerHtml='';
-            if (itemsKey.childrenItems!=null|undefined){
-                childInnerHtml=createItemsHtml(itemsKey.childrenItems,level+1);
-            }
-            let href = itemsKey.url=='#'? 'href="javascript:;"' : `lay-href="${itemsKey.url}"`;
-            innerHtml+=
-                `<dd data-name="${itemsKey.menuName}">
+        if (items!=null|undefined){
+            for (let itemsKey of items) {
+                let childInnerHtml='';
+                if (itemsKey.childrenItems!=null|undefined){
+                    childInnerHtml=createItemsHtml(itemsKey.childrenItems,level+1);
+                }
+                let href = itemsKey.url=='#'? 'href="javascript:;"' : `lay-href="${itemsKey.url}"`;
+                innerHtml+=
+                    `<dd data-name="${itemsKey.menuName}">
                     <a ${href} style="padding-left: ${45+15*level}px">${itemsKey.menuName}</a>
                     ${childInnerHtml}
                 </dd>`;
+            }
         }
         let outHtml=`<dl class="layui-nav-child">
                         ${innerHtml}                        
