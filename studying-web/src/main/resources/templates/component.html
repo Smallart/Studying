@@ -160,4 +160,62 @@
     </div>
 </div>
 
+<!--dept添加和删除的公共部门-->
+<div th:fragment="dept">
+    <div class="layui-fluid">
+        <div class="layui-col-space12">
+            <form class="layui-form addForm" lay-filter="deptForm">
+                <div class="layui-form-item">
+                    <input type="hidden" name="deptId" autocomplete="off" class="layui-input" th:value="${#objects.nullSafe(deptId,'')}">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">上级部门：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="superDeptName" autocomplete="off" class="layui-input">
+                        <input type="hidden" name="superDeptId" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="star">*</span>部门名称：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="deptName" autocomplete="off" class="layui-input" lay-verify="required|deptName">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="star">*</span>显示排序：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="order" autocomplete="off" class="layui-input" lay-verify="required|order">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">负责人：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="leader" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系电话：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="phone" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="email" autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">部门状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="deptStatus" value="0" title="显示">
+                        <input type="radio" name="deptStatus" value="1" title="隐藏">
+                    </div>
+                </div>
+                <th:block th:include="component::submitBtn"></th:block>
+            </form>
+        </div>
+    </div>
+</div>
+
 </html>

@@ -16,7 +16,7 @@ public class SysDepartmentQuery extends BaseQuery {
     /**
      * 当前父id
      */
-    private Integer parentId;
+    private Long parentId;
 
     /**
      * 组织名称
@@ -27,4 +27,9 @@ public class SysDepartmentQuery extends BaseQuery {
      * 部门状态
      */
     private Integer deptStatus;
+
+    /**
+     * 部门Id
+     */
+    private Long deptId;
 }

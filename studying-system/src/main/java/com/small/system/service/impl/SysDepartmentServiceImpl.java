@@ -17,7 +17,7 @@ import java.util.List;
  * @author Liang
  */
 @Service
-public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartment,SysDepartmentQuery, SysMenuMapper> implements ISysDepartmentService {
+public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartment,SysDepartmentQuery, SysMenuMapper> implements ISysDepartmentService{
     @Autowired
     private SysDepartmentMapper departmentMapper;
 
@@ -34,5 +34,25 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartment,SysD
     @Override
     public List<SysDepartment> findDeptByRoleId(Long roleId) {
         return departmentMapper.findDeptByRoleId(roleId);
+    }
+
+    @Override
+    public SysDepartment findDeptById(Long deptId) {
+        return departmentMapper.findDeptById(deptId);
+    }
+
+    @Override
+    public Integer selectDeptCount(SysDepartmentQuery query) {
+        return departmentMapper.selectDeptCount(query);
+    }
+
+    @Override
+    public SysDepartment checkDeptInSameParent(SysDepartmentQuery query) {
+        return departmentMapper.checkDeptInSameParent(query);
+    }
+
+    @Override
+    public List<SysDepartment> selectNormalChildrenDeptById(Long departmentId) {
+        return departmentMapper.selectNormalChildrenDeptById(departmentId);
     }
 }

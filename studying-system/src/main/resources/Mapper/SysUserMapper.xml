@@ -114,6 +114,9 @@
             <if test="id != null and id != 0">
                 and u.user_id = #{id}
             </if>
+            <if test="deptId != null">
+                and u.dept_id = #{deptId}
+            </if>
             <if test="createStartTime != null">
                 and <![CDATA[DATE_FORMAT(u.create_time,'%Y-%m-%d')>= DATE_FORMAT(#{createStartTime},'%Y-%m-%d')]]>
             </if>

@@ -17,6 +17,12 @@ public class SysDepartment extends BaseObject {
      * 父类ID
      */
     private Long parentId;
+
+    /**
+     * 父类名称
+     */
+    private String parentName;
+
     /**
      * 祖先ID
      */

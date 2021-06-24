@@ -102,7 +102,6 @@ layui.config({
 
     // 监听表单提交事件
     form.on('submit(*)',function(data){
-        console.log(data);
         let params={
             menuName: data.field.menuName,
             visible: data.field.visible

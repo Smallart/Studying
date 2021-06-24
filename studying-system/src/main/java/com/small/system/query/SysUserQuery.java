@@ -28,6 +28,12 @@ public class SysUserQuery extends BaseQuery {
      * 用户状态
      */
     private Integer userStatus;
+
+    /**
+     * 部门Id
+     */
+    private Long deptId;
+
     /**
      * 创建时间
      */

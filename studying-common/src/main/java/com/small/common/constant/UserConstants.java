@@ -51,4 +51,10 @@ public class UserConstants {
      */
     public static final String ROLE_KEY_UNIQUE = "0";
     public static final String ROLE_KEY_NOT_UNIQUE = "1";
+
+    /** 部门正常状态 */
+    public static final String DEPT_NORMAL = "0";
+
+    /** 部门停用状态 */
+    public static final String DEPT_DISABLE = "1";
 }

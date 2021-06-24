@@ -1,6 +1,7 @@
 package com.small.studyingweb.service.impl;
 
 import com.small.common.anno.DataScope;
+import com.small.common.base.enitity.SysRole;
 import com.small.common.base.enitity.SysUser;
 import com.small.common.constant.UserConstants;
 import com.small.common.exceptions.BusinessException;
@@ -162,6 +163,13 @@ public class SysUserWebServiceImpl implements SysUserWebService {
         map.put("data",sysUserService.findNotBindUserByRoleId(query));
         map.put("total",sysUserService.findNotBindUserCount(query));
         return map;
+    }
+
+    @Override
+    public List<SysUser> findExitUserById(Long deptId) {
+        SysUserQuery query = new SysUserQuery();
+        query.setDeptId(deptId);
+        return sysUserService.find(query);
     }
 
     /**

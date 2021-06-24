@@ -1,8 +1,10 @@
 package com.small.studyingweb.service;
 
+import com.small.common.base.enitity.SysRole;
 import com.small.common.base.enitity.SysUser;
 import com.small.system.query.SysUserQuery;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -93,4 +95,11 @@ public interface SysUserWebService {
      * @return
      */
     Map<String,Object> findNotBindUser(SysUserQuery query);
+
+    /**
+     * 通过deptId查询相关用户
+     * @param deptId
+     * @return
+     */
+    List<SysUser> findExitUserById(Long deptId);
 }

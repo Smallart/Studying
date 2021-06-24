@@ -48,7 +48,7 @@ public class SysUserController extends BaseController {
      */
     @GetMapping("/userDept")
     public String addUserDeptIndex(){
-        return "/back/system/back_user/back_user_add_dept";
+        return "back/system/back_user/back_user_add_dept";
     }
 
     /**

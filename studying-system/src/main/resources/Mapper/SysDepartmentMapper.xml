@@ -26,17 +26,44 @@
     <select id="find" resultType="com.small.common.base.enitity.SysDepartment" parameterType="com.small.system.query.SysDepartmentQuery">
         <include refid="commonSelectSql"></include>
         <where>
+            dept.del_flag = 0
             <if test="deptStatus != null">
-                dept.status = #{deptStatus}
+               and dept.status = #{deptStatus}
             </if>
             <if test="deptName != null and deptName != ''">
-               and dept.dept_name like CONCAT('%',${deptName},'%')
+               and dept.dept_name like CONCAT('%',#{deptName},'%')
             </if>
         </where>
     </select>
-    <select id="save" parameterType="com.small.common.base.enitity.SysDepartment">
-
-    </select>
+    <insert id="save" parameterType="com.small.common.base.enitity.SysDepartment">
+        insert into sys_dept(
+            <if test="parentId != null">parent_id,</if>
+            <if test="ancestors != null and ancestors != ''">ancestors,</if>
+            <if test="departmentName != null and departmentName != ''">dept_name,</if>
+            <if test="orderNum != null">order_num,</if>
+            <if test="leader != null and leader != ''">leader,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="email != null and email != ''">email,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            isParent,
+            create_time
+        )values(
+            <if test="parentId != null">#{parentId},</if>
+            <if test="ancestors != null and ancestors != ''">#{ancestors},</if>
+            <if test="departmentName != null and departmentName != ''">#{departmentName},</if>
+            <if test="orderNum != null">#{orderNum},</if>
+            <if test="leader != null and leader != ''">#{leader},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="email != null and email != ''">#{email},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+             0,
+             sysdate()
+        );
+    </insert>
     <select id="count" resultType="Integer" parameterType="com.small.system.query.SysDepartmentQuery"></select>
     <select id="dynamicGetDeptByPId" parameterType="com.small.system.query.SysDepartmentQuery" resultType="com.small.common.base.enitity.SysDepartment">
        <include refid="commonSelectSql"></include>
@@ -56,12 +83,80 @@
             and sur.user_id = #{userId}
         </if>
     </select>
-    <delete id="batchDelete"></delete>
-    <update id="update"></update>
+    <update id="batchDelete" parameterType="Long">
+        update sys_dept set del_flag = 2 where dept_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+    <update id="update">
+        update sys_dept
+        <set>
+            <if test="parentId != null">parent_id=#{parentId},</if>
+            <if test="ancestors != null and ancestors != ''">ancestors=#{ancestors},</if>
+            <if test="departmentName != null and departmentName != ''">dept_name=#{departmentName},</if>
+            <if test="orderNum != null">order_num=#{orderNum},</if>
+            <if test="leader != null and leader != ''">leader=#{leader},</if>
+            <if test="phone != null and phone != ''">phone=#{phone},</if>
+            <if test="email != null and email != ''">email=#{email},</if>
+            <if test="status != null">status=#{status},</if>
+            <if test="delFlag != null">del_flag=#{delFlag},</if>
+            <if test="updateBy != null">update_by=#{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where
+            dept_id = #{departmentId}
+    </update>
     <select id="findDeptByRoleId" parameterType="Long" resultType="com.small.common.base.enitity.SysDepartment">
         <include refid="commonSelectSql"></include>
         LEFT JOIN sys_role_dept srd on srd.dept_id = dept.dept_id
         where
         srd.role_id = #{roleId}
+    </select>
+    <select id="findDeptById" parameterType="Long" resultType="com.small.common.base.enitity.SysDepartment">
+        SELECT
+            dept.dept_id departmentId,
+            dept.parent_id parentId,
+            dept.ancestors ancestors,
+            dept.dept_name departmentName,
+            dept.order_num orderNum,
+            dept.leader leader,
+            dept.phone phone,
+            dept.email email,
+            dept.status status,
+            dept.del_flag delFlag,
+            dept.create_by  createBy,
+            dept.create_time createTime,
+            dept.update_by updateBy,
+            dept.update_time updateTime,
+            dept.isParent isParent,
+            d.dept_name parentName
+        FROM
+            sys_dept dept
+        left join sys_dept d on d.dept_id = dept.parent_id
+        where
+            dept.dept_id = #{deptId}
+    </select>
+    <select id="selectDeptCount" resultType="Integer" parameterType="com.small.system.query.SysDepartmentQuery">
+        SELECT count(*) from sys_dept
+        <where>
+            del_flag = 0
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="parentId != null">
+                and parent_id = #{parentId}
+            </if>
+        </where>
+    </select>
+    <select id="checkDeptInSameParent" resultType="com.small.common.base.enitity.SysDepartment" parameterType="com.small.system.query.SysDepartmentQuery">
+        <include refid="commonSelectSql"></include>
+        where
+        dept.dept_name = #{deptName} and dept.parent_id = #{parentId}
+    </select>
+    <select id="selectNormalChildrenDeptById" parameterType="Long" resultType="com.small.common.base.enitity.SysDepartment">
+        <include refid="commonSelectSql"></include>
+        where
+        dept.status = 0 and dept.parent_id = #{departmentId}
     </select>
 </mapper>

@@ -24,10 +24,10 @@ public class SysDepartmentController extends BaseController {
 
     @GetMapping("/dynamicGetDept")
     @ResponseBody
-    public List<SysDepartment> dynamicGetDeptByPId(@RequestParam(value = "departmentId",required = false)Integer pId){
+    public List<SysDepartment> dynamicGetDeptByPId(@RequestParam(value = "departmentId",required = false)Long pId){
         SysDepartmentQuery query = new SysDepartmentQuery();
         if(pId==null){
-            query.setParentId(0);
+            query.setParentId(0L);
         }else{
             query.setParentId(pId);
         }
