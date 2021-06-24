@@ -23,4 +23,11 @@ public interface ISysUserPostService{
      * @return
      */
     Integer batchDelete(List<Long> userId);
+
+    /**
+     * 通过postId查询相关联的用户
+     * @param postId
+     * @return
+     */
+    Integer checkUserNumByPostId(Long postId);
 }

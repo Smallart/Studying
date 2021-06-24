@@ -13,7 +13,8 @@
             post.create_by createBy,
             post.create_time createTime,
             post.update_by updateBy,
-            post.update_time updateTime
+            post.update_time updateTime,
+            post.remark remark
         FROM
             sys_post post
     </sql>
@@ -54,12 +55,68 @@
             </if>
         </where>
     </select>
-    <insert id="save" parameterType="com.small.system.domain.SysPost"></insert>
+    <insert id="save" parameterType="com.small.system.domain.SysPost">
+        INSERT into sys_post(
+            <if test="postCode != null and postCode != ''">post_code,</if>
+            <if test="postName != null and postName != ''">post_name,</if>
+            <if test="postSort != null">post_sort,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            create_time
+        )values(
+            <if test="postCode != null and postCode != ''">#{postCode},</if>
+            <if test="postName != null and postName != ''">#{postName},</if>
+            <if test="postSort != null">#{postSort},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+             sysdate()
+        );
+    </insert>
     <select id="findPostByUserId" parameterType="Integer" resultType="com.small.system.domain.SysPost">
         <include refid="sysPost"></include>
         INNER JOIN sys_user_post sup ON post.post_id = sup.post_id
         where sup.user_id = #{userId}
     </select>
-    <delete id="batchDelete"></delete>
-    <update id="update"></update>
+    <delete id="batchDelete" parameterType="List">
+        DELETE FROM sys_post where post_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+    <update id="update" parameterType="com.small.system.domain.SysPost">
+        update sys_post
+        <set>
+            <if test="postCode != null and postCode != ''">post_code=#{postCode},</if>
+            <if test="postName != null and postName != ''">post_name=#{postName},</if>
+            <if test="postSort != null">post_sort=#{postSort},</if>
+            <if test="status != null">status=#{status},</if>
+            <if test="updateBy != null and updateBy != ''">update_by=#{updateBy},</if>
+            <if test="remark != null and remark != ''">remark=#{remark},</if>
+            update_time = sysdate()
+        </set>
+        where
+            post_id = #{postId}
+    </update>
+    <select id="checkUnique" parameterType="com.small.system.query.SysPostQuery" resultType="com.small.system.domain.SysPost">
+        <include refid="sysPost"></include>
+        <where>
+            <if test="postId != null">
+                post.post_id = #{postId}
+            </if>
+            <if test="postName != null and postName != ''">
+                and post.post_name = #{postName}
+            </if>
+            <if test="postCode != null and postCode != ''">
+                and post.post_code = #{postCode}
+            </if>
+        </where>
+        limit 1
+    </select>
+    <select id="findPostById" parameterType="Long" resultType="com.small.system.domain.SysPost">
+        <include refid="sysPost"></include>
+        WHERE
+            post.post_id=#{postId}
+    </select>
 </mapper>

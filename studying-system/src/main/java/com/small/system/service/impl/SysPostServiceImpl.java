@@ -29,4 +29,14 @@ public class SysPostServiceImpl extends BaseServiceImpl<SysPost, SysPostQuery, S
     public List<SysPost> findPostByUserId(Integer userId) {
         return sysPostMapper.findPostByUserId(userId);
     }
+
+    @Override
+    public SysPost findPostById(Long postId) {
+        return sysPostMapper.findPostById(postId);
+    }
+
+    @Override
+    public SysPost checkUnique(SysPostQuery query) {
+        return sysPostMapper.checkUnique(query);
+    }
 }

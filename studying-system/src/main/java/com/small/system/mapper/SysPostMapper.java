@@ -16,4 +16,17 @@ public interface SysPostMapper extends BaseDao<SysPost, SysPostQuery> {
      * @return
      */
     List<SysPost> findPostByUserId(Integer userId);
+    /**
+     * 根据某些值检测是否唯一
+     * @param query
+     * @return
+     */
+    SysPost checkUnique(SysPostQuery query);
+
+    /**
+     * 通过id查询Syspost
+     * @param postId
+     * @return
+     */
+    SysPost findPostById(Long postId);
 }

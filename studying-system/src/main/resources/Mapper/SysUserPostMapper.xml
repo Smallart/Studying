@@ -16,4 +16,7 @@
             #{item}
         </foreach>
     </delete>
+    <select id="checkUserNumByPostId" parameterType="Long" resultType="Integer">
+        select count(1) from sys_user_post where post_id = #{postId}
+    </select>
 </mapper>

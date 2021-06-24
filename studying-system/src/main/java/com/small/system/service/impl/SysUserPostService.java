@@ -27,4 +27,9 @@ public class SysUserPostService implements ISysUserPostService {
     public Integer batchDelete(List<Long> userId) {
         return sysUserPostMapper.batchDelete(userId);
     }
+
+    @Override
+    public Integer checkUserNumByPostId(Long postId) {
+        return sysUserPostMapper.checkUserNumByPostId(postId);
+    }
 }

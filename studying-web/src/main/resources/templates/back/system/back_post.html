@@ -26,14 +26,14 @@
                         </div>
                         <label class="layui-form-label">岗位状态：</label>
                         <div class="layui-input-inline">
-                            <select name="deptStatus">
+                            <select name="postStatus">
                                 <option value="">所有</option>
                                 <option value="0">正常</option>
                                 <option value="1">停用</option>
                             </select>
                         </div>
                         <div class="layui-btn-container">
-                            <button class="layui-btn" type="button">
+                            <button class="layui-btn" type="button" lay-submit lay-filter="*">
                                 <i class="layui-icon layui-icon-search"></i>
                                 搜索
                             </button>
@@ -54,11 +54,11 @@
                             <i class="layui-icon layui-icon-addition"></i>
                             新增
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-warm layui-btn-disabled" type="button" studying-event="edit">
+                        <button class="layui-btn layui-btn-sm layui-btn-normal layui-btn-disabled" type="button" studying-event="edit" id="edit">
                             <i class="layui-icon layui-icon-edit"></i>
                             修改
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled" type="button" studying-event="delete">
+                        <button class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled" type="button" studying-event="del" id="del">
                             <i class="layui-icon layui-icon-delete"></i>
                             删除
                         </button>
@@ -67,14 +67,14 @@
                             导出
                         </button>
                     </div>
-                    <table id="deptTable" lay-filter="deptTable"></table>
+                    <table id="postTable" lay-filter="postTable"></table>
                 </div>
             </div>
         </div>
     </div>
     <script type="text/html" id="barOperator">
-        <button type="button" class="layui-btn layui-btn-xs barOperatorStyle">编辑</button>
-        <button type="button" class="layui-btn layui-btn-danger layui-btn-xs barOperatorStyle">删除</button>
+        <button type="button" class="layui-btn layui-btn-xs barOperatorStyle" lay-event="edit">编辑</button>
+        <button type="button" class="layui-btn layui-btn-danger layui-btn-xs barOperatorStyle" lay-event="del">删除</button>
     </script>
     <th:block th:include="component::commonJs"></th:block>
     <script th:src="@{/system/back/system/js/back_post.js}"></script>

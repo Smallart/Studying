@@ -17,4 +17,18 @@ public interface ISysPostService extends BaseService<SysPost, SysPostQuery> {
      * @return
      */
     List<SysPost> findPostByUserId(Integer userId);
+
+    /**
+     * 通过id查询Syspost
+     * @param postId
+     * @return
+     */
+    SysPost findPostById(Long postId);
+
+    /**
+     * 根据某些值检测是否唯一
+     * @param query
+     * @return
+     */
+    SysPost checkUnique(SysPostQuery query);
 }

@@ -11,6 +11,7 @@ import java.util.Date;
  */
 @Data
 public class SysPostQuery extends BaseQuery {
+    private Long postId;
     /**
      * 岗位编码
      */
