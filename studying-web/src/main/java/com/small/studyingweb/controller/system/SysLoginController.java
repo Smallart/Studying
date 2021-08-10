@@ -46,7 +46,7 @@ public class SysLoginController extends BaseController {
             subject.login(token);
         }catch (AuthenticationException e){
             String msg = "用户或密码错误";
-            if (!StringUtils.hasText(msg)){
+            if (StringUtils.hasText(e.getMessage())){
                 msg = e.getMessage();
             }
             return error(msg);

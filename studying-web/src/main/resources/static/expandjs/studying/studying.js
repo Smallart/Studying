@@ -131,7 +131,8 @@ layui.config({
                 if (!ztreeConfig.enable) return a;
                 if (ztreeConfig.url!=null){
                     $.get(ztreeConfig.url,function (data) {
-                        $.fn.zTree.init($(ztreeConfig.elem),ztreeConfig.setting,data);
+                        var zTreeObj  = $.fn.zTree.init($(ztreeConfig.elem),ztreeConfig.setting,data);
+                        zTreeObj.expandAll(true);
                     });
                 }else{
                     $.fn.zTree.init($(ztreeConfig.elem),ztreeConfig.setting);

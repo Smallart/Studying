@@ -1,16 +1,33 @@
-layui.use(['jquery','table','form'],function () {
+layui.config({
+    base: '/expandjs/'
+}).extend({
+    studying: 'studying/studying'
+}).use(['jquery','studying'],function () {
     let $  = layui.jquery,
-        table = $.extend(layui.table,{
+        studying = layui.studying,
+        table = $.extend(studying.table(),{
             config:{
                 checkName:'flag'
             }
         }),
-        form = layui.form,
-        userId = $('input[name="userId"]').val();
-    
+        form = studying.form(),
+        userId = $('input[name="userId"]').val(),
+        studyingConfig = {
+            form:{
+                enable:true,
+                events:{
+                    submit:{
+                        filter: '*',
+                        event: submitEvent
+                    }
+                }
+            }
+    };
+
     init();
     function init() {
         initInput();
+        studying.render(studyingConfig);
         initTable();
     }
 
@@ -63,7 +80,7 @@ layui.use(['jquery','table','form'],function () {
     /**
      * 表单提交
      */
-    form.on('submit(*)',function (obj) {
+    function submitEvent(obj) {
         let params = {};
         params.userId = parseInt(obj.field.userId);
         let roles = table.checkStatus('roleTable');
@@ -84,5 +101,5 @@ layui.use(['jquery','table','form'],function () {
             }
         });
         return false;
-    });
+    }
 });

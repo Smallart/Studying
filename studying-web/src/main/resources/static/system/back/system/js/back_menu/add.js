@@ -181,7 +181,6 @@ layui.config({
                 // 获得子弹出框的树
                 let zTreeObj = layero.find('iframe')[0].contentWindow.layui.jquery.fn.zTree.getZTreeObj('menuTree');
                 let selectMenu = zTreeObj.getSelectedNodes()[0];
-                console.log(selectMenu);
                 $('input[name="parentId"]').val(selectMenu.menuId);
                 form.val('menuForm',{
                     "parentMenu": selectMenu.oldname??selectMenu.menuName

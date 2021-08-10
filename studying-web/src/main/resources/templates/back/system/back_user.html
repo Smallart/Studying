@@ -40,7 +40,7 @@
                                     <i class="layui-icon layui-icon-search"></i>
                                     搜索
                                 </button>
-                                <button class="layui-btn layui-btn-warm" type="reset">
+                                <button class="layui-btn layui-btn-warm" type="reset" studying-event="reset">
                                     <i class="layui-icon layui-icon-refresh"></i>
                                     重置
                                 </button>
@@ -52,19 +52,19 @@
             <div class="layui-row">
                 <div class="layui-panel">
                     <div class="layui-btn-container menu-table">
-                        <button class="layui-btn layui-btn-normal layui-btn-sm" studying-event="add">
+                        <button class="layui-btn layui-btn-normal layui-btn-sm" studying-event="add" shiro:hasPermission="system:user:add">
                             <i class="layui-icon layui-icon-addition"></i>新增
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-disabled" studying-event="edit" id="edit">
+                        <button class="layui-btn layui-btn-sm layui-btn-disabled" studying-event="edit" id="edit" shiro:hasPermission="system:user:edit">
                             <i class="layui-icon layui-icon-edit"></i>修改
                         </button>
-                        <button class="layui-btn layui-btn-danger layui-btn-sm layui-btn-disabled" studying-event="batchDelete" id="del">
+                        <button class="layui-btn layui-btn-danger layui-btn-sm layui-btn-disabled" studying-event="batchDelete" id="del" shiro:hasPermission="system:user:remove">
                             <i class="layui-icon layui-icon-delete"></i>删除
                         </button>
-                        <button class="layui-btn layui-btn-normal layui-btn-sm" ruoyi-event="import">
+                        <button class="layui-btn layui-btn-normal layui-btn-sm" ruoyi-event="import" shiro:hasPermission="system:user:import">
                             <i class="layui-icon layui-icon-upload"></i>导入
                         </button>
-                        <button class="layui-btn  layui-btn-warm layui-btn-sm" ruoyi-event="outport">
+                        <button class="layui-btn  layui-btn-warm layui-btn-sm" ruoyi-event="outport" shiro:hasPermission="system:user:export">
                             <i class="layui-icon layui-icon-download-circle"></i>导出
                         </button>
                         <table class="layui-hide" id="userTable" lay-filter="userTable" lay-skin="line"></table>
@@ -81,7 +81,7 @@
                     <i class="layui-icon layui-icon-set-fill"></i>
                 </a>
                 <a href="javascript:void(0)" title="折叠" studying-event="toggle">
-                    <i class="layui-icon layui-icon-down"></i>
+                    <i class="layui-icon layui-icon-down" id="toggle"></i>
                 </a>
                 <a href="javascript:void(0)" title="刷新部门" studying-event="refresh">
                     <i class="layui-icon layui-icon-refresh"></i>
@@ -93,13 +93,13 @@
         </div>
     </div>
     <script type="text/html" id="barOperator">
-        <button type="button" class="layui-btn layui-btn-xs barOperatorStyle" lay-event="edit">编辑</button>
-        <button type="button" class="layui-btn layui-btn-danger layui-btn-xs barOperatorStyle"  lay-event="delete">删除</button>
+        <button type="button" th:class="${@permissionService.hasPermi('system:user:edit')+' layui-btn layui-btn-xs barOperatorStyle'}" lay-event="edit">编辑</button>
+        <button type="button" th:class="${@permissionService.hasPermi('system:user:remove')+' layui-btn layui-btn-danger layui-btn-xs barOperatorStyle'}" lay-event="delete">删除</button>
         <div class="btn-box">
             <button type="button" class="layui-btn layui-btn-xs layui-btn-normal barOperatorStyle">更多操作</button>
             <div class="layui-btn-container more-operate">
-                <button type="button" class="layui-btn layui-btn-xs" lay-event="resetPassword">重置密码</button>
-                <button type="button" class="layui-btn layui-btn-xs" lay-event="assignRole">分配角色</button>
+                <button type="button" th:class="${@permissionService.hasPermi('system:user:remove')+' layui-btn layui-btn-xs'}" lay-event="resetPassword">重置密码</button>
+                <button type="button" th:class="${@permissionService.hasPermi('system:role:list')+' layui-btn layui-btn-xs'}" lay-event="assignRole">分配角色</button>
             </div>
         </div>
     </script>

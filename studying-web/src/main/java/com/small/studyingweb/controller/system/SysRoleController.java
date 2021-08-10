@@ -14,6 +14,8 @@ import com.small.system.domain.SysMenu;
 import com.small.common.base.enitity.SysRole;
 import com.small.system.domain.SysUserRole;
 import com.small.system.query.SysRoleQuery;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -36,11 +38,13 @@ public class SysRoleController extends BaseController {
     private SysUserWebService userWebService;
 
     @GetMapping
+    @RequiresPermissions("system:role:view")
     public String index(){
         return "back/system/back_role";
     }
 
     @GetMapping("/find")
+    @RequiresPermissions("system:role:list")
     @ResponseBody
     public ResponseResult find(@RequestParam(value = "roleName",required = false) String roleName,
                                @RequestParam(value = "roleKey",required = false) String roleKey,
@@ -65,6 +69,7 @@ public class SysRoleController extends BaseController {
     }
 
     @GetMapping("/add")
+    @RequiresPermissions("system:role:add")
     public String add(){
         return "back/system/back_role/add";
     }
@@ -76,6 +81,7 @@ public class SysRoleController extends BaseController {
     };
 
     @GetMapping("/assignRoleTable/{userId}")
+    @RequiresPermissions("system:role:edit")
     @ResponseBody
     public ResponseResult assignRoleTable(@PathVariable("userId") Long userId){
         return success("success",roleWebService.assignRoleTable(userId));
@@ -88,6 +94,7 @@ public class SysRoleController extends BaseController {
      * @return
      */
     @GetMapping("/dataScope/{roleId}")
+    @RequiresPermissions("system:role:edit")
     public String dataScopeIndex(@PathVariable("roleId")Long roleId, ModelMap mmap){
         mmap.put("SysRole",roleWebService.findRoleById(roleId));
         return "back/system/back_role/data_scope";
@@ -99,12 +106,14 @@ public class SysRoleController extends BaseController {
      * @return
      */
     @GetMapping("/assignUsers/{roleId}")
+    @RequiresPermissions("system:role:list")
     public String assignUsers(@PathVariable("roleId")Long roleId,ModelMap mmp){
         mmp.put("roleId",roleId);
         return "back/system/back_role/assign_users";
     }
 
     @GetMapping("/assignUsers/add/{roleId}")
+    @RequiresPermissions("system:role:add")
     public String assignUsersAdd(@PathVariable("roleId")Long roleId,ModelMap mmp){
         mmp.put("roleId",roleId);
         return "back/system/back_role/assign_users_add";
@@ -147,6 +156,7 @@ public class SysRoleController extends BaseController {
      * @return
      */
     @PostMapping("/save")
+    @RequiresPermissions("system:role:add")
     @ResponseBody
     public ResponseResult save(@RequestBody String sysRoleJson){
         SysRole sysRole = JSONObject.parseObject(sysRoleJson, SysRole.class);
@@ -179,6 +189,7 @@ public class SysRoleController extends BaseController {
      * @return
      */
     @GetMapping("/delete/{roleIds}")
+    @RequiresPermissions("system:role:remove")
     @ResponseBody
     public ResponseResult delete(@PathVariable("roleIds") String roleIds){
         return roleWebService.delete(roleIds)?success():error();
@@ -203,6 +214,7 @@ public class SysRoleController extends BaseController {
      */
     @PostMapping("/edit")
     @ResponseBody
+    @RequiresPermissions("system:role:edit")
     public ResponseResult edit(@RequestBody String roleJson){
         SysRole sysRole = JSONObject.parseObject(roleJson, SysRole.class);
         if (SysRole.isAdmin(sysRole.getRoleId())){
@@ -225,6 +237,7 @@ public class SysRoleController extends BaseController {
      * @return
      */
     @PostMapping("/dataScope")
+    @RequiresPermissions("system:role:edit")
     @ResponseBody
     public ResponseResult assignDataScope(@RequestBody String roleJson){
         SysRole sysRole = JSONObject.parseObject(roleJson, SysRole.class);
@@ -247,6 +260,7 @@ public class SysRoleController extends BaseController {
      * @return
      */
     @PostMapping("/assignUser/{roleId}")
+    @RequiresPermissions("system:role:edit")
     @ResponseBody
     public ResponseResult assignUser(@PathVariable("roleId") Long roleId,@RequestBody String userIds){
         return roleWebService.assignUser(roleId,userIds)?success("分配用户成功"):error("分配用户失败");
@@ -277,6 +291,7 @@ public class SysRoleController extends BaseController {
     }
 
     @GetMapping("/changeStatus/{roleId}")
+    @RequiresPermissions("system:role:edit")
     @ResponseBody
     public ResponseResult changeStatus(@PathVariable("roleId") Long roleId,
                                        @RequestParam("status") String status){

@@ -51,4 +51,16 @@ public interface SysDepartmentMapper extends BaseDao<SysDepartment, SysDepartmen
      * @return
      */
     List<SysDepartment> selectNormalChildrenDeptById(Long departmentId);
+
+    /**
+     * 查询相关祖先子部门
+     * @param departmentId
+     * @return
+     */
+    List<SysDepartment> selectSubDepts(Long departmentId);
+
+    /**
+     * 批量更新部门
+     */
+    void batchUpdateDepts(List<SysDepartment> sysDepartments);
 }

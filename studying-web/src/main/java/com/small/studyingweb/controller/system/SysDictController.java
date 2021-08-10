@@ -6,6 +6,7 @@ import com.small.studyingweb.controller.common.BaseController;
 import com.small.studyingweb.service.SysDictWebService;
 import com.small.system.query.SysDictDetailQuery;
 import com.small.system.query.SysDictTypeQuery;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,6 +25,7 @@ public class SysDictController extends BaseController {
     private SysDictWebService sysDictWebService;
 
     @GetMapping("/type")
+    @RequiresPermissions("system:dict:view")
     public String dictTypeIndex(){
         return "back/system/back_dictType";
     }
@@ -42,6 +44,7 @@ public class SysDictController extends BaseController {
      * @return
      */
     @GetMapping("/type/find")
+    @RequiresPermissions("system:dict:list")
     @ResponseBody
     public ResponseResult dictTypeFind(@RequestParam(value = "dictTypeName",required = false) String dictTypeName,
                                        @RequestParam(value = "dictTypeCode",required = false) String dictTypeCode,
@@ -77,6 +80,7 @@ public class SysDictController extends BaseController {
      * @return
      */
     @GetMapping("/detail/find")
+    @RequiresPermissions("system:dict:list")
     @ResponseBody
     public ResponseResult dictDetailList(@RequestParam(value = "dictDetailStatus",required = false) Integer dictDetailStatus,
                                          @RequestParam(value = "dictLabel",required = false) String dictLabel,
@@ -106,10 +110,13 @@ public class SysDictController extends BaseController {
     }
 
     @GetMapping("/dictType/add")
+    @RequiresPermissions("system:dict:add")
     public String dictTypeAdd(){
         return "back/system/back_dictType/back_dictType_add";
     }
+
     @GetMapping("/dictDetail/add")
+    @RequiresPermissions("system:dict:add")
     public String dictDetailAdd(@RequestParam("dictType")String dictType,ModelMap mmp){
         mmp.put("dictType",dictType);
         return "back/system/back_dictDetail/back_dictDetail_add";

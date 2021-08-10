@@ -1,49 +1,69 @@
 layui.config({
     base: '/expandjs/'
 }).extend({
-    JqueryZtree: 'ztree/jquery-ztree',
-    xmSelect: 'xmSelect/xm-select'
-}).use(['jquery','layer','JqueryZtree','form','xmSelect'],function () {
+    xmSelect: 'xmSelect/xm-select',
+    studying: 'studying/studying'
+}).use(['jquery','layer','studying','xmSelect'],function () {
     let $ = layui.jquery,
         layer = layui.layer,
-        form = layui.form,
         xmSelect = layui.xmSelect,
         postSelect=xmSelect.render({
             el:'#post'
         }),
-    events = {
-        close:function () {
-            top.layui.pageOp.closeThisTab();
-        }
-    };
-    initSelect();
-    form.verify({
-        loginName:function (value,item) {
-           if (value.length<2||value.length>20){
-               return '登录名的长度应该不小于2且不大于20';
-           }
-            let exist = false;
-            checkNameIsExist();
-            function checkNameIsExist(){
-               $.ajax({
-                  async: false,
-                  method: 'get',
-                  url: '/system/user/checkRegisterName?loginName='+value,
-                  success:function (res) {
-                      exist = res.data;
-                  }
-               });
-           }
-           if (exist){
-             return "该登录账号已被注册";
-           }
-        },
-        loginPassword:function (value,item) {
-            if (value.length<2||value.length>20){
-                return "密码的长度要在2到20之间";
+        studying = layui.studying,
+        studyingConfig = {
+            form:{
+                enable:true,
+                events:{
+                    submit:{
+                        filter: '*',
+                        event: submitEvent
+                    }
+                },
+                verify:{
+                    enable:false,
+                    rule:{
+                        loginName:function (value,item) {
+                            if (value.length<2||value.length>20){
+                                return '登录名的长度应该不小于2且不大于20';
+                            }
+                            let exist = false;
+                            checkNameIsExist();
+                            function checkNameIsExist(){
+                                $.ajax({
+                                    async: false,
+                                    method: 'get',
+                                    url: '/system/user/checkRegisterName?loginName='+value,
+                                    success:function (res) {
+                                        exist = res.data;
+                                    }
+                                });
+                            }
+                            if (exist){
+                                return "该登录账号已被注册";
+                            }
+                        },
+                        loginPassword:function (value,item) {
+                            if (value.length<2||value.length>20){
+                                return "密码的长度要在2到20之间";
+                            }
+                        }
+                    }
+                }
+            },
+            globalEvents:{
+                enable: true,
+                close: closeEvent
             }
-        }
-    });
+        },
+        form = studying.form();
+
+
+    studying.render(studyingConfig);
+
+    initSelect();
+    initRoleCheckedBox();
+
     /**
      * 归属部门事件
      */
@@ -90,14 +110,23 @@ layui.config({
         })
     }
 
-    $('body').on('click','*[studying-event]',function () {
-        let methodName = $(this).attr('studying-event');
-        methodName && events[methodName].call(this);
-    });
+    /**
+     * 初始化角色checkbox
+     */
+    function initRoleCheckedBox() {
+        $.get('/system/role/selectRolesByUserId/'+-1,function (resp) {
+            let checkbox = $('#role');
+            let innerHtml =resp.map(item=>`<input type="checkbox" name="role" title="${item.roleName}" value="${item.roleId}" lay-skin="primary" ${item.flag?'checked':''}>`).join('');
+            checkbox.html(innerHtml);
+            form.render('checkbox');
+        });
+    }
+
     /**
      * 提交
+     * @param obj
      */
-    form.on('submit(*)',function (obj) {
+    function submitEvent(obj){
         let params = obj.field;
         params.deptId = parseInt($('input[name="dept"]').attr('dept-id'));
         params.postIds = postSelect.getValue().map(item=>item.value);
@@ -114,8 +143,15 @@ layui.config({
                 'Content-Type': 'application/json'
             },
             success:function (data) {
-                console.log(data);
+                layer.msg(data.msg);
             }
         });
-    });
+    }
+
+    /**
+     * close关闭事件
+     */
+    function closeEvent() {
+        top.layui.pageOp.closeThisTab();
+    }
 });

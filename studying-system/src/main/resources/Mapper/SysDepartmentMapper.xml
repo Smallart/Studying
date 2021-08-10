@@ -67,21 +67,9 @@
     <select id="count" resultType="Integer" parameterType="com.small.system.query.SysDepartmentQuery"></select>
     <select id="dynamicGetDeptByPId" parameterType="com.small.system.query.SysDepartmentQuery" resultType="com.small.common.base.enitity.SysDepartment">
        <include refid="commonSelectSql"></include>
-        <if test="userId!=1">
-            Inner join sys_role_dept srd on srd.dept_id = dept.dept_id
-            Inner join sys_role role on role.role_id = srd.role_id
-            Inner join sys_role_user sur on sur.role_id = role.role_id
-        </if>
-        WHERE
-        <if test="parentId!=0">
-            dept.parent_id=#{parentId}
-        </if>
-        <if test="parentId==0">
-            (dept.parent_id = 0  or dept.parent_id=(select dept_id from sys_dept where parent_id= 0))
-        </if>
-        <if test="userId != 1">
-            and sur.user_id = #{userId}
-        </if>
+        where
+        dept.del_flag = 0
+        ${params.dataScope}
     </select>
     <update id="batchDelete" parameterType="Long">
         update sys_dept set del_flag = 2 where dept_id in
@@ -159,4 +147,21 @@
         where
         dept.status = 0 and dept.parent_id = #{departmentId}
     </select>
+    <select id="selectSubDepts" parameterType="Long" resultType="com.small.common.base.enitity.SysDepartment">
+        <include refid="commonSelectSql"></include>
+        where
+        FIND_IN_SET(#{departmentId},dept.ancestors)
+    </select>
+    <update id="batchUpdateDepts" parameterType="List">
+        update sys_dept set ancestors =
+        <foreach collection="list" item="item" index="index"
+                 separator=" " open="case dept_id" close="end">
+            when #{item.departmentId} then #{item.ancestors}
+        </foreach>
+        where dept_id in
+        <foreach collection="list" item="item" index="index"
+                 separator="," open="(" close=")">
+            #{item.departmentId}
+        </foreach>
+    </update>
 </mapper>

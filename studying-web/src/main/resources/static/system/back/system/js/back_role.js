@@ -207,9 +207,6 @@ layui.config({
             yes:function (index,layero) {
                 //这个应该是直接获得了子窗口的东西
                 layero.find('iframe')[0].contentWindow.document.getElementById("search").click();
-            },
-            done:function () {
-                reloadTable(getParams());
             }
         });
     }
@@ -232,8 +229,6 @@ layui.config({
             yes:function (index,layero) {
                 //这个应该是直接获得了子窗口的东西
                 layero.find('iframe')[0].contentWindow.document.getElementById("search").click();
-                //关闭窗口
-                layer.close(index);
             },
             btn2: function () {
 

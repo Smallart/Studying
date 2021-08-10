@@ -1,7 +1,6 @@
 package com.small.studyingweb.service.impl;
 
 import com.small.common.anno.DataScope;
-import com.small.common.base.enitity.SysRole;
 import com.small.common.base.enitity.SysUser;
 import com.small.common.constant.UserConstants;
 import com.small.common.exceptions.BusinessException;
@@ -42,6 +41,7 @@ public class SysUserWebServiceImpl implements SysUserWebService {
     private SysPasswordService passwordService;
 
     @Override
+    @DataScope
     public Map<String, Object> find(SysUserQuery query) {
         Map<String,Object> map = new HashMap<>();
         map.put("data",sysUserService.find(query));
@@ -77,7 +77,7 @@ public class SysUserWebServiceImpl implements SysUserWebService {
         SysUserQuery query = new SysUserQuery();
         query.setPhone(user.getIphone());
         SysUser sysUser = sysUserService.checkInputUnique(query);
-        if (sysUser!=null&&sysUser.getUserId().longValue()!=user.getUserId().longValue()){
+        if (sysUser!=null&&(user.getUserId()==null||sysUser.getUserId().longValue()!=user.getUserId().longValue())){
             return UserConstants.USER_PHONE_NOT_UNIQUE;
         }
         return UserConstants.USER_PHONE_UNIQUE;
@@ -88,7 +88,7 @@ public class SysUserWebServiceImpl implements SysUserWebService {
         SysUserQuery query = new SysUserQuery();
         query.setEmail(user.getEmail());
         SysUser sysUser = sysUserService.checkInputUnique(query);
-        if (sysUser!=null&&sysUser.getUserId().longValue()!=user.getUserId().longValue()){
+        if (sysUser!=null&&(user.getUserId()==null||sysUser.getUserId().longValue()!=user.getUserId().longValue())){
             return UserConstants.USER_EMAIL_NOT_UNIQUE;
         }
         return UserConstants.USER_EMAIL_UNIQUE;
@@ -100,6 +100,7 @@ public class SysUserWebServiceImpl implements SysUserWebService {
         user.setSalt(ShiroUtils.randomSalt());
         user.setPassword(passwordService.encryptPassword(user,user.getPassword()));
         user.setCreateBy(ShiroUtils.getLoginName());
+        user.setDelFlag("0");
         Integer row = sysUserService.save(user);
         Long[] roles = user.getRoles();
         Long[] postIds = user.getPostIds();
@@ -147,7 +148,6 @@ public class SysUserWebServiceImpl implements SysUserWebService {
     }
 
     @Override
-    @DataScope(deptAlias = "d",userAlias = "u")
     public Map<String,Object> findBindUserByRoleId(SysUserQuery query) {
         Map<String,Object> map = new HashMap<>();
         List<SysUser> sysUsers = sysUserService.findBindUserByRoleId(query);
@@ -157,7 +157,6 @@ public class SysUserWebServiceImpl implements SysUserWebService {
     }
 
     @Override
-    @DataScope(deptAlias = "d",userAlias = "u")
     public Map<String, Object> findNotBindUser(SysUserQuery query) {
         Map<String,Object> map = new HashMap<>();
         map.put("data",sysUserService.findNotBindUserByRoleId(query));

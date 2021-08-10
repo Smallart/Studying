@@ -55,4 +55,14 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartment,SysD
     public List<SysDepartment> selectNormalChildrenDeptById(Long departmentId) {
         return departmentMapper.selectNormalChildrenDeptById(departmentId);
     }
+
+    @Override
+    public List<SysDepartment> selectSubDepts(Long departmentId) {
+        return departmentMapper.selectSubDepts(departmentId);
+    }
+
+    @Override
+    public void batchUpdateDepts(List<SysDepartment> sysDepartments) {
+        departmentMapper.batchUpdateDepts(sysDepartments);
+    }
 }

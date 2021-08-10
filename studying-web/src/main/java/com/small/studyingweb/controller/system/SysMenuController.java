@@ -9,6 +9,7 @@ import com.small.studyingweb.controller.common.BaseController;
 import com.small.studyingweb.service.SysMenuWebService;
 import com.small.system.domain.SysMenu;
 import com.small.system.query.SysMenuQuery;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,6 +29,7 @@ public class SysMenuController extends BaseController {
     private SysMenuWebService menuWebService;
 
     @GetMapping("/menu")
+    @RequiresPermissions("system:menu:view")
     public String menuIndex(){
         return "back/system/back_menu";
     }
@@ -37,6 +39,7 @@ public class SysMenuController extends BaseController {
      * @return
      */
     @GetMapping("/menus")
+    @RequiresPermissions("system:menu:list")
     @ResponseBody
     public ResponseResult menus(){
         return success("success",menuWebService.findMenus());
@@ -47,6 +50,7 @@ public class SysMenuController extends BaseController {
      * @return
      */
     @GetMapping("/menusTable")
+    @RequiresPermissions("system:menu:list")
     @ResponseBody
     public ResponseResult menusTable(@RequestParam(value = "menuName",required = false)String menuName,
                                      @RequestParam(value = "visible",required = false)Integer visible){
@@ -61,12 +65,14 @@ public class SysMenuController extends BaseController {
      * @return
      */
     @GetMapping("/menu/menusZtree")
+    @RequiresPermissions("system:menu:list")
     @ResponseBody
     public List<SysMenu> menusZtree(){
         return menuWebService.menusZtree();
     }
 
     @GetMapping("/menu/add")
+    @RequiresPermissions("system:menu:add")
     public String add(@RequestParam(value = "menuId",required = false)Long menuId,ModelMap mmp){
         if (menuId!=null){
             mmp.put("menuId",menuId);
@@ -79,6 +85,7 @@ public class SysMenuController extends BaseController {
      * @return
      */
     @GetMapping("/menu/edit")
+    @RequiresPermissions("system:menu:edit")
     public String editIndex(@RequestParam("menuId") Long menuId,
                        ModelMap mmp){
         mmp.put("menuId",menuId);
@@ -128,6 +135,7 @@ public class SysMenuController extends BaseController {
     }
 
     @PostMapping("/menu/save")
+    @RequiresPermissions("system:menu:add")
     @ResponseBody
     public ResponseResult save(@RequestBody String json){
         SysMenu sysMenu = JSONObject.parseObject(json, SysMenu.class);
@@ -136,6 +144,7 @@ public class SysMenuController extends BaseController {
     }
 
     @PostMapping("/menu/edit")
+    @RequiresPermissions("system:menu:edit")
     @ResponseBody
     public ResponseResult edit(@RequestBody String json){
         SysMenu sysMenu = JSONObject.parseObject(json,SysMenu.class);
@@ -149,6 +158,7 @@ public class SysMenuController extends BaseController {
      * @return
      */
     @GetMapping("/menu/del/{menuId}")
+    @RequiresPermissions("system:menu:remove")
     @ResponseBody
     public ResponseResult delete(@PathVariable("menuId")Long menuId){
         if (menuWebService.findChildMenuByMenuId(menuId).size()>0){

@@ -9,6 +9,7 @@ import com.small.studyingweb.controller.common.BaseController;
 import com.small.studyingweb.service.SysPostWebService;
 import com.small.system.domain.SysPost;
 import com.small.system.query.SysPostQuery;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,11 +29,13 @@ public class SysPostController extends BaseController {
     private SysPostWebService sysPostWebService;
 
     @GetMapping
+    @RequiresPermissions("system:post:view")
     public String index(){
         return "back/system/back_post";
     }
 
     @GetMapping("/find")
+    @RequiresPermissions("system:post:list")
     @ResponseBody
     public ResponseResult find(@RequestParam(value = "postName",required = false) String postName,
                                @RequestParam(value = "postCode",required = false) String postCode,
@@ -57,17 +60,20 @@ public class SysPostController extends BaseController {
     }
 
     @GetMapping("/add")
+    @RequiresPermissions("system:post:add")
     public String add(){
         return "back/system/back_post/add";
     }
 
     @GetMapping("/edit/{postId}")
+    @RequiresPermissions("system:post:edit")
     public String edit(@PathVariable("postId")Long postId, ModelMap mmp){
         mmp.put("postId",postId);
         return "back/system/back_post/edit";
     }
 
     @PostMapping("/edit")
+    @RequiresPermissions("system:post:edit")
     @ResponseBody
     public ResponseResult update(@RequestBody String json){
         SysPost sysPost = JSONObject.parseObject(json, SysPost.class);
@@ -94,6 +100,7 @@ public class SysPostController extends BaseController {
     }
 
     @PostMapping("/save")
+    @RequiresPermissions("system:post:save")
     @ResponseBody
     public ResponseResult save(@RequestBody String json){
         SysPost sysPost = JSONObject.parseObject(json, SysPost.class);
@@ -122,6 +129,7 @@ public class SysPostController extends BaseController {
     }
 
     @GetMapping("/batchDelete")
+    @RequiresPermissions("system:post:remove")
     @ResponseBody
     public ResponseResult batchDelete(@RequestParam("postIds") String postIds){
         return sysPostWebService.batchDelete(postIds)?success("删除成功"):error("删除失败");

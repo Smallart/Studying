@@ -8,6 +8,7 @@ import com.small.common.utils.ResponseResult;
 import com.small.studyingweb.controller.common.BaseController;
 import com.small.studyingweb.service.SysUserWebService;
 import com.small.system.query.SysUserQuery;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,6 +30,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @GetMapping("/user")
+    @RequiresPermissions("system:user:view")
     public String index(){
         return "back/system/back_user";
     }
@@ -38,6 +40,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @GetMapping("user/add")
+    @RequiresPermissions("system:user:add")
     public String addIndex(){
         return "back/system/back_user/add";
     }
@@ -65,6 +68,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @GetMapping("/user/find")
+    @RequiresPermissions("system:user:list")
     @ResponseBody
     public ResponseResult find(@RequestParam(value = "loginName",required = false) String loginName,
                                    @RequestParam(value = "iphone",required = false) String iphone,
@@ -107,6 +111,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @PostMapping("/user/save")
+    @RequiresPermissions("system:user:add")
     @ResponseBody
     public ResponseResult save(@RequestBody String userJson)
     {
@@ -121,15 +126,23 @@ public class SysUserController extends BaseController {
             return error("新增账号："+sysUser.getLoginName()+"失败，邮箱已经被注册");
         }
         if (userWebService.insertUser(sysUser)){
-            return success("success",sysUser);
+            return success("保存成功",sysUser);
         }
-        return error("error");
+        return error("保存失败");
     }
 
     @GetMapping("/user/edit/{userId}")
+    @RequiresPermissions("system:user:edit")
     public String edit(@PathVariable("userId") Long userId,ModelMap mmp){
-        mmp.put("user",userWebService.findUserByUserId(userId));
+        mmp.put("userId",userId);
         return "back/system/back_user/edit";
+    }
+
+
+    @GetMapping("/user/getUserInfo/{userId}")
+    @ResponseBody
+    public ResponseResult getUserInfo(@PathVariable("userId") Long userId){
+        return success("success",userWebService.findUserByUserId(userId));
     }
 
     /**
@@ -140,6 +153,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @GetMapping("/user/resetPwd/{userName}/{userId}")
+    @RequiresPermissions("system:user:resetPwd")
     public String resetPwd(@PathVariable("userName")String userName,
                            @PathVariable("userId")Integer userId,
                            ModelMap mmp){
@@ -155,6 +169,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @GetMapping("/user/assignRole/{userId}")
+    @RequiresPermissions("system:role:view")
     public String assignRole(@PathVariable("userId")Integer userId,ModelMap mmp){
         mmp.put("userId",userId);
         return "back/system/back_user/assign_role";
@@ -172,12 +187,14 @@ public class SysUserController extends BaseController {
     }
 
     @GetMapping("/user/delete/{ids}")
+    @RequiresPermissions("system:user:remove")
     @ResponseBody
     public ResponseResult batchDelete(@PathVariable("ids")String ids){
         return userWebService.batchDelete(ids)?success("删除成功"):error("删除成功");
     }
 
     @PostMapping("/user/edit")
+    @RequiresPermissions("system:user:edit")
     @ResponseBody
     public ResponseResult update(@RequestBody String userJson){
         SysUser sysUser = JSONObject.parseObject(userJson, SysUser.class);
@@ -196,6 +213,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @PostMapping("/user/resetPwd")
+    @RequiresPermissions("system:user:resetPwd")
     @ResponseBody
     public ResponseResult resetPwd(@RequestBody String userJson){
         SysUser sysUser = JSONObject.parseObject(userJson, SysUser.class);
@@ -208,6 +226,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @PostMapping("/user/assignRoles")
+    @RequiresPermissions("system:user:edit")
     @ResponseBody
     public ResponseResult assignRoles(@RequestBody String userJson){
         SysUser sysUser = JSONObject.parseObject(userJson, SysUser.class);
@@ -238,6 +257,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @GetMapping("/user/findNotBindUserByRoleId/{roleId}")
+    @RequiresPermissions("system:role:view")
     @ResponseBody
     public ResponseResult findNotBindUserByRoleId(@PathVariable(value = "roleId")Long roleId,
                                                   @RequestParam(value = "loginName",required = false)String loginName,

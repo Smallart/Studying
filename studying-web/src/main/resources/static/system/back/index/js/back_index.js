@@ -116,6 +116,7 @@ layui.extend({
     element.on('tabDelete(layadmin-layout-tabs)',function (data) {
         data.index && pageOp.tabsBody(data.index).remove();
         pageOp.tabsBodyChange(data.index,{});
+        $('li[studying-event="refresh"]').click();
     });
     //点击事件
     $body.on('click','*[studying-event]',function () {

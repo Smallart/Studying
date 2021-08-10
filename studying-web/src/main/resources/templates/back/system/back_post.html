@@ -50,19 +50,19 @@
             <div class="layui-panel">
                 <div class="menu-table">
                     <div class="layui-btn-container">
-                        <button class="layui-btn layui-btn-sm" type="button" studying-event="add">
+                        <button class="layui-btn layui-btn-sm" type="button" studying-event="add" shiro:hasPermission="system:post:add">
                             <i class="layui-icon layui-icon-addition"></i>
                             新增
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-normal layui-btn-disabled" type="button" studying-event="edit" id="edit">
+                        <button class="layui-btn layui-btn-sm layui-btn-normal layui-btn-disabled" type="button" studying-event="edit" id="edit" shiro:hasPermission="system:post:edit">
                             <i class="layui-icon layui-icon-edit"></i>
                             修改
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled" type="button" studying-event="del" id="del">
+                        <button class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled" type="button" studying-event="del" id="del" shiro:hasPermission="system:post:remove">
                             <i class="layui-icon layui-icon-delete"></i>
                             删除
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-warm" type="button" studying-event="export">
+                        <button class="layui-btn layui-btn-sm layui-btn-warm" type="button" studying-event="export" shiro:hasPermission="system:post:export">
                             <i class="layui-icon layui-icon-down"></i>
                             导出
                         </button>
@@ -73,8 +73,8 @@
         </div>
     </div>
     <script type="text/html" id="barOperator">
-        <button type="button" class="layui-btn layui-btn-xs barOperatorStyle" lay-event="edit">编辑</button>
-        <button type="button" class="layui-btn layui-btn-danger layui-btn-xs barOperatorStyle" lay-event="del">删除</button>
+        <button type="button" lay-event="edit" th:class="${@permissionService.hasPermi('system:post:edit')+' layui-btn layui-btn-xs barOperatorStyle'}">编辑</button>
+        <button type="button" th:class="${@permissionService.hasPermi('system:post:edit')+' layui-btn layui-btn-danger layui-btn-xs barOperatorStyle'}" lay-event="del">删除</button>
     </script>
     <th:block th:include="component::commonJs"></th:block>
     <script th:src="@{/system/back/system/js/back_post.js}"></script>

@@ -26,12 +26,6 @@ public class SysDepartmentController extends BaseController {
     @ResponseBody
     public List<SysDepartment> dynamicGetDeptByPId(@RequestParam(value = "departmentId",required = false)Long pId){
         SysDepartmentQuery query = new SysDepartmentQuery();
-        if(pId==null){
-            query.setParentId(0L);
-        }else{
-            query.setParentId(pId);
-        }
-        query.setUserId(ShiroUtils.getUserId());
         return deptWebService.dynamicGetDeptByPId(query);
     }
 

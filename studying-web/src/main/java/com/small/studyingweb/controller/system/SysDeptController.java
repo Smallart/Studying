@@ -11,6 +11,7 @@ import com.small.studyingweb.controller.common.BaseController;
 import com.small.studyingweb.service.SysDeptWebService;
 import com.small.studyingweb.service.SysUserWebService;
 import com.small.system.query.SysDepartmentQuery;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,11 +32,13 @@ public class SysDeptController extends BaseController {
     private SysUserWebService userWebService;
 
     @GetMapping
+    @RequiresPermissions("system:dept:view")
     public String index(){
         return "back/system/back_dept";
     }
 
     @GetMapping("/find")
+    @RequiresPermissions("system:dept:list")
     @ResponseBody
     public ResponseResult find(@RequestParam(value = "deptName",required = false)String deptName,
                                @RequestParam(value = "deptStatus",required = false) Integer deptStatus){
@@ -47,6 +50,7 @@ public class SysDeptController extends BaseController {
 
 
     @GetMapping("/add")
+    @RequiresPermissions("system:dept:add")
     public String add(@RequestParam(value = "deptId",required = false) Long deptId,ModelMap mmp){
         mmp.put("deptId",deptId);
         return "back/system/back_dept/add";
@@ -54,6 +58,7 @@ public class SysDeptController extends BaseController {
 
 
     @GetMapping("/edit")
+    @RequiresPermissions("system:dept:edit")
     public String edit(@RequestParam("deptId")Long deptId, ModelMap mmp){
         mmp.put("deptId",deptId);
         return "back/system/back_dept/edit";
@@ -66,6 +71,7 @@ public class SysDeptController extends BaseController {
     }
 
     @PostMapping("/edit")
+    @RequiresPermissions("system:dept:edit")
     @ResponseBody
     public ResponseResult edit(@RequestBody String json){
         SysDepartment sysDepartment = JSONObject.parseObject(json,SysDepartment.class);
@@ -88,6 +94,7 @@ public class SysDeptController extends BaseController {
      * @return
      */
     @PostMapping("/save")
+    @RequiresPermissions("system:dept:save")
     @ResponseBody
     public ResponseResult save(@RequestBody String json){
         SysDepartment sysDepartment = JSONObject.parseObject(json, SysDepartment.class);
@@ -98,6 +105,7 @@ public class SysDeptController extends BaseController {
     }
 
     @GetMapping("/del")
+    @RequiresPermissions("system:dept:del")
     @ResponseBody
     public ResponseResult del(@RequestParam("deptId") Long deptId){
         if (deptWebService.selectDeptCount(deptId)>0){

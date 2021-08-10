@@ -108,11 +108,21 @@ layui.config({
             },
             success:function (data) {
                 layer.msg(data.msg);
-                layer.closeAll('iframe');
+                if(data.code == 0){
+                    closecurrent();
+                }
             }
         });
 
         return false;
+    }
+
+    function closecurrent() {
+        setTimeout(function(){
+            var index = index = parent.layer.getFrameIndex(window.name);
+            parent.window.location.reload();
+            parent.layer.close(index);
+        },1000);
     }
 
     function treeParams() {

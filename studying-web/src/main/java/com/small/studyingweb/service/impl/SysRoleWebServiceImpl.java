@@ -1,11 +1,13 @@
 package com.small.studyingweb.service.impl;
 
-import com.small.common.anno.DataScope;
 import com.small.common.base.enitity.SysRole;
 import com.small.common.base.enitity.SysUser;
 import com.small.common.exceptions.BusinessException;
 import com.small.studyingweb.service.SysRoleWebService;
-import com.small.system.domain.*;
+import com.small.system.domain.SysMenu;
+import com.small.system.domain.SysRoleDept;
+import com.small.system.domain.SysRoleMenu;
+import com.small.system.domain.SysUserRole;
 import com.small.system.query.SysRoleQuery;
 import com.small.system.query.SysUserQuery;
 import com.small.system.service.*;
@@ -43,7 +45,6 @@ public class SysRoleWebServiceImpl implements SysRoleWebService
     private ISysUserRoleService userRoleService;
 
     @Override
-    @DataScope(deptAlias = "d",userAlias = "u")
     public Map<String, Object> find(SysRoleQuery query) {
         Map<String,Object> map = new HashMap<>();
         map.put("data",roleService.find(query));
@@ -62,7 +63,7 @@ public class SysRoleWebServiceImpl implements SysRoleWebService
                 item.setFlag(true);
             }
         });
-        return SysUser.isAdmin(userId)?roles:userRoles;
+        return SysUser.isAdmin(userId)?roles:roles.stream().filter(item->!item.isAdmin(item.getRoleId())).collect(Collectors.toList());
     }
 
     @Override
@@ -113,6 +114,7 @@ public class SysRoleWebServiceImpl implements SysRoleWebService
     @Override
     @Transactional
     public boolean save(SysRole sysRole) {
+        sysRole.setDelFlag("0");
         Integer row = roleService.save(sysRole);
         saveSysMenuRole(sysRole.getRoleId(),sysRole.getMenuIds());
         return row>0?true:false;

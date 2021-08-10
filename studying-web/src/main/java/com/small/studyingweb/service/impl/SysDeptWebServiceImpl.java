@@ -1,5 +1,6 @@
 package com.small.studyingweb.service.impl;
 
+import com.small.common.anno.DataScope;
 import com.small.common.utils.ShiroUtils;
 import com.small.studyingweb.service.SysDeptWebService;
 import com.small.common.base.enitity.SysDepartment;
@@ -21,6 +22,7 @@ public class SysDeptWebServiceImpl implements SysDeptWebService{
     @Autowired
     private ISysDepartmentService departmentService;
     @Override
+    @DataScope
     public List<SysDepartment> dynamicGetDeptByPId(SysDepartmentQuery query) {
         return departmentService.dynamicGetDeptByPId(query);
     }
@@ -51,7 +53,26 @@ public class SysDeptWebServiceImpl implements SysDeptWebService{
     @Override
     @Transactional
     public boolean update(SysDepartment sysDept) {
+        SysDepartment parentDept = findDeptById(sysDept.getParentId());
+        SysDepartment dept = findDeptById(sysDept.getDepartmentId());
+        //互换了父结点
+        if (dept.getParentId().longValue() != parentDept.getDepartmentId().longValue()){
+            String newAncestors = parentDept.getAncestors()+","+parentDept.getDepartmentId();
+            sysDept.setAncestors(newAncestors);
+            String oldAncestors = dept.getAncestors()+","+dept.getDepartmentId();
+            updateSubDepts(newAncestors,oldAncestors,sysDept);
+        }
         return departmentService.update(sysDept)>0?true:false;
+    }
+
+    public void updateSubDepts(String newAncestors,String oldAncestors,SysDepartment sysDept){
+        List<SysDepartment> childrenDept = departmentService.selectSubDepts(sysDept.getDepartmentId());
+        for (SysDepartment sysDepartment : childrenDept) {
+            sysDepartment.setAncestors(sysDepartment.getAncestors().replace(oldAncestors,newAncestors));
+        }
+        if (childrenDept.size()>0){
+            departmentService.batchUpdateDepts(childrenDept);
+        }
     }
 
     @Override
