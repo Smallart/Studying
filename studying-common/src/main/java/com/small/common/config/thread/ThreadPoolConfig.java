@@ -51,6 +51,13 @@ public class ThreadPoolConfig {
      */
     @Bean(name = "studyingScheduledExecutorService")
     public ScheduledExecutorService scheduledExecutorService(){
-        return new ScheduledThreadPoolExecutor(corePoolSize, Executors.defaultThreadFactory());
+        return new ScheduledThreadPoolExecutor(10, new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable runnable) {
+                Thread thread = new Thread(runnable);
+                thread.setDaemon(true);
+                return thread;
+            }
+        });
     }
 }

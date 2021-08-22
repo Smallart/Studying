@@ -10,6 +10,10 @@ import lombok.Data;
 @Data
 public class SysDictDetailQuery extends BaseQuery {
     /**
+     * 字典编码
+     */
+    private Long dictCode;
+    /**
      * 字典状态
      */
     private String dictType;
@@ -21,4 +25,9 @@ public class SysDictDetailQuery extends BaseQuery {
      * 数据状态
      */
     private Integer dictDetailStatus;
+
+    /**
+     * 字典键值
+     */
+    private String dictValue;
 }

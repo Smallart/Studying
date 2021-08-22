@@ -1,6 +1,7 @@
 package com.small.studyingweb.controller.system;
 
 import com.small.common.utils.ResponseResult;
+import com.small.common.utils.ServletUtils;
 import com.small.studyingweb.controller.common.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 登录
@@ -33,7 +37,11 @@ public class SysLoginController extends BaseController {
     }
 
     @GetMapping("/login")
-    public String doLogin(){
+    public String doLogin(HttpServletRequest request, HttpServletResponse response){
+        if (ServletUtils.isAjaxRequest(request))
+        {
+            return ServletUtils.renderString(response, "{\"code\":\"1\",\"msg\":\"未登录或登录超时。请重新登录\"}");
+        }
         return "login";
     }
 

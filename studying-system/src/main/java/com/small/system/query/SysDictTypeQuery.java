@@ -12,6 +12,10 @@ import java.util.Date;
 @Data
 public class SysDictTypeQuery extends BaseQuery {
     /**
+     * 字典类型ID
+     */
+    private Long dictId;
+    /**
      * 字典名称
      */
     private String dictTypeName;

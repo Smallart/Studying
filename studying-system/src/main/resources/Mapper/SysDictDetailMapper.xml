@@ -54,7 +54,120 @@
             </if>
         </where>
     </select>
-    <insert id="save" parameterType="com.small.system.domain.SysDictDetail"></insert>
-    <delete id="batchDelete"></delete>
-    <update id="update"></update>
+    <insert id="save" parameterType="com.small.system.domain.SysDictDetail">
+        insert into sys_dict_data(
+            <if test="dictSort != null">dict_sort,</if>
+            <if test="dictLabel != null and dictLabel != ''">dict_label,</if>
+            <if test="dictValue != null and dictValue != ''">dict_value,</if>
+            <if test="dictType != null and dictType != ''">dict_type,</if>
+            <if test="cssClass != null and cssClass != ''">css_class,</if>
+            <if test="listClass != null and listClass != ''">list_class,</if>
+            <if test="isDefault != null and isDefault != ''">is_default,</if>
+            <if test="dictDetailStatus != null and dictDetailStatus != ''">status,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            create_time
+        ) values(
+            <if test="dictSort != null">#{dictSort},</if>
+            <if test="dictLabel != null and dictLabel != ''">#{dictLabel},</if>
+            <if test="dictValue != null and dictValue != ''">#{dictValue},</if>
+            <if test="dictType != null and dictType != ''">#{dictType},</if>
+            <if test="cssClass != null and cssClass != ''">#{cssClass},</if>
+            <if test="listClass != null and listClass != ''">#{listClass},</if>
+            <if test="isDefault != null and isDefault != ''">#{isDefault},</if>
+            <if test="dictDetailStatus != null and dictDetailStatus != ''">#{dictDetailStatus},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            sysdate()
+        )
+    </insert>
+    <delete id="batchDelete" parameterType="Long">
+        delete from sys_dict_data where dict_code in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <update id="update" parameterType="com.small.system.domain.SysDictDetail">
+        update sys_dict_data set
+        <if test="dictSort != null">dict_sort=#{dictSort},</if>
+        <if test="dictLabel != null and dictLabel != ''">dict_label=#{dictLabel},</if>
+        <if test="dictValue != null and dictValue != ''">dict_value=#{dictValue},</if>
+        <if test="dictType != null and dictType != ''">dict_type=#{dictType},</if>
+        <if test="cssClass != null and cssClass != ''">css_class=#{cssClass},</if>
+        <if test="listClass != null and listClass != ''">list_class=#{listClass},</if>
+        <if test="isDefault != null and isDefault != ''">is_default=#{isDefault},</if>
+        <if test="dictDetailStatus != null and dictDetailStatus != ''">status=#{dictDetailStatus},</if>
+        <if test="updateBy != null and updateBy != ''">update_by=#{updateBy},</if>
+        <if test="remark != null and remark != ''">remark=#{remark},</if>
+        update_time=#{updateTime}
+        where dict_code = #{dictCode}
+    </update>
+    <update id="updateDictTypeAndDictDetail" parameterType="String">
+        update sys_dict_data set dict_type= #{newDictType} where dict_type = #{oldDictType}
+    </update>
+    <select id="findDictDetailByType" parameterType="String" resultType="com.small.system.domain.SysDictDetail">
+         SELECT
+            sdd.dict_code dictCode,
+            sdd.dict_sort dictSort,
+            sdd.dict_label dictLabel,
+            sdd.dict_value dictValue,
+            sdd.dict_type dictType,
+            sdd.is_default isDefault,
+            sdd.status dictDetailStatus,
+            sdd.create_by createBy,
+            sdd.create_time createTime,
+            sdd.update_by updateBy,
+            sdd.update_time updateTime,
+            sdd.remark remark
+        FROM
+            sys_dict_data sdd
+        where sdd.dict_type = #{dictType}
+    </select>
+    <select id="checkUnique" parameterType="com.small.system.query.SysDictDetailQuery" resultType="com.small.system.domain.SysDictDetail">
+        SELECT
+            sdd.dict_code dictCode,
+            sdd.dict_sort dictSort,
+            sdd.dict_label dictLabel,
+            sdd.dict_value dictValue,
+            sdd.dict_type dictType,
+            sdd.is_default isDefault,
+            sdd.status dictDetailStatus,
+            sdd.create_by createBy,
+            sdd.create_time createTime,
+            sdd.update_by updateBy,
+            sdd.update_time updateTime,
+            sdd.remark remark
+        FROM
+            sys_dict_data sdd
+        where
+            sdd.dict_type = #{dictType}
+            <if test="dictLabel != null and dictLabel != ''">
+                and sdd.dict_label = #{dictLabel}
+            </if>
+            <if test="dictValue != null and dictValue != ''">
+                and sdd.dict_value = #{dictValue}
+            </if>
+    </select>
+    <select id="findDictDetailByQuery" resultType="com.small.system.domain.SysDictDetail" parameterType="com.small.system.query.SysDictDetailQuery">
+         SELECT
+            sdd.dict_code dictCode,
+            sdd.dict_sort dictSort,
+            sdd.dict_label dictLabel,
+            sdd.dict_value dictValue,
+            sdd.dict_type dictType,
+            sdd.is_default isDefault,
+            sdd.status dictDetailStatus,
+            sdd.create_by createBy,
+            sdd.create_time createTime,
+            sdd.update_by updateBy,
+            sdd.update_time updateTime,
+            sdd.remark remark
+        FROM
+            sys_dict_data sdd
+        <where>
+            <if test="dictCode != null">
+                sdd.dict_code = #{dictCode}
+            </if>
+        </where>
+    </select>
 </mapper>

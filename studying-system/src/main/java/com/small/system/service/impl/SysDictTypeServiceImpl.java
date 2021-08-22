@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * SysDeptType service的实现
@@ -21,5 +22,25 @@ public class SysDictTypeServiceImpl extends BaseServiceImpl<SysDictType, SysDict
     @PostConstruct
     public void init(){
         setDao(sysDeptTypeMapper);
+    }
+
+    @Override
+    public List<SysDictType> checkSysDictTypeExistByQuery(SysDictTypeQuery query) {
+        return sysDeptTypeMapper.findSysDictTypeByQuery(query);
+    }
+
+    @Override
+    public Integer addDictType(SysDictType sysDictType) {
+        return sysDeptTypeMapper.save(sysDictType);
+    }
+
+    @Override
+    public SysDictType findDictTypeById(Long dictId) {
+        return sysDeptTypeMapper.findDictTypeById(dictId);
+    }
+
+    @Override
+    public List<SysDictType> getAllDictTypeNames() {
+        return sysDeptTypeMapper.getAllDictTypeNames();
     }
 }

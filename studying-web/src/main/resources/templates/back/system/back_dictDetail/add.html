@@ -3,11 +3,11 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="component::header('添加部门')"></th:block>
+    <th:block th:include="component::header('添加数据')"></th:block>
 </head>
 <body>
-    <th:block th:include="component::dept"></th:block>
+    <th:block  th:include="component::dictDetail"></th:block>
     <th:block th:include="component::commonJs"></th:block>
-    <script th:src="@{/systemresouces/back/system/js/back_dept/add.js}"></script>
+    <script th:src="@{/systemresouces/back/system/js/back_dictDetail/back_dictDetail_add.js}"></script>
 </body>
 </html>

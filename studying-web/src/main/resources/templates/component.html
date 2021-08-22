@@ -6,7 +6,7 @@
     <title th:text="${title}"></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
-    <link th:href="@{/system/CommonStyle.css}" rel="stylesheet">
+    <link th:href="@{/systemresouces/CommonStyle.css}" rel="stylesheet">
 </head>
 
 <div th:fragment="commonJs">
@@ -252,7 +252,7 @@
     </div>
 </div>
 
-<!--dept添加和删除的公共部门-->
+<!--dept添加和删除的公共部分-->
 <div th:fragment="dept">
     <div class="layui-fluid">
         <div class="layui-col-space12">
@@ -310,7 +310,7 @@
     </div>
 </div>
 
-<!--post添加和删除的公共部门-->
+<!--post添加和删除的公共部分-->
 <div th:fragment="post">
     <div class="layui-fluid">
         <div class="layui-col-space12">
@@ -355,4 +355,122 @@
     </div>
 </div>
 
+<!--dictType添加和删除的公共部分-->
+<div th:fragment="dictType">
+    <div class="layui-fluid">
+        <div class="layui-col-space12">
+            <form class="layui-form addForm" lay-filter="dictTypeForm">
+                <div class="layui-form-item">
+                    <input type="hidden" name="dictId" autocomplete="off" class="layui-input" th:value="${#objects.nullSafe(dictId,'')}">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="star">*</span>字典名称：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="dictName" autocomplete="off" class="layui-input" lay-verify="required|dictNameCheck">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="star">*</span>字典类型：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="dictType" autocomplete="off" class="layui-input" lay-verify="required|dictType">
+                        <div class="layui-form-mid layui-word-aux">命名规则如"sys_user_sex"</div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="dictTypeStatus" value="0" title="正常" checked>
+                        <input type="radio" name="dictTypeStatus" value="1" title="停用">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注：</label>
+                    <div class="layui-input-block">
+                        <textarea name="remark" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <th:block th:include="component::submitBtn"></th:block>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--dictDetail添加和删除公共部分-->
+<div th:fragment="dictDetail">
+    <div class="layui-fluid">
+        <div class="layui-col-space12">
+            <form class="layui-form addForm" lay-filter="dictDetailForm">
+                <div class="layui-form-item">
+                    <input type="hidden" name="dictCode" autocomplete="off" class="layui-input" th:value="${#objects.nullSafe(dictCode,'')}">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="star">*</span>字典标签：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="dictLabel" autocomplete="off" class="layui-input" lay-verify="required|dictLabel">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="star">*</span>字典键值：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="dictValue" autocomplete="off" class="layui-input" lay-verify="required|dictValue">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">字典类型：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="dictType" autocomplete="off" class="layui-input" disabled th:value="${dictType}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">样式属性：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="cssClass" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="star">*</span>字典排序：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="dictSort" autocomplete="off" class="layui-input" lay-verify="required|dictSort">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">回显样式：</label>
+                    <div class="layui-input-block">
+                        <select name="listClass">
+                            <option value="">--请选择--</option>
+                            <option value="default">默认</option>
+                            <option value="primary">主要</option>
+                            <option value="success">成功</option>
+                            <option value="info">信息</option>
+                            <option value="warning">告警</option>
+                            <option value="danger">危险</option>
+                        </select>
+                        <div class="layui-form-mid layui-word-aux">table表格字典列显示样式属性</div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">系统默认：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="isDefault" value="Y" title="是" checked>
+                        <input type="radio" name="isDefault" value="N" title="否">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="status" value="0" title="正常" checked>
+                        <input type="radio" name="status" value="1" title="停用">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注：</label>
+                    <div class="layui-input-block">
+                        <textarea name="remark" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <th:block th:include="component::submitBtn"></th:block>
+            </form>
+        </div>
+    </div>
+</div>
 </html>

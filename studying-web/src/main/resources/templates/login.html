@@ -4,7 +4,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <th:block th:include="component::header('登录页面')"></th:block>
-    <link rel="stylesheet" th:href="@{/system/login/css/login.css}">
+    <link rel="stylesheet" th:href="@{/systemresouces/login/css/login.css}">
+    <script>
+        if(window.top!==window.self){alert('未登录或登录超时。请重新登录');window.top.location=window.location};
+    </script>
 </head>
 <body>
     <div class="left">
@@ -34,6 +37,6 @@
         </div>
     </div>
     <th:block th:include="component::commonJs"></th:block>
-    <script th:src="@{/system/login/js/login.js}"></script>
+    <script th:src="@{/systemresouces/login/js/login.js}"></script>
 </body>
 </html>

@@ -32,14 +32,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(AuthorizationException.class)
-    public Object handleAuthorizationException(HttpServletRequest request, AuthorizationException e){
-        if (ServletUtils.isAjaxRequest(request)){
-            return ResponseResult.error(PermissionUtils.getMsg(e.getMessage()));
-        }else{
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("error/unauth");
-            return modelAndView;
-        }
-    }
+//    @ExceptionHandler(AuthorizationException.class)
+//    public Object handleAuthorizationException(HttpServletRequest request, AuthorizationException e){
+//        if (ServletUtils.isAjaxRequest(request)){
+//            return ResponseResult.error(PermissionUtils.getMsg(e.getMessage()));
+//        }else{
+//            ModelAndView modelAndView = new ModelAndView();
+//            modelAndView.setViewName("error/unauth");
+//            return modelAndView;
+//        }
+//    }
 }

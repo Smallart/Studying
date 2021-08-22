@@ -36,14 +36,14 @@
                     <div class="layui-form-item" style="margin-bottom: 0px">
                         <label class="layui-form-label">创建时间：</label>
                         <div class="layui-input-inline dateTimeWidth">
-                            <input type="text" name="preTime" class="layui-input" placeholder="开始时间" id="create-start-time">
+                            <input type="text" name="preTime" class="layui-input" placeholder="开始时间" id="create-start-time" autocomplete="off">
                         </div>
                         <div class="layui-form-mid">-</div>
                         <div class="layui-input-inline dateTimeWidth">
-                            <input type="text" name="nextTime" class="layui-input" placeholder="结束时间" id="create-end-time">
+                            <input type="text" name="nextTime" class="layui-input" placeholder="结束时间" id="create-end-time" autocomplete="off">
                         </div>
                         <div class="layui-btn-container">
-                            <button class="layui-btn" type="button">
+                            <button class="layui-btn" type="button" lay-submit lay-filter="*">
                                 <i class="layui-icon layui-icon-search"></i>
                                 搜索
                             </button>
@@ -64,11 +64,11 @@
                             <i class="layui-icon layui-icon-addition"></i>
                             新增
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-normal layui-btn-disabled" type="button" studying-event="edit" shiro:hasPermission="system:dict:edit">
+                        <button class="layui-btn layui-btn-sm layui-btn-normal layui-btn-disabled" type="button" studying-event="edit" shiro:hasPermission="system:dict:edit" id="edit">
                             <i class="layui-icon layui-icon-edit"></i>
                             修改
                         </button>
-                        <button class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled" type="button" shiro:hasPermission="system:dict:remove">
+                        <button class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled" type="button" shiro:hasPermission="system:dict:remove" id="del" studying-event="del">
                             <i class="layui-icon layui-icon-delete"></i>
                             删除
                         </button>
@@ -88,13 +88,13 @@
     </div>
     <script type="text/html" id="operatorButtons">
         <a th:class="${@permissionService.hasPermi('system:dict:edit')+' layui-btn layui-btn-xs'}" lay-event="edit">编辑</a>
-        <a th:class="${@permissionService.hasPermi('system:menu:edit')+' layui-btn layui-btn-normal layui-btn-xs'}" lay-event="add">新增</a>
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="list">列表</a>
         <a th:class="${@permissionService.hasPermi('system:menu:edit')+' layui-btn layui-btn-danger layui-btn-xs'}" lay-event="delete">删除</a>
     </script>
-    <script type="text/html" id="deptStatus">
+    <script type="text/html" id="dictStatus">
         <a class="layui-btn layui-btn-radius layui-btn-xs {{d.status=='0'?'':'layui-btn-warm'}}">{{d.status==0?'正常':'停用'}}</a>
     </script>
     <th:block th:include="component::commonJs"></th:block>
-    <script th:src="@{/system/back/system/js/back_dictType.js}"></script>
+    <script th:src="@{/systemresouces/back/system/js/back_dictType.js}"></script>
 </body>
 </html>

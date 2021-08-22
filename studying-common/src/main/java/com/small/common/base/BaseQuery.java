@@ -39,7 +39,7 @@ public class BaseQuery {
     private String orderStrategy;
 
     public int getLimit() {
-        return (limit-1);
+        return (limit-1)*this.offset;
     }
 
 

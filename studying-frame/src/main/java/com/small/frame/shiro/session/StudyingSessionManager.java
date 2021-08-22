@@ -63,9 +63,6 @@ public class StudyingSessionManager extends DefaultWebSessionManager {
                 session = retrieveSession(key);
                 if (session!=null){
                     throw new InvalidSessionException();
-                }else {
-                    // 对于那些各种以外遗留的session进行清除
-                    needOfflineIdList.add(sysUserOnline.getSessionId());
                 }
             }catch (InvalidSessionException e){
                 if (log.isDebugEnabled()){
@@ -74,27 +71,25 @@ public class StudyingSessionManager extends DefaultWebSessionManager {
                 }
                 invalidCount++;
                 needOfflineIdList.add(sysUserOnline.getSessionId());
-                // 会调用父类的方法将缓存中的session进行删除
-                validate(session,key);
             }
-            try{
-                if (needOfflineIdList.size()>0){
-                    userOnlineService.batchDeleteOnline(needOfflineIdList);
-                }
-            }catch (Exception e){
-                if (log.isErrorEnabled()){
-                    log.error("batch delete db session error.",e);
-                }
+        }
+        try{
+            if (needOfflineIdList.size()>0){
+                userOnlineService.batchDeleteOnline(needOfflineIdList);
             }
-            if (log.isInfoEnabled()){
-                String msg = "Finished DB session validation";
-                if (invalidCount>0){
-                    msg+="["+invalidCount+"] session were stopped";
-                }else{
-                    msg+=" No session were stopped";
-                }
-                log.info(msg);
+        }catch (Exception e){
+            if (log.isErrorEnabled()){
+                log.error("batch delete db session error.",e);
             }
+        }
+        if (log.isInfoEnabled()){
+            String msg = "Finished DB session validation";
+            if (invalidCount>0){
+                msg+="["+invalidCount+"] session were stopped";
+            }else{
+                msg+=" No session were stopped";
+            }
+            log.info(msg);
         }
     }
 

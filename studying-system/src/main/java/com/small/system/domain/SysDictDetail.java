@@ -10,6 +10,10 @@ import lombok.Data;
 @Data
 public class SysDictDetail extends BaseObject {
     /**
+     * 样式属性
+     */
+    private String cssClass;
+    /**
      * 字典编码
      */
     private Long dictCode;
@@ -39,4 +43,8 @@ public class SysDictDetail extends BaseObject {
      * 0 正常 1 停用
      */
     private String dictDetailStatus;
+    /**
+     * 表格回显样式
+     */
+    private String listClass;
 }

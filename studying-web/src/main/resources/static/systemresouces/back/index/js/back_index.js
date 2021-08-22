@@ -1,5 +1,5 @@
 layui.extend({
-    pageOp : "/system/back/index/js/pageOp"
+    pageOp : "/systemresouces/back/index/js/pageOp"
 }).use(['jquery','element','pageOp'],function () {
     var pageOp = layui.pageOp,
     tabsPage = pageOp.tabsPage,
@@ -116,7 +116,7 @@ layui.extend({
     element.on('tabDelete(layadmin-layout-tabs)',function (data) {
         data.index && pageOp.tabsBody(data.index).remove();
         pageOp.tabsBodyChange(data.index,{});
-        $('li[studying-event="refresh"]').click();
+        //$('li[studying-event="refresh"]').click();
     });
     //点击事件
     $body.on('click','*[studying-event]',function () {

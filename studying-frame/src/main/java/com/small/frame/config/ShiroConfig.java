@@ -212,7 +212,7 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = shiroFilterFactoryBean.getFilterChainDefinitionMap();
         filterChainDefinitionMap.put("/static/**","anon");
         filterChainDefinitionMap.put("/layui/**","anon");
-        filterChainDefinitionMap.put("/system/**","anon");
+        filterChainDefinitionMap.put("/systemresouces/**","anon");
         filterChainDefinitionMap.put("/expandjs/**","anon");
         filterChainDefinitionMap.put("/img/**","anon");
         filterChainDefinitionMap.put("/clock","anon");
