@@ -3,35 +3,32 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="component::header('操作日志')"></th:block>
+    <th:block th:include="component::header('登录日志')"></th:block>
 </head>
 <body>
     <div class="layui-fluid">
-        <div class="layui-row">
+    <div class="layui-row">
         <div class="layui-panel">
             <form class="layui-form menu-form" lay-filter="operlogForm">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">系统模块：</label>
+                    <label class="layui-form-label">登录地址：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="systemModel" autocomplete="off" class="layui-input">
+                        <input type="text" name="ipAddr" autocomplete="off" class="layui-input">
                     </div>
-                    <label class="layui-form-label">操作人员：</label>
+                    <label class="layui-form-label">登录名称：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="operator" autocomplete="off" class="layui-input">
+                        <input type="text" name="loginName" autocomplete="off" class="layui-input">
                     </div>
-                    <label class="layui-form-label">操作类型：</label>
+                    <label class="layui-form-label">登录状态：</label>
                     <div class="layui-input-inline">
-                        <div id="operType"></div>
-                    </div>
-                </div>
-                <div class="layui-form-item" style="margin-bottom: 0px">
-                    <label class="layui-form-label">操作状态：</label>
-                    <div class="layui-input-inline">
-                        <select name="operStatus" th:with="status=${@sysDictWebServiceImpl.findDetailByType('sys_common_status')}">
+                        <select name="status" th:with="status=${@sysDictWebServiceImpl.findDetailByType('sys_common_status')}">
+                            <option value="">全部</option>
                             <option th:each="staus:${status}" th:text="${staus.dictLabel}" th:value="${staus.dictValue}"></option>
                         </select>
                     </div>
-                    <label class="layui-form-label">操作时间：</label>
+                </div>
+                <div class="layui-form-item" style="margin-bottom: 0px">
+                    <label class="layui-form-label">登录时间：</label>
                     <div class="layui-input-inline dateTimeWidth">
                         <input type="text" name="createStartTime" class="layui-input" placeholder="开始时间" id="create-start-time">
                     </div>
@@ -44,7 +41,7 @@
                             <i class="layui-icon layui-icon-search"></i>
                             搜索
                         </button>
-                        <button class="layui-btn layui-btn-warm" type="button" studying-event="reset">
+                        <button class="layui-btn layui-btn-warm" type="reset" studying-event="reset">
                             <i class="layui-icon layui-icon-refresh"></i>
                             重置
                         </button>
@@ -53,24 +50,30 @@
             </form>
         </div>
     </div>
-        <div class="layui-row">
+    <div class="layui-row">
         <div class="layui-panel">
             <div class="layui-btn-container menu-table">
                 <button class="layui-btn layui-btn-danger layui-btn-sm layui-btn-disabled" studying-event="batchDelete" id="del" shiro:hasPermission="system:user:remove">
                     <i class="layui-icon layui-icon-delete"></i>删除
                 </button>
-                <button class="layui-btn layui-btn-sm">
+                <button class="layui-btn layui-btn-sm" studying-event="clearAll">
                     <i class="layui-icon layui-icon-edit"></i>清空
                 </button>
-                <button class="layui-btn layui-btn-normal layui-btn-sm" ruoyi-event="import" shiro:hasPermission="system:user:import">
-                    <i class="layui-icon layui-icon-upload"></i>导入
+                <button class="layui-btn layui-btn-normal layui-btn-sm layui-btn-disabled" ruoyi-event="import" shiro:hasPermission="system:user:import" studying-event="unlock" id="unlock">
+                    <i class="layui-icon layui-icon-upload"></i>解锁
                 </button>
-                <table class="layui-hide" id="operLogTable" lay-filter="operLogTable" lay-skin="line"></table>
+                <button class="layui-btn layui-btn-warm layui-btn-sm" ruoyi-event="import" shiro:hasPermission="system:user:import">
+                    <i class="layui-icon layui-icon-upload"></i>导出
+                </button>
+                <table class="layui-hide" id="loginInfoTable" lay-filter="loginInfoTable" lay-skin="line"></table>
             </div>
         </div>
     </div>
-    </div>
+</div>
+    <script type="text/html" id="status">
+        <a class="layui-btn layui-btn-radius layui-btn-xs {{d.status=='0'?'':'layui-btn-warm'}}">{{d.status==0?'正常':'停用'}}</a>
+    </script>
     <th:block th:include="component::commonJs"></th:block>
-    <script th:src="@{/systemresouces/back/system/js/back_operlog.js}"></script>
+    <script th:src="@{/systemresouces/back/system/js/back_logininfo.js}"></script>
 </body>
 </html>

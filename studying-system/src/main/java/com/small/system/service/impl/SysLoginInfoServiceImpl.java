@@ -19,4 +19,9 @@ public class SysLoginInfoServiceImpl extends BaseServiceImpl<SysLoginInfo, SysUs
     private  void init(){
         setDao(userLoginInfoMapper);
     }
+
+    @Override
+    public int cleanLogininfo() {
+        return userLoginInfoMapper.cleanLogininfo();
+    }
 }

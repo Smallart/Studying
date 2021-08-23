@@ -9,4 +9,9 @@ import com.small.system.query.SysUserLoginInfoQuery;
  * @author Liang
  */
 public interface ISysLoginInfoService extends BaseService<SysLoginInfo, SysUserLoginInfoQuery> {
+    /**
+     * 删除所有信息重新构建表
+     * @return
+     */
+    int cleanLogininfo();
 }
